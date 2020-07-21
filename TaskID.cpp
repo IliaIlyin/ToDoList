@@ -7,5 +7,5 @@
 TaskID::TaskID(const int id) : id(id) {}
 
 int TaskID::getId() const {
-    5/20/2020
+    return this->id;
 }
