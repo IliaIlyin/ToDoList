@@ -36,6 +36,11 @@ public:
     std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(time_t date);
 
 private:
+    void cleanPrioritiesWithCertainPriority(Task::Priority priority); //deletes null ptrs from priorities
+    void cleanDatesWithCertainDate(time_t date);//deletes null ptrs from dates
+    void cleanLabelsWithCertainLabel(std::string label); //deletes null ptrs from labels
+
+private:
     std::unordered_set< std::shared_ptr<TaskEntity>, HashTaskEntity > tasks;
     std::multimap<Task::Priority, std::weak_ptr<TaskEntity> > priorities;
     std::multimap<time_t,std::weak_ptr<TaskEntity> > dates;
