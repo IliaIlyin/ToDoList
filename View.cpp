@@ -6,7 +6,7 @@
 
 void View::viewEntity(TaskEntity& entity) {
     viewTask(entity.getTask().operator*());
-    std::cout<<"status"<<entity.checkStatus()<<" ; "<<std::endl;
+    std::cout<<"status "<<entity.checkStatus()<<" ; "<<std::endl;
     auto vec=entity.getSubtasks();
     for(auto i=vec.begin();i!=vec.end();i++)
         viewEntity(i->operator*());
