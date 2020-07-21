@@ -66,4 +66,12 @@ void TaskService::insertEntity(TaskEntity& taskEntity) {
     labels.insert(std::pair<std::string,std::weak_ptr<TaskEntity> > (taskEntity.getTask()->getLabel(),ptr));
 }
 
+void TaskService::deleteTask(TaskEntity& task) {
+    auto iter=tasks.find(std::make_shared<TaskEntity> (task));
+    tasks.erase(iter);
+    cleanPrioritiesWithCertainPriority(task.getTask()->getPriority());
+    cleanDatesWithCertainDate(task.getTask()->getDate());
+    cleanLabelsWithCertainLabel(task.getTask()->getLabel());
+}
+
 
