@@ -28,9 +28,6 @@ const std::string &Task::getLabel() const {
     return label;
 }
 
-Task::~Task() {
-std::cout<<"Task "<<this->label<<" destroyed"<<std::endl;
-}
 
 Task Task::createTask(std::string name, time_t date, Task::Priority priority, std::string label) {
     return Task(name,date,priority,label);

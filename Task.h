@@ -23,8 +23,6 @@ public:
     };
 
 public:
-    ~Task();
-
     static Task createTask(std::string name, time_t date = 0, Task::Priority priority = Task::Priority::NONE,
                            std::string label = "");
 
