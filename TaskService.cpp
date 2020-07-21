@@ -6,7 +6,7 @@
 
 #include <utility>
 
-void TaskService::postponeTask(TaskEntity task, time_t dueDate) {
+void TaskService::postponeTask(TaskEntity& task, time_t dueDate) {
     auto iter=tasks.find(std::make_shared<TaskEntity> (task));
     if(iter!=tasks.end()){
         Task t = Task::createTask(task.getTask()->getName(),dueDate+task.getTask()->getDate(),
@@ -14,10 +14,7 @@ void TaskService::postponeTask(TaskEntity task, time_t dueDate) {
 
         TaskEntity taskEntity(t,task.getTaskId(),task.checkStatus(),task.getSubtasks());
 
-        tasks.erase(iter);
-        cleanPrioritiesWithCertainPriority(t.getPriority());
-        cleanDatesWithCertainDate(t.getDate());
-        cleanLabelsWithCertainLabel(t.getLabel());
+        deleteTask(task);
         insertEntity(taskEntity);
     }
     else{
