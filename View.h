@@ -5,9 +5,12 @@
 #ifndef TODOLIST_VIEW_H
 #define TODOLIST_VIEW_H
 
+#include"TaskEntity.h"
 
 class View {
+public:
 
+    void viewTask(Task& task);
 };
 
 
