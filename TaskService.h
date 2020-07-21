@@ -15,9 +15,9 @@
 class TaskService {
 
 public:
-    void postponeTask(TaskEntity task, time_t dueDate);
-    void deleteTask(TaskEntity task);
-    void completeTask(TaskEntity task);
+    void postponeTask(TaskEntity& task, time_t dueDate);
+    void deleteTask(TaskEntity& task);
+    void completeTask(TaskEntity& task);
 
 public:
     void addTask(std::string taskName, time_t date = 0,
@@ -42,7 +42,6 @@ private:
 
 private:
     void insertEntity(TaskEntity& entity);
-
 private:
     IdGenerator idGenerator;
     std::unordered_set< std::shared_ptr<TaskEntity>, HashTaskEntity > tasks;
