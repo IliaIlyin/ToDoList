@@ -36,4 +36,18 @@ Task Task::createTask(std::string name, time_t date, Task::Priority priority, st
     return Task(name,date,priority,label);
 }
 
+std::ostream& operator<<(std::ostream &os, const Task::Priority &priority1) {
+    switch(priority1){
+        case Task::Priority::NONE :
+           os<<"No priority set";
+        case Task::Priority::FIRST :
+            os<<"First priority";
+        case Task::Priority::SECOND :
+            os<<"Second priority";
+        case Task::Priority::THIRD :
+            os<<"Third priority";
+    }
+    return os;
+}
+
 
