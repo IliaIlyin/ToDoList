@@ -22,7 +22,7 @@ public:
 public:
     void addTask(std::string taskName, time_t date = 0,
             Task::Priority priority=Task::Priority::NONE,std::string label="");
-    void addSubTaskToParent(TaskEntity parent, std::string taskName, time_t date =0,
+    void addSubTaskToParent(TaskEntity& parent, std::string taskName, time_t date =0,
             Task::Priority priority=Task::Priority::NONE,std::string label="" );
 
 public:

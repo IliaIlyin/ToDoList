@@ -79,4 +79,12 @@ void TaskService::completeTask(TaskEntity &task) {
     }
 }
 
+void TaskService::addSubTaskToParent(TaskEntity& parent, std::string taskName, time_t date, Task::Priority priority,
+                                     std::string label) {
+
+    Task t=Task::createTask(taskName,date,priority,label);
+    TaskEntity taskEntity(t,this->idGenerator);
+    parent.addsubtask(taskEntity);
+}
+
 
