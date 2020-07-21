@@ -26,6 +26,7 @@ public:
             Task::Priority priority=Task::Priority::NONE,std::string label="");
     void addSubTaskToParent(TaskEntity& parent, std::string taskName, time_t date =0,
             Task::Priority priority=Task::Priority::NONE,std::string label="" );
+    void addTask(Task& task);
 
 public:
     void showAllByPriority();

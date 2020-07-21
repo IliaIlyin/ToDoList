@@ -92,6 +92,11 @@ void TaskService::showAllByPriority() {
         this->view.viewEntity(i->second.lock().operator*());
 }
 
+void TaskService::addTask(Task &task) {
+    TaskEntity taskEntity(task,this->idGenerator);
+    insertEntity(taskEntity);
+}
+
 
 
 
