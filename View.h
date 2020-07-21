@@ -9,6 +9,8 @@
 
 class View {
 public:
+    View();
+
     void viewEntity(TaskEntity& entity);
     void viewTask(Task& task);
 };
