@@ -10,7 +10,7 @@
 class HashTaskEntity {
 public:
     // id is returned as hash function
-    size_t operator()(const TaskEntity &t) const;
+    size_t operator()(const std::shared_ptr<TaskEntity> &t) const;
 
 };
 
