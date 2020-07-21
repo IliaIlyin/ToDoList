@@ -87,4 +87,9 @@ void TaskService::addSubTaskToParent(TaskEntity& parent, std::string taskName, t
     parent.addsubtask(taskEntity);
 }
 
+std::vector<std::weak_ptr<TaskEntity>> TaskService::showAllByPriority() {
+    for(auto i=priorities.begin();i!=priorities.end();i++)
+        this->View.viewEntity(i->second);
+}
+
 
