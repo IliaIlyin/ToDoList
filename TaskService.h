@@ -36,7 +36,7 @@ public:
     std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(time_t date);
 
 private:
-    std::unordered_set<TaskEntity, HashTaskEntity > tasks;
+    std::unordered_set< std::shared_ptr<TaskEntity>, HashTaskEntity > tasks;
     std::multimap<Task::Priority, std::weak_ptr<TaskEntity> > priorities;
     std::multimap<time_t,std::weak_ptr<TaskEntity> > dates;
     std::multimap<std::string,std::weak_ptr<TaskEntity> > labels;
