@@ -5,9 +5,11 @@
 #ifndef TODOLIST_TASKSERVICE_H
 #define TODOLIST_TASKSERVICE_H
 
+#include"View.h"
 #include"HashTaskEntity.h"
 #include"TaskEntity.h"
 #include"IdGenerator.h"
+
 #include<map>
 #include<vector>
 #include<memory>
@@ -43,6 +45,7 @@ private:
 private:
     void insertEntity(TaskEntity& entity);
 private:
+    View view;
     IdGenerator idGenerator;
     std::unordered_set< std::shared_ptr<TaskEntity>, HashTaskEntity > tasks;
     std::multimap<Task::Priority, std::weak_ptr<TaskEntity> > priorities;
