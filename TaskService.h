@@ -41,7 +41,7 @@ private:
     void cleanLabelsWithCertainLabel(std::string label); //deletes null ptrs from labels
 
 private:
-    void InsertEntity(TaskEntity& entity);
+    void insertEntity(TaskEntity& entity);
 
 private:
     IdGenerator idGenerator;
