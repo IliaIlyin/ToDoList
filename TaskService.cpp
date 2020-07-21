@@ -4,6 +4,8 @@
 
 #include "TaskService.h"
 
+#include <utility>
+
 void TaskService::postponeTask(TaskEntity task, time_t dueDate) {
     auto iter=tasks.find(std::make_shared<TaskEntity> (task));
     if(iter!=tasks.end()){
@@ -54,6 +56,18 @@ void TaskService::cleanLabelsWithCertainLabel(std::string label) {
             labels.erase(i);
         }
     }
+}
+
+void TaskService::addTask(std::string taskName, time_t date, Task::Priority priority, std::string label) {
+    Task task = Task::createTask(std::move(taskName),date,priority,std::move(label));
+    TaskEntity taskEntity(task,this->idGenerator);
+
+    auto ptr=std::make_shared<TaskEntity>(taskEntity);
+
+    tasks.insert(ptr);
+    priorities.insert(std::pair<Task::Priority,std::weak_ptr<TaskEntity> > (task.getPriority(),ptr));
+    dates.insert(std::pair<time_t,std::weak_ptr<TaskEntity> > (task.getDate(),ptr));
+    labels.insert(std::pair<std::string,std::weak_ptr<TaskEntity> > (task.getLabel(),ptr));
 }
 
 
