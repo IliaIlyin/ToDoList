@@ -71,4 +71,12 @@ void TaskService::deleteTask(TaskEntity& task) {
     cleanLabelsWithCertainLabel(task.getTask()->getLabel());
 }
 
+void TaskService::completeTask(TaskEntity &task) {
+    task.completeTask();
+    auto vec=task.getSubtasks();
+    for(auto i=vec.begin();i!=vec.end();i++){
+        i->get()->completeTask();
+    }
+}
+
 
