@@ -40,12 +40,16 @@ std::ostream& operator<<(std::ostream &os, const Task::Priority &priority1) {
     switch(priority1){
         case Task::Priority::NONE :
            os<<"No priority set";
+           break;
         case Task::Priority::FIRST :
             os<<"First priority";
+            break;
         case Task::Priority::SECOND :
             os<<"Second priority";
+            break;
         case Task::Priority::THIRD :
             os<<"Third priority";
+            break;
     }
     return os;
 }

@@ -28,7 +28,7 @@ public:
             Task::Priority priority=Task::Priority::NONE,std::string label="" );
 
 public:
-    std::vector<std::weak_ptr<TaskEntity>> showAllByPriority();
+    void showAllByPriority();
     std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();
     std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
     std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority();

@@ -82,14 +82,16 @@ void TaskService::completeTask(TaskEntity &task) {
 void TaskService::addSubTaskToParent(TaskEntity& parent, std::string taskName, time_t date, Task::Priority priority,
                                      std::string label) {
 
-    Task t=Task::createTask(taskName,date,priority,label);
+    Task t=Task::createTask(std::move(taskName),date,priority,std::move(label));
     TaskEntity taskEntity(t,this->idGenerator);
     parent.addsubtask(taskEntity);
 }
 
-std::vector<std::weak_ptr<TaskEntity>> TaskService::showAllByPriority() {
+void TaskService::showAllByPriority() {
     for(auto i=priorities.begin();i!=priorities.end();i++)
         this->view.viewEntity(i->second.lock().operator*());
 }
+
+
 
 
