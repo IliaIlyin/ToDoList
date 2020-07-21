@@ -70,4 +70,12 @@ void TaskService::addTask(std::string taskName, time_t date, Task::Priority prio
     labels.insert(std::pair<std::string,std::weak_ptr<TaskEntity> > (task.getLabel(),ptr));
 }
 
+void TaskService::InsertEntity(TaskEntity& taskEntity) {
+    auto ptr=std::make_shared<TaskEntity>(taskEntity);
+    tasks.insert(ptr);
+    priorities.insert(std::pair<Task::Priority,std::weak_ptr<TaskEntity> > (taskEntity.getTask()->getPriority(),ptr));
+    dates.insert(std::pair<time_t,std::weak_ptr<TaskEntity> > (taskEntity.getTask()->getDate(),ptr));
+    labels.insert(std::pair<std::string,std::weak_ptr<TaskEntity> > (taskEntity.getTask()->getLabel(),ptr));
+}
+
 

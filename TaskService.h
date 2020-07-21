@@ -41,6 +41,9 @@ private:
     void cleanLabelsWithCertainLabel(std::string label); //deletes null ptrs from labels
 
 private:
+    void InsertEntity(TaskEntity& entity);
+
+private:
     IdGenerator idGenerator;
     std::unordered_set< std::shared_ptr<TaskEntity>, HashTaskEntity > tasks;
     std::multimap<Task::Priority, std::weak_ptr<TaskEntity> > priorities;
