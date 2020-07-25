@@ -28,7 +28,7 @@ public:
             Task::Priority priority=Task::Priority::NONE,std::string label="" );
     void addTask(Task& task);
     void addSubTaskToParent(TaskEntity& parent, Task& task);
-
+    TaskEntity getEntityByTask(Task& task);
 public:
     void showAllByPriority();
     std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();
