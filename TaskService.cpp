@@ -97,6 +97,11 @@ void TaskService::addTask(Task &task) {
     insertEntity(taskEntity);
 }
 
+void TaskService::addSubTaskToParent(TaskEntity &parent, Task &task) {
+    TaskEntity taskEntity(task,this->idGenerator);
+    parent.addsubtask(taskEntity);
+}
+
 
 
 
