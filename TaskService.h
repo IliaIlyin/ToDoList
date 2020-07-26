@@ -39,13 +39,16 @@ public:
     std::vector<std::weak_ptr<TaskEntity>> showDueDateByLabel(time_t date);
     std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(time_t date);
 
+public://for test
+    IdGenerator &getIdGenerator();
+
 private:
     void cleanPrioritiesWithCertainPriority(Task::Priority priority); //deletes null ptrs from priorities
     void cleanDatesWithCertainDate(time_t date);//deletes null ptrs from dates
     void cleanLabelsWithCertainLabel(std::string label); //deletes null ptrs from labels
 
-private:
-    void insertEntity(TaskEntity& entity);
+public: //for test
+    void insertEntity(std::shared_ptr<TaskEntity> entity);
 private:
     View view;
     IdGenerator idGenerator;

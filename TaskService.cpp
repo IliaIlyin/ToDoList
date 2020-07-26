@@ -102,14 +102,12 @@ void TaskService::addSubTaskToParent(TaskEntity &parent, Task &task) {
     parent.addsubtask(taskEntity);
 }
 
-TaskEntity TaskService::getEntityByTask(Task &task) {
-    for(auto i=tasks.begin();i!=tasks.end();i++){
-        if(i->operator*().getTask().get() == &task){
-            return i->operator*();
-        }
-    }
-    return tasks.end()->operator*();
+
+
+IdGenerator &TaskService::getIdGenerator() {
+    return idGenerator;
 }
+
 
 
 
