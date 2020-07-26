@@ -30,7 +30,7 @@ public:
     void addSubTaskToParent(std::shared_ptr<TaskEntity>  parent, Task& task);
 public:
     void showAllByPriority();
-    std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();
+    void showAllByLabel();
     std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
     std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority();
     std::vector<std::weak_ptr<TaskEntity>> showTodayByLabel();

@@ -110,6 +110,11 @@ IdGenerator &TaskService::getIdGenerator() {
     return idGenerator;
 }
 
+void TaskService::showAllByLabel() {
+    for(auto i=labels.begin();i!=labels.end();i++)
+        this->view.viewEntity(i->second.lock().operator*());
+}
+
 
 
 
