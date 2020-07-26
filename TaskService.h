@@ -32,7 +32,7 @@ public:
     void showAllByPriority();
     void showAllByLabel();
     void showAllByDate();
-    std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority();
+    void showTodayByPriority();
     std::vector<std::weak_ptr<TaskEntity>> showTodayByLabel();
     std::vector<std::weak_ptr<TaskEntity>> showDueDateByPriority(time_t date);
     std::vector<std::weak_ptr<TaskEntity>> showDueDateByLabel(time_t date);
