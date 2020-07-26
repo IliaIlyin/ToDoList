@@ -29,8 +29,8 @@ void TaskEntity::completeTask() {
     this->status=true;
 }
 
-void TaskEntity::addsubtask(TaskEntity& taskEntity) {
-    this->subtasks.push_back(std::make_unique<TaskEntity>(taskEntity));
+void TaskEntity::addsubtask(std::shared_ptr<TaskEntity> taskEntity) {
+    this->subtasks.push_back(taskEntity);
 }
 
 TaskEntity::TaskEntity(TaskEntity &entity, TaskID taskId) : taskID(taskId) {

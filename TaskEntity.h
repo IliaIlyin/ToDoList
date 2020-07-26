@@ -25,11 +25,11 @@ public:
 public:
     void completeTask();
 
-    void addsubtask(TaskEntity &taskEntity);
+    void addsubtask(std::shared_ptr<TaskEntity> taskEntity);
 
     TaskEntity(TaskEntity &entity, TaskID taskId);//copy
 
-    TaskEntity(const Task &task,IdGenerator& idGenerator); //create
+    TaskEntity(const Task &task, IdGenerator& idGenerator); //create
 
     TaskEntity(const Task &task,const TaskID& id,bool status, const std::vector<std::shared_ptr<TaskEntity>> & subtasks); //copy
 
