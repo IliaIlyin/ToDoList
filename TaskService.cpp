@@ -153,6 +153,21 @@ void TaskService::showTodayByLabel() {
     }
 }
 
+void TaskService::showDueDateByPriority(time_t date) {
+    auto aTime = gmtime(&date);
+    int day = aTime->tm_mday;
+    int year = aTime->tm_year;
+    int month = aTime->tm_mon;
+    for(auto i=priorities.begin();i!=priorities.end();i++)
+    {
+        time_t t = i->second.lock()->getTask().operator*().getDate();
+        auto tmp = gmtime(&t);
+        if(tmp->tm_mday < day && tmp->tm_year<year && tmp->tm_mon<month){
+            this->view.viewEntity(i->second.lock().operator*());
+        }
+    }
+}
+
 
 
 
