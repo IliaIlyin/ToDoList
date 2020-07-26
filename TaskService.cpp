@@ -115,6 +115,11 @@ void TaskService::showAllByLabel() {
         this->view.viewEntity(i->second.lock().operator*());
 }
 
+void TaskService::showAllByDate() {
+    for(auto i=dates.begin();i!=dates.end();i++)
+        this->view.viewEntity(i->second.lock().operator*());
+}
+
 
 
 
