@@ -17,18 +17,17 @@
 class TaskService {
 
 public:
-    void postponeTask(TaskEntity& task, time_t dueDate);
-    void deleteTask(TaskEntity& task);
-    void completeTask(TaskEntity& task);
+    void postponeTask(std::shared_ptr<TaskEntity>  task, time_t dueDate);
+    void deleteTask(std::shared_ptr<TaskEntity>  task);
+    void completeTask(std::shared_ptr<TaskEntity>  task);
 
 public:
     void addTask(std::string taskName, time_t date = 0,
             Task::Priority priority=Task::Priority::NONE,std::string label="");
-    void addSubTaskToParent(TaskEntity& parent, std::string taskName, time_t date =0,
+    void addSubTaskToParent(std::shared_ptr<TaskEntity>  parent, std::string taskName, time_t date =0,
             Task::Priority priority=Task::Priority::NONE,std::string label="" );
     void addTask(Task& task);
-    void addSubTaskToParent(TaskEntity& parent, Task& task);
-    TaskEntity getEntityByTask(Task& task);
+    void addSubTaskToParent(std::shared_ptr<TaskEntity>  parent, Task& task);
 public:
     void showAllByPriority();
     std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();

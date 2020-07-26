@@ -6,19 +6,19 @@
 
 #include <utility>
 
-void TaskService::postponeTask(TaskEntity& task, time_t dueDate) {
-    auto iter=tasks.find(std::make_shared<TaskEntity> (task));
+void TaskService::postponeTask(std::shared_ptr<TaskEntity>  task, time_t dueDate) {
+    auto iter=tasks.find((task));
     if(iter!=tasks.end()){
-        Task t = Task::createTask(task.getTask()->getName(),dueDate+task.getTask()->getDate(),
-                task.getTask()->getPriority(),task.getTask()->getLabel());
+        Task t = Task::createTask(task.operator*().getTask()->getName(),dueDate+task.operator*().getTask()->getDate(),
+                task.operator*().getTask()->getPriority(),task.operator*().getTask()->getLabel());
 
-        TaskEntity taskEntity(t,task.getTaskId(),task.checkStatus(),task.getSubtasks());
+        TaskEntity taskEntity(t,task.operator*().getTaskId(),task.operator*().checkStatus(),task.operator*().getSubtasks());
 
         deleteTask(task);
-        insertEntity(taskEntity);
+        insertEntity(std::make_shared<TaskEntity>(taskEntity));
     }
     else{
-        std::cout<<"task "<<task.getTask()->getName()<<" Not found"<<std::endl;
+        std::cout<<"task "<<task.operator*().getTask()->getName()<<" Not found"<<std::endl;
     }
 }
 
@@ -52,39 +52,41 @@ void TaskService::cleanLabelsWithCertainLabel(std::string label) {
 void TaskService::addTask(std::string taskName, time_t date, Task::Priority priority, std::string label) {
     Task task = Task::createTask(std::move(taskName),date,priority,std::move(label));
     TaskEntity taskEntity(task,this->idGenerator);
-    insertEntity(taskEntity);
+    insertEntity(std::make_shared<TaskEntity>(taskEntity));
 }
 
-void TaskService::insertEntity(TaskEntity& taskEntity) {
-    auto ptr=std::make_shared<TaskEntity>(taskEntity);
-    tasks.insert(ptr);
-    priorities.insert(std::pair<Task::Priority,std::weak_ptr<TaskEntity> > (taskEntity.getTask()->getPriority(),ptr));
-    dates.insert(std::pair<time_t,std::weak_ptr<TaskEntity> > (taskEntity.getTask()->getDate(),ptr));
-    labels.insert(std::pair<std::string,std::weak_ptr<TaskEntity> > (taskEntity.getTask()->getLabel(),ptr));
+void TaskService::insertEntity(std::shared_ptr<TaskEntity> taskEntity) {
+    tasks.insert(taskEntity);
+    priorities.insert(std::pair<Task::Priority,std::weak_ptr<TaskEntity> >
+            (taskEntity.operator*().getTask()->getPriority(),taskEntity));
+    dates.insert(std::pair<time_t,std::weak_ptr<TaskEntity> > 
+            (taskEntity.operator*().getTask()->getDate(),taskEntity));
+    labels.insert(std::pair<std::string,std::weak_ptr<TaskEntity> > 
+            (taskEntity.operator*().getTask()->getLabel(),taskEntity));
 }
 
-void TaskService::deleteTask(TaskEntity& task) {
-    auto iter=tasks.find(std::make_shared<TaskEntity> (task));
+void TaskService::deleteTask(std::shared_ptr<TaskEntity>  task) {
+    auto iter=tasks.find(task);
     tasks.erase(iter);
-    cleanPrioritiesWithCertainPriority(task.getTask()->getPriority());
-    cleanDatesWithCertainDate(task.getTask()->getDate());
-    cleanLabelsWithCertainLabel(task.getTask()->getLabel());
+    cleanPrioritiesWithCertainPriority(task.operator*().getTask()->getPriority());
+    cleanDatesWithCertainDate(task.operator*().getTask()->getDate());
+    cleanLabelsWithCertainLabel(task.operator*().getTask()->getLabel());
 }
 
-void TaskService::completeTask(TaskEntity &task) {
-    task.completeTask();
-    auto vec=task.getSubtasks();
+void TaskService::completeTask(std::shared_ptr<TaskEntity> task) {
+    task.operator*().completeTask();
+    auto vec=task.operator*().getSubtasks();
     for(auto i=vec.begin();i!=vec.end();i++){
         i->get()->completeTask();
     }
 }
 
-void TaskService::addSubTaskToParent(TaskEntity& parent, std::string taskName, time_t date, Task::Priority priority,
+void TaskService::addSubTaskToParent(std::shared_ptr<TaskEntity>  parent, std::string taskName, time_t date, Task::Priority priority,
                                      std::string label) {
 
     Task t=Task::createTask(std::move(taskName),date,priority,std::move(label));
     TaskEntity taskEntity(t,this->idGenerator);
-    parent.addsubtask(taskEntity);
+    parent->addsubtask(std::make_shared<TaskEntity>(taskEntity));
 }
 
 void TaskService::showAllByPriority() {
@@ -94,12 +96,12 @@ void TaskService::showAllByPriority() {
 
 void TaskService::addTask(Task &task) {
     TaskEntity taskEntity(task,this->idGenerator);
-    insertEntity(taskEntity);
+    insertEntity(std::make_shared<TaskEntity>(taskEntity));
 }
 
-void TaskService::addSubTaskToParent(TaskEntity &parent, Task &task) {
+void TaskService::addSubTaskToParent(std::shared_ptr<TaskEntity> parent, Task &task) {
     TaskEntity taskEntity(task,this->idGenerator);
-    parent.addsubtask(taskEntity);
+    parent->addsubtask(std::make_shared<TaskEntity>(taskEntity));
 }
 
 
