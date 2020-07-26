@@ -183,6 +183,21 @@ void TaskService::showDueDateByLabel(time_t date) {
     }
 }
 
+void TaskService::showDueDateByDate(time_t date) {
+    auto aTime = gmtime(&date);
+    int day = aTime->tm_mday;
+    int year = aTime->tm_year;
+    int month = aTime->tm_mon;
+    for(auto i=dates.begin();i!=dates.end();i++)
+    {
+        time_t t = i->second.lock()->getTask().operator*().getDate();
+        auto tmp = gmtime(&t);
+        if(tmp->tm_mday < day && tmp->tm_year<year && tmp->tm_mon<month){
+            this->view.viewEntity(i->second.lock().operator*());
+        }
+    }
+}
+
 
 
 

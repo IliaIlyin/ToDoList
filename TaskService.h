@@ -36,7 +36,7 @@ public:
     void showTodayByLabel();
     void showDueDateByPriority(time_t date);
     void showDueDateByLabel(time_t date);
-    std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(time_t date);
+    void showDueDateByDate(time_t date);
 
 public://for test
     IdGenerator &getIdGenerator();
