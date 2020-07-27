@@ -4,12 +4,13 @@
 
 #include "TaskEntity.h"
 
-TaskEntity::TaskEntity(const Task& task,IdGenerator& idGenerator): task(std::make_shared<Task>(task)),taskID(idGenerator.generateId()){
+TaskEntity::TaskEntity(const Task &task, IdGenerator &idGenerator) : task(std::make_shared<Task>(task)),
+                                                                     taskID(idGenerator.generateId()) {
     this->subtasks = std::vector<std::shared_ptr<TaskEntity> >();
-    this->status=false;
+    this->status = false;
 }
 
-std::shared_ptr<Task> &TaskEntity::getTask()  {
+std::shared_ptr<Task> &TaskEntity::getTask() {
     return task;
 }
 
@@ -26,7 +27,7 @@ const std::vector<std::shared_ptr<TaskEntity>> &TaskEntity::getSubtasks() const 
 }
 
 void TaskEntity::completeTask() {
-    this->status=true;
+    this->status = true;
 }
 
 void TaskEntity::addsubtask(std::shared_ptr<TaskEntity> taskEntity) {
@@ -34,15 +35,16 @@ void TaskEntity::addsubtask(std::shared_ptr<TaskEntity> taskEntity) {
 }
 
 TaskEntity::TaskEntity(TaskEntity &entity, TaskID taskId) : taskID(taskId) {
-  this->subtasks.push_back(std::make_shared<TaskEntity>(entity));
+    this->subtasks.push_back(std::make_shared<TaskEntity>(entity));
 }
 
 bool TaskEntity::operator==(const TaskEntity &t) const {
-    return this->getTaskId().getId()==t.getTaskId().getId();
+    return this->getTaskId().getId() == t.getTaskId().getId();
 }
 
 TaskEntity::TaskEntity(const Task &task, const TaskID &id, bool status,
-                       const std::vector<std::shared_ptr<TaskEntity>> &subtasks):task(std::make_shared<Task>(task)),
-                       taskID(id),status(status),subtasks(subtasks){
+                       const std::vector<std::shared_ptr<TaskEntity>> &subtasks) : task(std::make_shared<Task>(task)),
+                                                                                   taskID(id), status(status),
+                                                                                   subtasks(subtasks) {
 }
 

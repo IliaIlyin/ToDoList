@@ -29,11 +29,12 @@ public:
 
     TaskEntity(TaskEntity &entity, TaskID taskId);//copy
 
-    TaskEntity(const Task &task, IdGenerator& idGenerator); //create
+    TaskEntity(const Task &task, IdGenerator &idGenerator); //create
 
-    TaskEntity(const Task &task,const TaskID& id,bool status, const std::vector<std::shared_ptr<TaskEntity>> & subtasks); //copy
+    TaskEntity(const Task &task, const TaskID &id, bool status,
+               const std::vector<std::shared_ptr<TaskEntity>> &subtasks); //copy
 
-    bool operator==(const TaskEntity& t) const;
+    bool operator==(const TaskEntity &t) const;
 
 private:
     std::shared_ptr<Task> task;

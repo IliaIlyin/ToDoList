@@ -30,22 +30,22 @@ const std::string &Task::getLabel() const {
 
 
 Task Task::createTask(std::string name, time_t date, Task::Priority priority, std::string label) {
-    return Task(name,date,priority,label);
+    return Task(name, date, priority, label);
 }
 
-std::ostream& operator<<(std::ostream &os, const Task::Priority &priority1) {
-    switch(priority1){
+std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1) {
+    switch (priority1) {
         case Task::Priority::NONE :
-           os<<"No priority set";
-           break;
+            os << "No priority set";
+            break;
         case Task::Priority::FIRST :
-            os<<"First priority";
+            os << "First priority";
             break;
         case Task::Priority::SECOND :
-            os<<"Second priority";
+            os << "Second priority";
             break;
         case Task::Priority::THIRD :
-            os<<"Third priority";
+            os << "Third priority";
             break;
     }
     return os;

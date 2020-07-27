@@ -26,7 +26,7 @@ public:
     static Task createTask(std::string name, time_t date = 0, Task::Priority priority = Task::Priority::NONE,
                            std::string label = "");
 
-    friend std::ostream& operator << (std::ostream& os, const Task::Priority& priority1);
+    friend std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1);
 
 public:
 
