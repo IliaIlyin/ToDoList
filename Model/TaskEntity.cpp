@@ -48,3 +48,7 @@ TaskEntity::TaskEntity(const Task &task, const TaskID &id, bool status,
                                                                                    subtasks(subtasks) {
 }
 
+TaskEntity TaskEntity::createTaskEntity(const Task &task, IdGenerator &idGenerator) {
+    return TaskEntity(task,idGenerator);
+}
+
