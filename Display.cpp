@@ -2,9 +2,9 @@
 // Created by Ilya on 7/20/2020.
 //
 
-#include "View.h"
+#include "Display.h"
 
-void View::viewEntity(TaskEntity &entity) {
+void Display::viewEntity(TaskEntity &entity) {
     viewTask(entity.getTask().operator*());
     std::cout << "status " << entity.checkStatus() << " ; " << std::endl;
     auto vec = entity.getSubtasks();
@@ -13,9 +13,9 @@ void View::viewEntity(TaskEntity &entity) {
 }
 
 
-void View::viewTask(Task &task) {
+void Display::viewTask(Task &task) {
     std::cout << "task " << task.getName() << " with date: " << task.getDate() << std::endl;
     std::cout << "Priority " << task.getPriority() << " label " << task.getLabel() << std::endl;
 }
 
-View::View() {}
+Display::Display() {}

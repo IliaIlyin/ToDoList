@@ -2,14 +2,14 @@
 // Created by Ilya on 7/20/2020.
 //
 
-#ifndef TODOLIST_VIEW_H
-#define TODOLIST_VIEW_H
+#ifndef TODOLIST_DISPLAY_H
+#define TODOLIST_DISPLAY_H
 
 #include"TaskEntity.h"
 
-class View {
+class Display {
 public:
-    View();
+    Display();
 
     void viewEntity(TaskEntity &entity);
 
@@ -17,4 +17,4 @@ public:
 };
 
 
-#endif //TODOLIST_VIEW_H
+#endif //TODOLIST_DISPLAY_H
