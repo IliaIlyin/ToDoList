@@ -18,13 +18,11 @@ class TaskEntity {
 
  public:
 
-  TaskEntity(TaskEntity &entity, TaskID taskId);//copy
-
   TaskEntity(const Task &task, const TaskID &id, bool status,
              const std::vector<std::shared_ptr<TaskEntity>> &subtasks); //copy
  public:
 
-  std::shared_ptr<Task> &getTask();
+  const Task &getTask() const;
 
   const TaskID &getTaskId() const;
 
@@ -43,7 +41,7 @@ class TaskEntity {
   TaskEntity(const Task &task, IdGenerator &idGenerator); //create
 
  private:
-  std::shared_ptr<Task> task;
+  Task task;
   TaskID taskID;
   bool status;
   std::vector<std::shared_ptr<TaskEntity> > subtasks;

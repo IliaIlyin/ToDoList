@@ -5,7 +5,8 @@
 #include "Display.h"
 
 void Display::viewEntity(TaskEntity &entity) {
-    viewTask(entity.getTask().operator*());
+    Task t = entity.getTask();
+    viewTask(t);
     std::cout << "status " << entity.checkStatus() << " ; " << std::endl;
     auto vec = entity.getSubtasks();
     for (auto i = vec.begin(); i != vec.end(); i++)
