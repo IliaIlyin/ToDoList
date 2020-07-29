@@ -4,7 +4,7 @@
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
 
-#include "C:\Users\Ilya\CLionProjects\toDoList\TaskService.h"
+#include "../API/TaskService.h"
 
 using testing::Eq;
 

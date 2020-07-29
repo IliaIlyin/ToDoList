@@ -5,7 +5,7 @@
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
 
-#include "C:\Users\Ilya\CLionProjects\toDoList\TaskEntity.h"
+#include "../Model/TaskEntity.h"
 using testing::Eq;
 
 class TaskEntityTest : public ::testing::Test {

@@ -4,8 +4,8 @@
 #include<gtest/gtest.h>
 #include<gmock/gmock.h>
 
-#include "C:\Users\Ilya\CLionProjects\toDoList\IdGenerator.h"
-#include "C:\Users\Ilya\CLionProjects\toDoList\TaskId.h"
+#include "../Model/IdGenerator.h"
+#include "../Model/TaskID.h"
 
 using testing::Eq;
 

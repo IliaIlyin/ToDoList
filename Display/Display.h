@@ -5,7 +5,7 @@
 #ifndef TODOLIST_DISPLAY_H
 #define TODOLIST_DISPLAY_H
 
-#include"TaskEntity.h"
+#include"../Model/TaskEntity.h"
 
 class Display {
 public:

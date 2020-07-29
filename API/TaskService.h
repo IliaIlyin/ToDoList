@@ -5,10 +5,10 @@
 #ifndef TODOLIST_TASKSERVICE_H
 #define TODOLIST_TASKSERVICE_H
 
-#include"Display.h"
-#include"HashTaskEntity.h"
-#include"TaskEntity.h"
-#include"IdGenerator.h"
+#include"../Display/Display.h"
+#include"../Model/HashTaskEntity.h"
+#include"../Model/TaskEntity.h"
+#include"../Model/IdGenerator.h"
 
 #include<map>
 #include<vector>
