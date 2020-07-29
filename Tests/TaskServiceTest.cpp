@@ -17,7 +17,7 @@ public:
 
     TaskServiceTest() {
         ptr = std::make_shared<Task>(Task::createTask("LOL"));
-        taskEntity = std::make_shared<TaskEntity>(t, taskService.getIdGenerator());
+        taskEntity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(t, taskService.getIdGenerator()));
     }
 };
 

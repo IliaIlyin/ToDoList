@@ -17,11 +17,11 @@ TEST_F(TaskEntityTest,shouldCreateTaskEntity){
     IdGenerator idGenerator;
     std::vector<std::shared_ptr<TaskEntity>> vec;
     TaskID taskId(0);
-    TaskEntity taskEntity(task,idGenerator);
-    ASSERT_TRUE(taskEntity.getTask()->getName()== task.getName());
-    ASSERT_TRUE(taskEntity.getTask()->getLabel()==task.getLabel());
-    ASSERT_EQ(taskEntity.getTask()->getDate(),task.getDate());
-    ASSERT_EQ(taskEntity.getTask()->getPriority(),task.getPriority());
+    TaskEntity taskEntity=TaskEntity::createTaskEntity(task,idGenerator);
+    ASSERT_TRUE(taskEntity.getTask().getName()== task.getName());
+    ASSERT_TRUE(taskEntity.getTask().getLabel()==task.getLabel());
+    ASSERT_EQ(taskEntity.getTask().getDate(),task.getDate());
+    ASSERT_EQ(taskEntity.getTask().getPriority(),task.getPriority());
     ASSERT_EQ((taskId.getId()),(taskEntity.getTaskId().getId()));
     ASSERT_EQ(false,taskEntity.checkStatus());
     ASSERT_EQ(vec,taskEntity.getSubtasks());
