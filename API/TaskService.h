@@ -9,6 +9,10 @@
 #include"../Model/HashTaskEntity.h"
 #include"../Model/TaskEntity.h"
 #include"../Model/IdGenerator.h"
+#include"../Views/LabelView.h"
+#include"../Views/PriorityView.h"
+#include"../Views/DateView.h"
+
 
 #include<map>
 #include<vector>
@@ -29,17 +33,14 @@ public:
     void addTask(Task& task);
     void addSubTaskToParent(std::shared_ptr<TaskEntity>  parent, Task& task);
 public:
-    void showAllByPriority();
-    void showAllByLabel();
-    void showAllByDate();
-    void showTodayByPriority();
-    void showTodayByLabel();
-    void showDueDateByPriority(time_t date);
-    void showDueDateByLabel(time_t date);
-    void showDueDateByDate(time_t date);
-
-public://for test
-    IdGenerator &getIdGenerator();
+    std::vector<std::weak_ptr<TaskEntity> > showAllByPriority();
+    std::vector<std::weak_ptr<TaskEntity> > showAllByLabel();
+    std::vector<std::weak_ptr<TaskEntity> > showAllByDate();
+    std::vector<std::weak_ptr<TaskEntity> > showTodayByPriority();
+    std::vector<std::weak_ptr<TaskEntity> > showTodayByLabel();
+    std::vector<std::weak_ptr<TaskEntity> > showDueDateByPriority(time_t date);
+    std::vector<std::weak_ptr<TaskEntity> > showDueDateByLabel(time_t date);
+    std::vector<std::weak_ptr<TaskEntity> > showDueDateByDate(time_t date);
 
 private:
     void cleanPrioritiesWithCertainPriority(Task::Priority priority); //deletes null ptrs from priorities
@@ -49,7 +50,10 @@ private:
 public: //for test
     void insertEntity(std::shared_ptr<TaskEntity> entity);
 private:
-    Display view;
+    Display display;
+    LabelView label_view_;
+    PriorityView priority_view_;
+    DateView date_view_;
     IdGenerator idGenerator;
     std::unordered_set< std::shared_ptr<TaskEntity>, HashTaskEntity > tasks;
     std::multimap<Task::Priority, std::weak_ptr<TaskEntity> > priorities;

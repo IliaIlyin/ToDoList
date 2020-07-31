@@ -91,9 +91,8 @@ void TaskService::addSubTaskToParent(std::shared_ptr<TaskEntity> parent, std::st
     parent->addsubtask(std::make_shared<TaskEntity>(taskEntity));
 }
 
-void TaskService::showAllByPriority() {
-    for (auto i = priorities.begin(); i != priorities.end(); i++)
-        this->view.viewEntity(i->second.lock().operator*());
+std::vector<std::weak_ptr<TaskEntity> > TaskService::showAllByPriority() {
+    return priority_view_.showAllByPriority();
 }
 
 void TaskService::addTask(Task &task) {
@@ -107,91 +106,33 @@ void TaskService::addSubTaskToParent(std::shared_ptr<TaskEntity> parent, Task &t
 }
 
 
-IdGenerator &TaskService::getIdGenerator() {
-    return idGenerator;
+std::vector<std::weak_ptr<TaskEntity> > TaskService::showAllByLabel() {
+    return label_view_.showAllByLabel();
 }
 
-void TaskService::showAllByLabel() {
-    for (auto i = labels.begin(); i != labels.end(); i++)
-        this->view.viewEntity(i->second.lock().operator*());
+std::vector<std::weak_ptr<TaskEntity> > TaskService::showAllByDate() {
+    return date_view_.showAllByDate();
 }
 
-void TaskService::showAllByDate() {
-    for (auto i = dates.begin(); i != dates.end(); i++)
-        this->view.viewEntity(i->second.lock().operator*());
-}
-
-void TaskService::showTodayByPriority() {
-    time_t theTime = time(NULL);
-    auto aTime = localtime(&theTime);
-    int day = aTime->tm_mday;
-    int year = aTime->tm_year;
-    int month = aTime->tm_mon;
-    for (auto i = priorities.begin(); i != priorities.end(); i++) {
-        time_t t = i->second.lock()->getTask().getDate();
-        auto tmp = gmtime(&t);
-        if (tmp->tm_mday == day && tmp->tm_year == year && tmp->tm_mon == month) {
-            this->view.viewEntity(i->second.lock().operator*());
-        }
-    }
+std::vector<std::weak_ptr<TaskEntity> > TaskService::showTodayByPriority() {
+    return priority_view_.showTodayByPriority();
 
 }
 
-void TaskService::showTodayByLabel() {
-    time_t theTime = time(NULL);
-    auto aTime = localtime(&theTime);
-    int day = aTime->tm_mday;
-    int year = aTime->tm_year;
-    int month = aTime->tm_mon;
-    for (auto i = labels.begin(); i != labels.end(); i++) {
-        time_t t = i->second.lock()->getTask().getDate();
-        auto tmp = gmtime(&t);
-        if (tmp->tm_mday == day && tmp->tm_year == year && tmp->tm_mon == month) {
-            this->view.viewEntity(i->second.lock().operator*());
-        }
-    }
+std::vector<std::weak_ptr<TaskEntity> > TaskService::showTodayByLabel() {
+    return label_view_.showAllByLabel();
 }
 
-void TaskService::showDueDateByPriority(time_t date) {
-    auto aTime = gmtime(&date);
-    int day = aTime->tm_mday;
-    int year = aTime->tm_year;
-    int month = aTime->tm_mon;
-    for (auto i = priorities.begin(); i != priorities.end(); i++) {
-        time_t t = i->second.lock()->getTask().getDate();
-        auto tmp = gmtime(&t);
-        if (tmp->tm_mday < day && tmp->tm_year < year && tmp->tm_mon < month) {
-            this->view.viewEntity(i->second.lock().operator*());
-        }
-    }
+std::vector<std::weak_ptr<TaskEntity> > TaskService::showDueDateByPriority(time_t date) {
+    return priority_view_.showDueDateByPriority(date);
 }
 
-void TaskService::showDueDateByLabel(time_t date) {
-    auto aTime = gmtime(&date);
-    int day = aTime->tm_mday;
-    int year = aTime->tm_year;
-    int month = aTime->tm_mon;
-    for (auto i = labels.begin(); i != labels.end(); i++) {
-        time_t t = i->second.lock()->getTask().getDate();
-        auto tmp = gmtime(&t);
-        if (tmp->tm_mday < day && tmp->tm_year < year && tmp->tm_mon < month) {
-            this->view.viewEntity(i->second.lock().operator*());
-        }
-    }
+std::vector<std::weak_ptr<TaskEntity> > TaskService::showDueDateByLabel(time_t date) {
+    return label_view_.showDueDateByLabel(date);
 }
 
-void TaskService::showDueDateByDate(time_t date) {
-    auto aTime = gmtime(&date);
-    int day = aTime->tm_mday;
-    int year = aTime->tm_year;
-    int month = aTime->tm_mon;
-    for (auto i = dates.begin(); i != dates.end(); i++) {
-        time_t t = i->second.lock()->getTask().getDate();
-        auto tmp = gmtime(&t);
-        if (tmp->tm_mday < day && tmp->tm_year < year && tmp->tm_mon < month) {
-            this->view.viewEntity(i->second.lock().operator*());
-        }
-    }
+std::vector<std::weak_ptr<TaskEntity> > TaskService::showDueDateByDate(time_t date) {
+    return date_view_.showDueDateByDate(date);
 }
 
 
