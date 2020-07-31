@@ -8,8 +8,8 @@
 #include"TaskDTO.h"
 class DTOconvertor {
  public:
-  TaskDTO convert(TaskEntity task_entity);
-  TaskEntity convert(TaskDTO task_dto);
+  TaskDTO convert(TaskEntity& task_entity);
+  TaskEntity convert(TaskDTO& task_dto);
 };
 
 #endif //TODOLIST_MODEL_DTOCONVERTOR_H_
