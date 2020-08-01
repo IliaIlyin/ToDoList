@@ -7,7 +7,7 @@
 
 #include"TaskEntity.h"
 
-class HashTaskEntity {
+class HashTaskID {
 public:
     // id is returned as hash function
     size_t operator()(const std::shared_ptr<TaskEntity> &t) const;
