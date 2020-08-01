@@ -8,7 +8,6 @@
 #include"../Model/HashTaskEntity.h"
 #include"../Model/TaskEntity.h"
 #include"../Model/IdGenerator.h"
-
 #include<map>
 #include<vector>
 #include<memory>
@@ -18,8 +17,8 @@
 
 class DateView {
  public:
-  std::vector<std::weak_ptr<TaskEntity> > showAllByDate();
-  std::vector<std::weak_ptr<TaskEntity> > showDueDateByDate(time_t date);
+  std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
+  std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(time_t date);
  private:
   std::multimap<time_t,std::weak_ptr<TaskEntity> > dates;
 };

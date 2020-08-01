@@ -11,8 +11,7 @@ std::vector<std::weak_ptr<TaskEntity> > DateView::showAllByDate() {
   return vector;
 }
 
-
-std::vector<std::weak_ptr<TaskEntity> >  DateView::showDueDateByDate(time_t date) {
+std::vector<std::weak_ptr<TaskEntity> > DateView::showDueDateByDate(time_t date) {
   std::vector<std::weak_ptr<TaskEntity> > vector;
   auto aTime = gmtime(&date);
   int day = aTime->tm_mday;

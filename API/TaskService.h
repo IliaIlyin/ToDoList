@@ -12,7 +12,7 @@
 #include"../Views/LabelView.h"
 #include"../Views/PriorityView.h"
 #include"../Views/DateView.h"
-
+#include"../Model/Storage.h"
 
 #include<map>
 #include<vector>
@@ -32,6 +32,7 @@ public:
             Task::Priority priority=Task::Priority::NONE,std::string label="" );
     void addTask(Task& task);
     void addSubTaskToParent(std::shared_ptr<TaskEntity>  parent, Task& task);
+
 public:
     std::vector<std::weak_ptr<TaskEntity> > showAllByPriority();
     std::vector<std::weak_ptr<TaskEntity> > showAllByLabel();
@@ -50,15 +51,12 @@ private:
 public: //for test
     void insertEntity(std::shared_ptr<TaskEntity> entity);
 private:
-    Display display;
+    Display display_;
     LabelView label_view_;
     PriorityView priority_view_;
     DateView date_view_;
-    IdGenerator idGenerator;
-    std::unordered_set< std::shared_ptr<TaskEntity>, HashTaskEntity > tasks;
-    std::multimap<Task::Priority, std::weak_ptr<TaskEntity> > priorities;
-    std::multimap<time_t,std::weak_ptr<TaskEntity> > dates;
-    std::multimap<std::string,std::weak_ptr<TaskEntity> > labels;
+    IdGenerator idGenerator_;
+    Storage storage_;
 };
 
 
