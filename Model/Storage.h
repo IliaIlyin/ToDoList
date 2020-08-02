@@ -8,16 +8,18 @@
 #include"TaskEntity.h"
 #include"HashTaskID.h"
 class Storage {
-
- public:
-  bool postponeTask(std::shared_ptr<TaskEntity>  task, time_t dueDate);
-  bool completeTask(std::shared_ptr<TaskEntity>  task);
-
  public:
   bool addTask(TaskEntity &task_entity);
   bool deleteTask(TaskEntity &task_entity);
   TaskEntity getTask(TaskEntity &task_entity);
-  bool addSubTaskToParent(std::shared_ptr<TaskEntity> parent, TaskEntity &task_entity);
+
+ public:
+  bool addSubTaskToParent(TaskEntity &parent, TaskEntity &task_entity);
+
+ public:
+  bool postponeTask(TaskEntity &task, time_t dueDate);
+  bool completeTask(TaskEntity &task);
+
  private:
   std::unordered_map<TaskID, TaskEntity, HashTaskID> tasks_;
 };
