@@ -6,7 +6,7 @@
 #define TODOLIST_MODEL_DTOCONVERTOR_H_
 #include"TaskEntity.h"
 #include"TaskDTO.h"
-class DTOconvertor {
+class dtoConvertor {
  public:
   TaskDTO convert(TaskEntity& task_entity);
   TaskEntity convert(TaskDTO& task_dto);
