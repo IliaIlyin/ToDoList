@@ -4,7 +4,7 @@
 
 #include "HashTaskID.h"
 
-size_t HashTaskID::operator()(const std::shared_ptr<TaskEntity> &t) const {
-    return std::hash<std::shared_ptr<TaskEntity>>()(t);
-}
 
+size_t HashTaskID::operator()(TaskID task_id) const {
+return std::hash<int>()(task_id.getId());
+}
