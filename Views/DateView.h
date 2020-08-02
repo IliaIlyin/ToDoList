@@ -5,9 +5,10 @@
 #ifndef TODOLIST_VIEWS_DATEVIEW_H_
 #define TODOLIST_VIEWS_DATEVIEW_H_
 #include"../Display/Display.h"
-#include"../Model/HashTaskEntity.h"
+#include"../Model/HashTaskID.h"
 #include"../Model/TaskEntity.h"
 #include"../Model/IdGenerator.h"
+#include"GeneralView.h"
 #include<map>
 #include<vector>
 #include<memory>
@@ -15,10 +16,11 @@
 
 
 
-class DateView {
+class DateView : public GeneralView<DateView> {
  public:
-  std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
-  std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(time_t date);
+  std::vector<std::weak_ptr<TaskEntity>> showAll() override ;
+  std::vector<std::weak_ptr<TaskEntity>> showToday() override ;
+  std::vector<std::weak_ptr<TaskEntity>> showDueDate(time_t date) override ;
  private:
   std::multimap<time_t,std::weak_ptr<TaskEntity> > dates;
 };

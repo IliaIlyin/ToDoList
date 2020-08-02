@@ -3,7 +3,7 @@
 //
 
 #include "LabelView.h"
-std::vector<std::weak_ptr<TaskEntity> > LabelView::showDueDateByLabel(time_t date) {
+std::vector<std::weak_ptr<TaskEntity> > LabelView::showDueDate(time_t date) {
   std::vector<std::weak_ptr<TaskEntity> > vector;
   auto aTime = gmtime(&date);
   int day = aTime->tm_mday;
@@ -20,7 +20,7 @@ std::vector<std::weak_ptr<TaskEntity> > LabelView::showDueDateByLabel(time_t dat
 }
 
 
-std::vector<std::weak_ptr<TaskEntity> > LabelView::showTodayByLabel() {
+std::vector<std::weak_ptr<TaskEntity> > LabelView::showToday() {
   std::vector<std::weak_ptr<TaskEntity> > vector;
   time_t theTime = time(NULL);
   auto aTime = localtime(&theTime);
@@ -39,7 +39,7 @@ std::vector<std::weak_ptr<TaskEntity> > LabelView::showTodayByLabel() {
 }
 
 
-std::vector<std::weak_ptr<TaskEntity> > LabelView::showAllByLabel() {
+std::vector<std::weak_ptr<TaskEntity> > LabelView::showAll() {
   std::vector<std::weak_ptr<TaskEntity> > vector;
   for (auto i = labels.begin(); i != labels.end(); i++)
     vector.push_back(i->second);
