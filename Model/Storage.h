@@ -8,6 +8,11 @@
 #include"TaskEntity.h"
 #include"HashTaskID.h"
 class Storage {
+
+ public:
+  bool postponeTask(std::shared_ptr<TaskEntity>  task, time_t dueDate);
+  bool completeTask(std::shared_ptr<TaskEntity>  task);
+
  public:
   bool addTask(TaskEntity &task_entity);
   bool deleteTask(TaskEntity &task_entity);
