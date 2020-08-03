@@ -15,14 +15,14 @@ class ViewService {
  public:
   ViewService();
  public:
-  std::vector<std::weak_ptr<TaskDTO> > showAllByPriority();
-  std::vector<std::weak_ptr<TaskDTO> > showAllByLabel();
-  std::vector<std::weak_ptr<TaskDTO> > showAllByDate();
-  std::vector<std::weak_ptr<TaskDTO> > showTodayByPriority();
-  std::vector<std::weak_ptr<TaskDTO> > showTodayByLabel();
-  std::vector<std::weak_ptr<TaskDTO> > showDueDateByPriority(time_t date);
-  std::vector<std::weak_ptr<TaskDTO> > showDueDateByLabel(time_t date);
-  std::vector<std::weak_ptr<TaskDTO> > showDueDateByDate(time_t date);
+  std::vector<std::weak_ptr<TaskEntity> > showAllByPriority();
+  std::vector<std::weak_ptr<TaskEntity> > showAllByLabel();
+  std::vector<std::weak_ptr<TaskEntity> > showAllByDate();
+  std::vector<std::weak_ptr<TaskEntity> > showTodayByPriority();
+  std::vector<std::weak_ptr<TaskEntity> > showTodayByLabel();
+  std::vector<std::weak_ptr<TaskEntity> > showDueDateByPriority(time_t date);
+  std::vector<std::weak_ptr<TaskEntity> > showDueDateByLabel(time_t date);
+  std::vector<std::weak_ptr<TaskEntity> > showDueDateByDate(time_t date);
  public:
   void clean();
  private:
