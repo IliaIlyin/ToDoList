@@ -14,40 +14,40 @@
 
 class Task {
 
-public:
-    enum class Priority {
-        FIRST,
-        SECOND,
-        THIRD,
-        NONE,
-    };
+ public:
+  enum class Priority {
+    FIRST,
+    SECOND,
+    THIRD,
+    NONE,
+  };
 
-public:
-    static Task createTask(std::string name, time_t date = 0, Task::Priority priority = Task::Priority::NONE,
-                           std::string label = "");
+ public:
+  static Task createTask(std::string name, time_t date = 0, Task::Priority priority = Task::Priority::NONE,
+                         std::string label = "");
 
-    friend std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1);
+ public:
 
-public:
+  const std::string &getName() const;
 
-    const std::string &getName() const;
+  time_t getDate() const;
 
-    time_t getDate() const;
+  Priority getPriority() const;
 
-    Priority getPriority() const;
+  const std::string &getLabel() const;
+ public:
+  bool operator==(const Task &task) const;
 
-    const std::string &getLabel() const;
+ private:
+  explicit Task(std::string name, time_t date = 0, Task::Priority priority = Task::Priority::NONE,
+                std::string label = "");
 
-private:
-    explicit Task(std::string name, time_t date = 0, Task::Priority priority = Task::Priority::NONE,
-                  std::string label = "");
-
-private:
-    std::string name;
-    time_t date;
-    Priority priority;
-    std::string label;
+ private:
+  std::string name;
+  time_t date;
+  Priority priority;
+  std::string label;
 };
-
+std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1);
 
 #endif //TODOLIST_TASK_H

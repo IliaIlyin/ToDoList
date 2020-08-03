@@ -13,42 +13,43 @@ Task::Task(std::string name, time_t date, Task::Priority priority, std::string l
 }
 
 const std::string &Task::getName() const {
-    return name;
+  return name;
 }
 
 time_t Task::getDate() const {
-    return date;
+  return date;
 }
 
 Task::Priority Task::getPriority() const {
-    return priority;
+  return priority;
 }
 
 const std::string &Task::getLabel() const {
-    return label;
+  return label;
 }
 
-
 Task Task::createTask(std::string name, time_t date, Task::Priority priority, std::string label) {
-    return Task(name, date, priority, label);
+  return Task(name, date, priority, label);
+}
+bool Task::operator==(const Task &task) const {
+  return this->priority == task.getPriority() &&
+      this->label == task.getLabel() &&
+      this->name == task.getName() &&
+      this->date == task.getDate();
 }
 
 std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1) {
-    switch (priority1) {
-        case Task::Priority::NONE :
-            os << "No priority set";
-            break;
-        case Task::Priority::FIRST :
-            os << "First priority";
-            break;
-        case Task::Priority::SECOND :
-            os << "Second priority";
-            break;
-        case Task::Priority::THIRD :
-            os << "Third priority";
-            break;
-    }
-    return os;
+  switch (priority1) {
+    case Task::Priority::NONE :os << "No priority set";
+      break;
+    case Task::Priority::FIRST :os << "First priority";
+      break;
+    case Task::Priority::SECOND :os << "Second priority";
+      break;
+    case Task::Priority::THIRD :os << "Third priority";
+      break;
+  }
+  return os;
 }
 
 
