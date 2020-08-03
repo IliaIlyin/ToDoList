@@ -13,13 +13,6 @@ class Storage {
   bool deleteTask(TaskEntity &task_entity);
   TaskEntity getTask(TaskEntity &task_entity);
 
- public:
-  bool addSubTaskToParent(TaskEntity &parent, TaskEntity &task_entity);
-
- public:
-  bool postponeTask(TaskEntity &task, time_t dueDate);
-  bool completeTask(TaskEntity &task);
-
  private:
   std::unordered_map<TaskID, TaskEntity, HashTaskID> tasks_;
 };
