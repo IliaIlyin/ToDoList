@@ -5,23 +5,69 @@
 #include "ViewService.h"
 
 ViewService::ViewService() {
-    general_view_.push_back(std::unique_ptr<LabelView>());
-    general_view_.push_back(std::unique_ptr<PriorityView>());
-    general_view_.push_back(std::unique_ptr<DateView>());
+  general_view_.push_back(std::unique_ptr<LabelView>());
+  general_view_.push_back(std::unique_ptr<PriorityView>());
+  general_view_.push_back(std::unique_ptr<DateView>());
 }
 
-bool ViewService::cleanPrioritiesWithCertainPriority(Task::Priority priority) {
-  for(auto i=general_view_.begin();i!=general_view_.end();i++) {
-    if(dynamic_cast<std::unique_ptr<LabelView>&>(i->operator*())){
-      i->operator*().cleanNullptr(Task::Priority);
-    }
+void ViewService::clean() {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    i.operator*().operator*().clean();
   }
 }
 
-bool ViewService::cleanDatesWithCertainDate(time_t date) {
-
+std::vector<std::weak_ptr<TaskEntity> > ViewService::showAllByPriority() {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    if (dynamic_cast<std::unique_ptr<PriorityView> &>(i->operator*()))
+      return i->operator*().showAll();
+  }
 }
 
-bool ViewService::cleanLabelsWithCertainLabel(std::string label) {
+std::vector<std::weak_ptr<TaskEntity> > ViewService::showAllByLabel() {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    if (dynamic_cast<std::unique_ptr<LabelView> &>(i->operator*()))
+      return i->operator*().showAll();
+  }
+}
 
+std::vector<std::weak_ptr<TaskEntity> > ViewService::showAllByDate() {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    if (dynamic_cast<std::unique_ptr<DateView> &>(i->operator*()))
+      return i->operator*().showAll();
+  }
+}
+
+std::vector<std::weak_ptr<TaskEntity> > ViewService::showTodayByPriority() {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    if (dynamic_cast<std::unique_ptr<PriorityView> &>(i->operator*()))
+      return i->operator*().showToday();
+  }
+}
+
+std::vector<std::weak_ptr<TaskEntity> > ViewService::showTodayByLabel() {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    if (dynamic_cast<std::unique_ptr<LabelView> &>(i->operator*()))
+      return i->operator*().showToday();
+  }
+}
+
+std::vector<std::weak_ptr<TaskEntity> > ViewService::showDueDateByPriority(time_t date) {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    if (dynamic_cast<std::unique_ptr<PriorityView> &>(i->operator*()))
+      return i->operator*().showDueDate(date);
+  }
+}
+
+std::vector<std::weak_ptr<TaskEntity> > ViewService::showDueDateByLabel(time_t date) {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    if (dynamic_cast<std::unique_ptr<LabelView> &>(i->operator*()))
+      return i->operator*().showDueDate(date);
+  }
+}
+
+std::vector<std::weak_ptr<TaskEntity> > ViewService::showDueDateByDate(time_t date) {
+  for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
+    if (dynamic_cast<std::unique_ptr<DateView> &>(i->operator*()))
+      i->operator*().showDueDate(date);
+  }
 }

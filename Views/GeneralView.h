@@ -9,6 +9,7 @@
 #include<memory>
 #include<vector>
 class GeneralView {
+ public:
   virtual std::vector<std::weak_ptr<TaskEntity>> showAll()=0;
   virtual std::vector<std::weak_ptr<TaskEntity>> showToday()=0;
   virtual std::vector<std::weak_ptr<TaskEntity>> showDueDate(time_t date)=0;

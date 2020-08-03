@@ -14,11 +14,17 @@
 class ViewService {
  public:
   ViewService();
-
  public:
-  bool cleanPrioritiesWithCertainPriority(Task::Priority priority); //deletes null ptrs from priorities
-  bool cleanDatesWithCertainDate(time_t date);//deletes null ptrs from dates
-  bool cleanLabelsWithCertainLabel(std::string label); //deletes null ptrs from labels
+  std::vector<std::weak_ptr<TaskDTO> > showAllByPriority();
+  std::vector<std::weak_ptr<TaskDTO> > showAllByLabel();
+  std::vector<std::weak_ptr<TaskDTO> > showAllByDate();
+  std::vector<std::weak_ptr<TaskDTO> > showTodayByPriority();
+  std::vector<std::weak_ptr<TaskDTO> > showTodayByLabel();
+  std::vector<std::weak_ptr<TaskDTO> > showDueDateByPriority(time_t date);
+  std::vector<std::weak_ptr<TaskDTO> > showDueDateByLabel(time_t date);
+  std::vector<std::weak_ptr<TaskDTO> > showDueDateByDate(time_t date);
+ public:
+  void clean();
  private:
   std::vector<std::unique_ptr<GeneralView>> general_view_;
 
