@@ -17,3 +17,10 @@ TaskEntity dtoConvertor::convert(TaskDTO& task_dto) {
   }
   return TaskEntity(task_dto.getTask(),task_dto.getTaskId(),task_dto.checkStatus(),vec);
 }
+std::vector<TaskDTO> dtoConvertor::convert(std::vector<std::weak_ptr<TaskEntity>> vec) {
+  std::vector<TaskDTO> result;
+  for (auto i = vec.begin(); i != vec.end(); i++) {
+    result.push_back(this->convert(i->lock().operator*()));
+  }
+  return result;
+}
