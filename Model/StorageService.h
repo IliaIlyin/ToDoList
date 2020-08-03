@@ -14,6 +14,7 @@ class StorageService {
                           Task::Priority priority = Task::Priority::NONE, std::string label = "");
   bool addTask(Task &task);
   bool addSubTaskToParent(TaskEntity &parent, Task &task);
+  bool addSubTaskToParent(TaskEntity &parent, TaskEntity &task_entity);
   TaskEntity getTask(TaskEntity &task_entity);
 
  public:
