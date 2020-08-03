@@ -12,7 +12,7 @@ add_executable(toDoList main.cpp Model/Task.cpp Model/Task.h Model/TaskID.cpp Mo
         Model/HashTaskID.cpp Model/HashTaskID.h Tests/IdGeneratorTest.cpp Tests/TaskTest.cpp Tests/TaskServiceTest.cpp
         Tests/TaskEntityTest.cpp Model/TaskDTO.cpp Model/TaskDTO.h Views/DateView.cpp Views/DateView.h Views/LabelView.cpp
         Views/LabelView.h Views/PriorityView.cpp Views/PriorityView.h Model/dtoConvertor.cpp Model/dtoConvertor.h Model/Storage.cpp
-        Model/Storage.h Model/StorageService.cpp Model/StorageService.h Views/GeneralView.h Views/ViewService.cpp Views/ViewService.h Model/AllDataStorage.cpp Model/AllDataStorage.h)
+        Model/Storage.h Model/StorageService.cpp Model/StorageService.h Views/GeneralView.h Views/ViewService.cpp Views/ViewService.h Model/AllDataStorage.cpp Model/AllDataStorage.h Tests/TaskIdTest.cpp)
 
 set(BOOST_ROOT "C:/Users/Ilya/boost")
 include_directories(${Boost_INCLUDE_DIR})
