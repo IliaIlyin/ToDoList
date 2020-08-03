@@ -5,20 +5,20 @@
 #include<gmock/gmock.h>
 
 #include "../API/TaskService.h"
-
+#include <vector>
 using testing::Eq;
 
 class TaskServiceTest : public ::testing::Test {
-public:
-    std::shared_ptr<Task> ptr;
-    TaskService taskService;
-    Task t = Task::createTask("RRR", 18, Task::Priority::SECOND, "epicenter");
-    std::shared_ptr<TaskEntity> taskEntity;
 
-    TaskServiceTest() {
-        ptr = std::make_shared<Task>(Task::createTask("LOL"));
-        taskEntity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(t, taskService.getIdGenerator()));
-    }
 };
-
+TEST_F(TaskServiceTest, shouldAddTask) {
+  TaskService task_service;
+  Task task = Task::createTask("Lol", 200, Task::Priority::FIRST, "label");
+  ASSERT_EQ(true,task_service.addTask(task));
+  auto vec = task_service.showAllByPriority();
+  ASSERT_EQ(vec.size(), 1);
+  ASSERT_EQ(vec.begin()->getTask(), task);
+  ASSERT_EQ(0, vec.begin()->getTaskId().getId());
+  ASSERT_EQ(0, vec.begin()->getSubtasks().size());
+}
 

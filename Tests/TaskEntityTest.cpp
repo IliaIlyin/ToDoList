@@ -26,3 +26,32 @@ TEST_F(TaskEntityTest,shouldCreateTaskEntity){
     ASSERT_EQ(false,taskEntity.checkStatus());
     ASSERT_EQ(vec,taskEntity.getSubtasks());
 }
+TEST_F(TaskEntityTest,shouldAddSubTasks){
+  Task task = Task::createTask("Lol",200,Task::Priority::FIRST,"label");
+  IdGenerator idGenerator;
+  TaskEntity taskEntity=TaskEntity::createTaskEntity(task,idGenerator);
+  Task task2 = Task::createTask("fsdfds",200,Task::Priority::THIRD,"label");
+  Task task3 = Task::createTask("Lgdfgdfgsdf",200,Task::Priority::SECOND,"label");
+  std::shared_ptr<TaskEntity> ptr=std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task2,idGenerator));
+  taskEntity.addsubtask(ptr);
+  std::shared_ptr<TaskEntity> ptr2=std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task3,idGenerator));
+  ptr->addsubtask(ptr2);
+  ASSERT_EQ(1,taskEntity.getSubtasks().size());
+  ASSERT_EQ(ptr.operator*(),taskEntity.getSubtasks().begin().operator*().operator*());
+  ASSERT_EQ(ptr2.operator*(),taskEntity.getSubtasks().begin()->operator*().getSubtasks().begin()->operator*());
+}
+TEST_F(TaskEntityTest,shouldCompleteTask){
+  Task task = Task::createTask("Lol",200,Task::Priority::FIRST,"label");
+  IdGenerator idGenerator;
+  TaskEntity taskEntity=TaskEntity::createTaskEntity(task,idGenerator);
+  Task task2 = Task::createTask("fsdfds",200,Task::Priority::THIRD,"label");
+  Task task3 = Task::createTask("Lgdfgdfgsdf",200,Task::Priority::SECOND,"label");
+  std::shared_ptr<TaskEntity> ptr=std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task2,idGenerator));
+  taskEntity.addsubtask(ptr);
+  std::shared_ptr<TaskEntity> ptr2=std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task3,idGenerator));
+  ptr->addsubtask(ptr2);
+  taskEntity.completeTask();
+  ASSERT_EQ(true,taskEntity.checkStatus());
+  ASSERT_EQ(true,taskEntity.getSubtasks().begin()->operator*().checkStatus());
+  ASSERT_EQ(true,taskEntity.getSubtasks().begin()->operator*().getSubtasks().begin()->operator*().checkStatus());
+}
