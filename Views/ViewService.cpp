@@ -68,12 +68,13 @@ std::vector<std::weak_ptr<TaskEntity> > ViewService::showDueDateByLabel(time_t d
 std::vector<std::weak_ptr<TaskEntity> > ViewService::showDueDateByDate(time_t date) {
   for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
     if (dynamic_cast<std::unique_ptr<DateView> &>(i->operator*()))
-      i->operator*().showDueDate(date);
+      return i->operator*().showDueDate(date);
   }
 }
 bool ViewService::insert(std::shared_ptr<TaskEntity> taskEntity) {
   for(auto i=general_view_.begin();i!=general_view_.end();i++){
     i->operator->()->insert(taskEntity);
   }
+  return true;
 }
 
