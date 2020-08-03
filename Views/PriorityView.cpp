@@ -44,3 +44,13 @@ std::vector<std::weak_ptr<TaskEntity> > PriorityView::showAll() {
     vector.push_back(i->second);
   return vector;
 }
+
+bool PriorityView::cleanPrioritiesWithCertainPriority(Task::Priority priority) {
+  auto iter = priorities.equal_range(priority);
+  for (auto i = iter.first; i != iter.second; i++) {
+    if (!(i->second.lock())) {
+      priorities.erase(i);
+    }
+  }
+  return true;
+}

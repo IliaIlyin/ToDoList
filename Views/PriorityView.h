@@ -15,12 +15,13 @@
 #include<memory>
 #include <ctime>
 
-class PriorityView:public GeneralView {
+ class PriorityView:public GeneralView<Task::Priority> {
  public:
 
   std::vector<std::weak_ptr<TaskEntity> > showAll() override ;
   std::vector<std::weak_ptr<TaskEntity> > showToday() override ;
   std::vector<std::weak_ptr<TaskEntity> > showDueDate(time_t date) override ;
+  bool cleanPrioritiesWithCertainPriority(Task::Priority priority);
  private:
   std::multimap<Task::Priority, std::weak_ptr<TaskEntity> > priorities;
 };

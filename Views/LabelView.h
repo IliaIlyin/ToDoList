@@ -18,6 +18,9 @@ class LabelView:public GeneralView{
   std::vector<std::weak_ptr<TaskEntity> > showAll() override ;
   std::vector<std::weak_ptr<TaskEntity> > showToday() override ;
   std::vector<std::weak_ptr<TaskEntity> > showDueDate(time_t date) override ;
+ public:
+  bool cleanLabelsWithCertainLabel(std::string label); //deletes null ptrs from labels
+
  private:
   std::multimap<std::string,std::weak_ptr<TaskEntity> > labels;
 };

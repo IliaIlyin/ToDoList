@@ -42,4 +42,13 @@ std::vector<std::weak_ptr<TaskEntity>> DateView::showToday() {
   }
   return vector;
 }
+bool DateView::cleanDatesWithCertainDate(time_t date) {
+  auto iter = dates.equal_range(date);
+  for (auto i = iter.first; i != iter.second; i++) {
+    if (!(i->second.lock())) {
+      dates.erase(i);
+    }
+  }
+  return true;
+}
 
