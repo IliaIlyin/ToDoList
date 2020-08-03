@@ -14,7 +14,9 @@ class TaskDTO {
  public:
 
   TaskDTO(const Task &task, const TaskID &id, bool status,
-             const std::vector<std::shared_ptr<TaskDTO>> &subtasks); //copy
+          const std::vector<std::shared_ptr<TaskDTO>> &subtasks); //copy
+
+  static TaskDTO createTaskDTO(const Task &task, IdGenerator &idGenerator);
  public:
 
   const Task &getTask() const;
@@ -24,6 +26,13 @@ class TaskDTO {
   bool checkStatus() const;
 
   const std::vector<std::shared_ptr<TaskDTO>> &getSubtasks() const;
+
+  void addsubtask(std::shared_ptr<TaskDTO> TaskDTO);
+  bool operator==(const TaskDTO &t) const;
+
+ private:
+  TaskDTO(const Task &task, IdGenerator &idGenerator); //create
+
  private:
   Task task;
   TaskID taskID;
