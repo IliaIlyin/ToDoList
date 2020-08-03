@@ -6,133 +6,76 @@
 
 #include <utility>
 
-void TaskService::postponeTask(std::shared_ptr<TaskEntity> task, time_t dueDate) {
-    auto iter = tasks.find((task));
-    if (iter != tasks.end()) {
-        Task t = Task::createTask(task.operator*().getTask().getName(),
-                                  dueDate + task.operator*().getTask().getDate(),
-                                  task.operator*().getTask().getPriority(), task.operator*().getTask().getLabel());
-
-        TaskEntity taskEntity(t, task.operator*().getTaskId(), task.operator*().checkStatus(),
-                              task.operator*().getSubtasks());
-
-        deleteTask(task);
-        insertEntity(std::make_shared<TaskEntity>(taskEntity));
-    } else {
-        std::cout << "task " << task.operator*().getTask().getName() << " Not found" << std::endl;
-    }
+bool TaskService::postponeTask(TaskDTO &task, time_t dueDate) {
+  TaskEntity entity = dto_convertor_.convert(task);
+  return storage_.postponeTask(entity, dueDate);
 }
 
-void TaskService::cleanPrioritiesWithCertainPriority(Task::Priority priority) {
-    auto iter = priorities.equal_range(priority);
-    for (auto i = iter.first; i != iter.second; i++) {
-        if (!(i->second.lock())) {
-            priorities.erase(i);
-        }
-    }
+bool TaskService::addTask(std::string taskName, time_t date, Task::Priority priority, std::string label) {
+  return storage_.addTask(taskName, date, priority, label);
 }
 
-void TaskService::cleanDatesWithCertainDate(time_t date) {
-    auto iter = dates.equal_range(date);
-    for (auto i = iter.first; i != iter.second; i++) {
-        if (!(i->second.lock())) {
-            dates.erase(i);
-        }
-    }
+bool TaskService::deleteTask(TaskDTO &task) {
+  TaskEntity entity = dto_convertor_.convert(task);
+  return storage_.deleteTask(entity);
 }
 
-void TaskService::cleanLabelsWithCertainLabel(std::string label) {
-    auto iter = labels.equal_range(label);
-    for (auto i = iter.first; i != iter.second; i++) {
-        if (!(i->second.lock())) {
-            labels.erase(i);
-        }
-    }
+bool TaskService::completeTask(TaskDTO &task) {
+  TaskEntity entity = dto_convertor_.convert(task);
+  return storage_.completeTask(entity);
 }
 
-void TaskService::addTask(std::string taskName, time_t date, Task::Priority priority, std::string label) {
-    Task task = Task::createTask(std::move(taskName), date, priority, std::move(label));
-    TaskEntity taskEntity=TaskEntity::createTaskEntity(task, this->idGenerator);
-    insertEntity(std::make_shared<TaskEntity>(taskEntity));
-}
-
-void TaskService::insertEntity(std::shared_ptr<TaskEntity> taskEntity) {
-    tasks.insert(taskEntity);
-    priorities.insert(std::pair<Task::Priority, std::weak_ptr<TaskEntity> >
-                              (taskEntity.operator*().getTask().getPriority(), taskEntity));
-    dates.insert(std::pair<time_t, std::weak_ptr<TaskEntity> >
-                         (taskEntity.operator*().getTask().getDate(), taskEntity));
-    labels.insert(std::pair<std::string, std::weak_ptr<TaskEntity> >
-                          (taskEntity.operator*().getTask().getLabel(), taskEntity));
-}
-
-void TaskService::deleteTask(std::shared_ptr<TaskEntity> task) {
-    auto iter = tasks.find(task);
-    tasks.erase(iter);
-    cleanPrioritiesWithCertainPriority(task.operator*().getTask().getPriority());
-    cleanDatesWithCertainDate(task.operator*().getTask().getDate());
-    cleanLabelsWithCertainLabel(task.operator*().getTask().getLabel());
-}
-
-void TaskService::completeTask(std::shared_ptr<TaskEntity> task) {
-    task.operator*().completeTask();
-    auto vec = task.operator*().getSubtasks();
-    for (auto i = vec.begin(); i != vec.end(); i++) {
-        i->get()->completeTask();
-    }
-}
-
-void TaskService::addSubTaskToParent(std::shared_ptr<TaskEntity> parent, std::string taskName, time_t date,
+bool TaskService::addSubTaskToParent(TaskDTO &parent, std::string taskName, time_t date,
                                      Task::Priority priority,
                                      std::string label) {
-
-    Task t = Task::createTask(std::move(taskName), date, priority, std::move(label));
-    TaskEntity taskEntity=TaskEntity::createTaskEntity(t, this->idGenerator);
-    parent->addsubtask(std::make_shared<TaskEntity>(taskEntity));
+  TaskEntity entity = dto_convertor_.convert(parent);
+  return storage_.addSubTaskToParent(entity, taskName, date, priority, label);
 }
 
-std::vector<std::weak_ptr<TaskEntity> > TaskService::showAllByPriority() {
-    return priority_view_.showAllByPriority();
+bool TaskService::addTask(Task &task) {
+  return storage_.addTask(task);
 }
 
-void TaskService::addTask(Task &task) {
-    TaskEntity taskEntity=TaskEntity::createTaskEntity(task, this->idGenerator);
-    insertEntity(std::make_shared<TaskEntity>(taskEntity));
+bool TaskService::addSubTaskToParent(TaskDTO &parent, Task &task) {
+  TaskEntity entity = dto_convertor_.convert(parent);
+  return storage_.addSubTaskToParent(entity, task);
 }
 
-void TaskService::addSubTaskToParent(std::shared_ptr<TaskEntity> parent, Task &task) {
-    TaskEntity taskEntity=TaskEntity::createTaskEntity(task, this->idGenerator);
-    parent->addsubtask(std::make_shared<TaskEntity>(taskEntity));
+std::vector<TaskDTO> TaskService::showAllByPriority() {
+  return dto_convertor_.convert(storage_.showAllByPriority());
 }
 
-
-std::vector<std::weak_ptr<TaskEntity> > TaskService::showAllByLabel() {
-    return label_view_.showAllByLabel();
+std::vector<TaskDTO> TaskService::showAllByLabel() {
+  return dto_convertor_.convert(storage_.showAllByLabel());
 }
 
-std::vector<std::weak_ptr<TaskEntity> > TaskService::showAllByDate() {
-    return date_view_.showAllByDate();
+std::vector<TaskDTO> TaskService::showAllByDate() {
+  return dto_convertor_.convert(storage_.showAllByDate());
 }
 
-std::vector<std::weak_ptr<TaskEntity> > TaskService::showTodayByPriority() {
-    return priority_view_.showTodayByPriority();
-
+std::vector<TaskDTO> TaskService::showTodayByPriority() {
+  return dto_convertor_.convert(storage_.showTodayByPriority());
 }
 
-std::vector<std::weak_ptr<TaskEntity> > TaskService::showTodayByLabel() {
-    return label_view_.showAllByLabel();
+std::vector<TaskDTO> TaskService::showTodayByLabel() {
+  return dto_convertor_.convert(storage_.showTodayByLabel());
 }
 
-std::vector<std::weak_ptr<TaskEntity> > TaskService::showDueDateByPriority(time_t date) {
-    return priority_view_.showDueDateByPriority(date);
+std::vector<TaskDTO> TaskService::showDueDateByPriority(time_t date) {
+  return dto_convertor_.convert(storage_.showDueDateByPriority(date));
 }
 
-std::vector<std::weak_ptr<TaskEntity> > TaskService::showDueDateByLabel(time_t date) {
-    return label_view_.showDueDateByLabel(date);
+std::vector<TaskDTO> TaskService::showDueDateByLabel(time_t date) {
+  return dto_convertor_.convert(storage_.showDueDateByLabel(date));
 }
 
-std::vector<std::weak_ptr<TaskEntity> > TaskService::showDueDateByDate(time_t date) {
-    return date_view_.showDueDateByDate(date);
+std::vector<TaskDTO> TaskService::showDueDateByDate(time_t date) {
+  return dto_convertor_.convert(storage_.showDueDateByDate(date));
+}
+TaskDTO TaskService::getTask(TaskDTO &task_entity) {
+  TaskEntity entity=dto_convertor_.convert(task_entity);
+  std::shared_ptr<TaskEntity> ptr=storage_.getTask(entity);
+  return dto_convertor_.convert(ptr.operator*());
 }
 
 

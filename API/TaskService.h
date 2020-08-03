@@ -59,5 +59,4 @@ private:
     Storage storage_;
 };
 
-
 #endif //TODOLIST_TASKSERVICE_H
