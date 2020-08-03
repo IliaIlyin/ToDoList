@@ -25,6 +25,7 @@ class ViewService {
   std::vector<std::weak_ptr<TaskEntity> > showDueDateByDate(time_t date);
  public:
   void clean();
+  bool insert(std::shared_ptr<TaskEntity> taskEntity);
  private:
   std::vector<std::unique_ptr<GeneralView>> general_view_;
 

@@ -48,4 +48,9 @@ void DateView::clean() {
       dates.erase(i);
   }
 }
+bool DateView::insert(std::shared_ptr<TaskEntity> taskEntity) {
+  dates.insert(std::pair<time_t, std::weak_ptr<TaskEntity> >
+                   (taskEntity.operator*().getTask().getDate(), taskEntity));
+  return true;
+}
 

@@ -20,7 +20,6 @@ std::vector<std::weak_ptr<TaskEntity> > PriorityView::showDueDate(time_t date) {
   return vector;
 }
 
-
 std::vector<std::weak_ptr<TaskEntity> > PriorityView::showToday() {
   std::vector<std::weak_ptr<TaskEntity> > vector;
   time_t theTime = time(NULL);
@@ -45,9 +44,14 @@ std::vector<std::weak_ptr<TaskEntity> > PriorityView::showAll() {
   return vector;
 }
 void PriorityView::clean() {
-for(auto it=priorities.begin();it!=priorities.end();it++){
-  if(!(it->second.lock()))
-    priorities.erase(it);
+  for (auto it = priorities.begin(); it != priorities.end(); it++) {
+    if (!(it->second.lock()))
+      priorities.erase(it);
+  }
 }
+bool PriorityView::insert(std::shared_ptr<TaskEntity> taskEntity) {
+  priorities.insert(std::pair<Task::Priority, std::weak_ptr<TaskEntity> >
+                        (taskEntity.operator*().getTask().getPriority(), taskEntity));
+  return true;
 }
 

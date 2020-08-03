@@ -71,3 +71,9 @@ std::vector<std::weak_ptr<TaskEntity> > ViewService::showDueDateByDate(time_t da
       i->operator*().showDueDate(date);
   }
 }
+bool ViewService::insert(std::shared_ptr<TaskEntity> taskEntity) {
+  for(auto i=general_view_.begin();i!=general_view_.end();i++){
+    i->operator->()->insert(taskEntity);
+  }
+}
+

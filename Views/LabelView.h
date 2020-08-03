@@ -13,16 +13,16 @@
 #include<vector>
 #include<memory>
 #include <ctime>
-class LabelView:public GeneralView{
+class LabelView : public GeneralView {
  public:
-  std::vector<std::weak_ptr<TaskEntity> > showAll() override ;
-  std::vector<std::weak_ptr<TaskEntity> > showToday() override ;
-  std::vector<std::weak_ptr<TaskEntity> > showDueDate(time_t date) override ;
+  std::vector<std::weak_ptr<TaskEntity> > showAll() override;
+  std::vector<std::weak_ptr<TaskEntity> > showToday() override;
+  std::vector<std::weak_ptr<TaskEntity> > showDueDate(time_t date) override;
  public:
-  void clean() override ;
-
+  void clean() override;
+  bool insert(std::shared_ptr<TaskEntity> taskEntity) override;
  private:
-  std::multimap<std::string,std::weak_ptr<TaskEntity> > labels;
+  std::multimap<std::string, std::weak_ptr<TaskEntity> > labels;
 };
 
 #endif //TODOLIST_VIEWS_LABELVIEW_H_

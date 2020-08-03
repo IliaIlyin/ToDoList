@@ -14,6 +14,7 @@ class GeneralView {
   virtual std::vector<std::weak_ptr<TaskEntity>> showToday()=0;
   virtual std::vector<std::weak_ptr<TaskEntity>> showDueDate(time_t date)=0;
   virtual void clean()=0;
+  virtual bool insert(std::shared_ptr<TaskEntity> taskEntity)=0;
 };
 
 #endif //TODOLIST_VIEWS_GENERALVIEW_H_

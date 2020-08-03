@@ -19,7 +19,6 @@ std::vector<std::weak_ptr<TaskEntity> > LabelView::showDueDate(time_t date) {
   return vector;
 }
 
-
 std::vector<std::weak_ptr<TaskEntity> > LabelView::showToday() {
   std::vector<std::weak_ptr<TaskEntity> > vector;
   time_t theTime = time(NULL);
@@ -38,7 +37,6 @@ std::vector<std::weak_ptr<TaskEntity> > LabelView::showToday() {
 
 }
 
-
 std::vector<std::weak_ptr<TaskEntity> > LabelView::showAll() {
   std::vector<std::weak_ptr<TaskEntity> > vector;
   for (auto i = labels.begin(); i != labels.end(); i++)
@@ -47,10 +45,15 @@ std::vector<std::weak_ptr<TaskEntity> > LabelView::showAll() {
 }
 
 void LabelView::clean() {
-  for (auto i = labels.begin();i!=labels.end();i++) {
+  for (auto i = labels.begin(); i != labels.end(); i++) {
     if (!(i->second.lock()))
       labels.erase(i);
   }
+}
+bool LabelView::insert(std::shared_ptr<TaskEntity> taskEntity) {
+  labels.insert(std::pair<std::string, std::weak_ptr<TaskEntity> >
+                    (taskEntity.operator*().getTask().getLabel(), taskEntity));
+  return true;
 }
 
 
