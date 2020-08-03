@@ -9,12 +9,12 @@
 #include"HashTaskID.h"
 class Storage {
  public:
-  bool addTask(TaskEntity &task_entity);
+  std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity);
   bool deleteTask(TaskEntity &task_entity);
-  TaskEntity getTask(TaskEntity &task_entity);
+  std::shared_ptr<TaskEntity> getTask(TaskEntity &task_entity);
 
  private:
-  std::unordered_map<TaskID, TaskEntity, HashTaskID> tasks_;
+  std::unordered_map<TaskID, std::shared_ptr<TaskEntity>, HashTaskID> tasks_;
 };
 
 #endif //TODOLIST_MODEL_STORAGE_H_
