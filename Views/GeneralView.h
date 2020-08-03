@@ -9,7 +9,6 @@
 #include<vector>
 
 
-template<typename T>
 class GeneralView {
 
   virtual std::vector<std::weak_ptr<TaskEntity>> showAll()=0;
