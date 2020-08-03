@@ -13,7 +13,7 @@
 #include<vector>
 #include<memory>
 #include <ctime>
-class LabelView:public GeneralView<LabelView> {
+class LabelView:public GeneralView{
  public:
   std::vector<std::weak_ptr<TaskEntity> > showAll() override ;
   std::vector<std::weak_ptr<TaskEntity> > showToday() override ;

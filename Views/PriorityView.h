@@ -15,7 +15,7 @@
 #include<memory>
 #include <ctime>
 
-class PriorityView:public GeneralView<PriorityView> {
+class PriorityView:public GeneralView {
  public:
 
   std::vector<std::weak_ptr<TaskEntity> > showAll() override ;

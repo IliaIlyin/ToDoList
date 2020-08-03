@@ -16,7 +16,7 @@
 
 
 
-class DateView : public GeneralView<DateView> {
+class DateView : public GeneralView {
  public:
   std::vector<std::weak_ptr<TaskEntity>> showAll() override ;
   std::vector<std::weak_ptr<TaskEntity>> showToday() override ;
