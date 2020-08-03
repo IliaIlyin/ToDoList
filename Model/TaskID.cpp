@@ -9,3 +9,9 @@ TaskID::TaskID(const int id) : id(id) {}
 int TaskID::getId() const {
     return this->id;
 }
+bool TaskID::operator==(const TaskID &id) const {
+  return this->id==id.getId();
+}
+bool TaskID::operator<(const TaskID &id) const {
+  return this->id<id.getId();
+}
