@@ -8,19 +8,11 @@
 #include"../Model/Task.h"
 #include<memory>
 #include<vector>
-/*
-enum class ViewsInput{
-  time_t,
-  string,
-
-};
-*/
-template<typename T>
 class GeneralView {
   virtual std::vector<std::weak_ptr<TaskEntity>> showAll()=0;
   virtual std::vector<std::weak_ptr<TaskEntity>> showToday()=0;
   virtual std::vector<std::weak_ptr<TaskEntity>> showDueDate(time_t date)=0;
-  virtual void cleanNullptr(T input)=0;
+  virtual void clean()=0;
 };
 
 #endif //TODOLIST_VIEWS_GENERALVIEW_H_

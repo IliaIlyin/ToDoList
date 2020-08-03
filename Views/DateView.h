@@ -22,7 +22,7 @@ class DateView : public GeneralView {
   std::vector<std::weak_ptr<TaskEntity>> showToday() override ;
   std::vector<std::weak_ptr<TaskEntity>> showDueDate(time_t date) override ;
  public:
-  bool cleanDatesWithCertainDate(time_t date);//deletes null ptrs from dates
+  void clean() override;
 
  private:
   std::multimap<time_t,std::weak_ptr<TaskEntity> > dates;

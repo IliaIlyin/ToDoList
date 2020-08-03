@@ -46,14 +46,11 @@ std::vector<std::weak_ptr<TaskEntity> > LabelView::showAll() {
   return vector;
 }
 
-bool LabelView::cleanLabelsWithCertainLabel(std::string label) {
-  auto iter = labels.equal_range(label);
-  for (auto i = iter.first; i != iter.second; i++) {
-    if (!(i->second.lock())) {
+void LabelView::clean() {
+  for (auto i = labels.begin();i!=labels.end();i++) {
+    if (!(i->second.lock()))
       labels.erase(i);
-    }
   }
-  return true;
 }
 
 
