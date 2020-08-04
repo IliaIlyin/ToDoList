@@ -7,11 +7,12 @@
 #include<unordered_map>
 #include"TaskEntity.h"
 #include"HashTaskID.h"
+#include<optional>
 class Storage {
  public:
   std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity);
   bool deleteTask(TaskEntity &task_entity);
-  std::shared_ptr<TaskEntity> getTask(TaskEntity &task_entity);
+  std::optional<std::shared_ptr<TaskEntity>> getTask(TaskEntity &task_entity);
 
  private:
   std::unordered_map<TaskID, std::shared_ptr<TaskEntity>, HashTaskID> tasks_;

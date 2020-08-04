@@ -29,7 +29,9 @@ bool TaskService::addSubTaskToParent(TaskDTO &parent, std::string taskName, time
                                      Task::Priority priority,
                                      std::string label) {
   TaskEntity entity = dto_convertor_.convert(parent);
-  return storage_.addSubTaskToParent(entity, taskName, date, priority, label);
+  if(storage_.addSubTaskToParent(entity, taskName, date, priority, label).has_value())
+    return true;
+  return false;
 }
 
 bool TaskService::addTask(Task &task) {
@@ -38,7 +40,9 @@ bool TaskService::addTask(Task &task) {
 
 bool TaskService::addSubTaskToParent(TaskDTO &parent, Task &task) {
   TaskEntity entity = dto_convertor_.convert(parent);
-  return storage_.addSubTaskToParent(entity, task);
+  if(storage_.addSubTaskToParent(entity, task).has_value())
+    return true;
+  return false;
 }
 
 std::vector<TaskDTO> TaskService::showAllByPriority() {
@@ -72,10 +76,14 @@ std::vector<TaskDTO> TaskService::showDueDateByLabel(time_t date) {
 std::vector<TaskDTO> TaskService::showDueDateByDate(time_t date) {
   return dto_convertor_.convert(storage_.showDueDateByDate(date));
 }
-TaskDTO TaskService::getTask(TaskDTO &task_entity) {
+std::optional<TaskDTO> TaskService::getTask(TaskDTO &task_entity) {
   TaskEntity entity=dto_convertor_.convert(task_entity);
-  std::shared_ptr<TaskEntity> ptr=storage_.getTask(entity);
-  return dto_convertor_.convert(ptr.operator*());
+  auto it=storage_.getTask(entity);
+  if(it.has_value()) {
+    std::shared_ptr<TaskEntity> ptr = it.value();
+    return dto_convertor_.convert(ptr.operator*());
+  }
+  return std::nullopt;
 }
 
 

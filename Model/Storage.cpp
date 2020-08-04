@@ -11,7 +11,10 @@ bool Storage::deleteTask(TaskEntity &task_entity) {
   tasks_.erase(task_entity.getTaskId());
   return true;
 }
-std::shared_ptr<TaskEntity> Storage::getTask(TaskEntity &task_entity) {
-  return tasks_.find(task_entity.getTaskId())->second;
+std::optional<std::shared_ptr<TaskEntity>> Storage::getTask(TaskEntity &task_entity) {
+  auto it=tasks_.find(task_entity.getTaskId());
+  if(it!=tasks_.end())
+    return it->second;
+  return nullptr;
 }
 

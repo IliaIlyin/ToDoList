@@ -20,6 +20,7 @@
 #include<map>
 #include<vector>
 #include<memory>
+#include<optional>
 
 class TaskService {
 
@@ -30,7 +31,7 @@ class TaskService {
                           Task::Priority priority = Task::Priority::NONE, std::string label = "");
   bool addTask(Task &task);
   bool addSubTaskToParent(TaskDTO &parent, Task &task);
-  TaskDTO getTask(TaskDTO &task_entity);
+  std::optional<TaskDTO> getTask(TaskDTO &task_entity);
 
  public:
   bool postponeTask(TaskDTO &task, time_t dueDate);

@@ -3,29 +3,27 @@
 //
 
 #include "AllDataStorage.h"
-bool AllDataStorage::addSubTaskToParent(TaskEntity &parent, Task &task) {
-   auto it = storage_service_.addSubTaskToParent(parent,task);
-   return true;
+std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::addSubTaskToParent(TaskEntity &parent, Task &task) {
+   return storage_service_.addSubTaskToParent(parent,task);
 }
 bool AllDataStorage::addTask(std::string taskName, time_t date, Task::Priority priority, std::string label) {
   auto it=storage_service_.addTask(taskName,date,priority,label);
   view_service_.insert(it);
   return true;
 }
-bool AllDataStorage::addSubTaskToParent(TaskEntity &parent,
+std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::addSubTaskToParent(TaskEntity &parent,
                                         std::string taskName,
                                         time_t date,
                                         Task::Priority priority,
                                         std::string label) {
-  auto it=storage_service_.addSubTaskToParent(parent,taskName,date,priority,label);
-  return true;
+  return storage_service_.addSubTaskToParent(parent,taskName,date,priority,label);
 }
 bool AllDataStorage::addTask(Task &task) {
   auto it= storage_service_.addTask(task);
   view_service_.insert(it);
   return true;
 }
-std::shared_ptr<TaskEntity> AllDataStorage::getTask(TaskEntity &task_entity) {
+std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::getTask(TaskEntity &task_entity) {
   return storage_service_.getTask(task_entity);
 }
 bool AllDataStorage::postponeTask(TaskEntity &task, time_t dueDate) {
