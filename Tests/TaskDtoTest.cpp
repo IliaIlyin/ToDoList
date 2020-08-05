@@ -7,9 +7,8 @@
 //
 
 #include<gtest/gtest.h>
-#include<gmock/gmock.h>
 
-#include "../Model/TaskDTO.h"
+#include "Model/TaskDTO.h"
 using testing::Eq;
 
 class TaskDTOTest : public ::testing::Test {

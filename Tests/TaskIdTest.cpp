@@ -4,9 +4,8 @@
 
 
 #include<gtest/gtest.h>
-#include<gmock/gmock.h>
 
-#include "../Model/TaskID.h"
+#include "Model/TaskID.h"
 using testing::Eq;
 
 class TaskIdTest : public ::testing::Test {

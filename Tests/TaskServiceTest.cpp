@@ -2,9 +2,8 @@
 // Created by Ilya on 7/26/2020.
 //
 #include<gtest/gtest.h>
-#include<gmock/gmock.h>
 
-#include "../API/TaskService.h"
+#include "API/TaskService.h"
 #include <vector>
 using testing::Eq;
 

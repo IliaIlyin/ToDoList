@@ -3,9 +3,9 @@
 //
 
 #include<gtest/gtest.h>
-#include<gmock/gmock.h>
 
-#include "../Model/Task.h"
+#include "Model/Task.h"
+
 using testing::Eq;
 
 class TaskTest : public ::testing::Test {

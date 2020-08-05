@@ -1,15 +1,10 @@
 //
 // Created by Ilya on 7/26/2020.
 //
-#include<gtest/gtest.h>
-#include<gmock/gmock.h>
 
-#include "../Model/IdGenerator.h"
-#include "../Model/TaskID.h"
-
-using testing::Eq;
-
-    class IdGeneratorTest : public ::testing::Test {
+#include "gtest/gtest.h"
+#include "Model/IdGenerator.h"
+class IdGeneratorTest : public ::testing::Test {
 
     };
 

@@ -3,9 +3,8 @@
 //
 
 #include<gtest/gtest.h>
-#include<gmock/gmock.h>
 
-#include "../Model/TaskEntity.h"
+#include "Model/TaskEntity.h"
 using testing::Eq;
 
 class TaskEntityTest : public ::testing::Test {

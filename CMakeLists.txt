@@ -1,12 +1,10 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.15)
+project(toDoList LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 include_directories(src)
-project(toDoList)
-set(CMAKE_CXX_STANDARD 17)
-add_subdirectory(lib/googletest-master)
-include_directories(lib/googletest-master/googletest/include)
-include_directories(lib/googletest-master/googlemock/include)
-
 add_executable(toDoList main.cpp
         src/Model/Task.cpp
         src/Model/Task.h
@@ -22,10 +20,6 @@ add_executable(toDoList main.cpp
         src/Model/IdGenerator.h
         src/Model/HashTaskID.cpp
         src/Model/HashTaskID.h
-        Tests/IdGeneratorTest.cpp
-        Tests/TaskTest.cpp
-        Tests/TaskServiceTest.cpp
-        Tests/TaskEntityTest.cpp
         src/Model/TaskDTO.cpp
         src/Model/TaskDTO.h
         src/Views/DateView.cpp
@@ -45,11 +39,32 @@ add_executable(toDoList main.cpp
         src/Views/ViewService.h
         src/Model/AllDataStorage.cpp
         src/Model/AllDataStorage.h
-        Tests/TaskIdTest.cpp
-        Tests/TaskDtoTest.cpp
-        Tests/StorageServiceTest.cpp)
+        )
 
-set(BOOST_ROOT "C:/Users/Ilya/boost")
-include_directories(${Boost_INCLUDE_DIR})
+include(GoogleTest)
+find_package(GTest REQUIRED)
+enable_testing()
 
-target_link_libraries(toDoList gtest gtest_main)
+
+add_executable(TestsExecutable Tests/IdGeneratorTest.cpp
+        )
+
+target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
+
+gtest_discover_tests(TestsExecutable)
+
+set(Boost_USE_STATIC_LIBS ON) # only find static libs
+set(Boost_USE_DEBUG_LIBS OFF)
+set(Boost_USE_DEBUG_LIBS OFF) # ignore debug libs and
+set(Boost_USE_RELEASE_LIBS ON)  # only find release libs
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+
+find_package(Boost REQUIRED COMPONENTS date_time)
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif ()
+
+target_link_libraries(toDoList ${Boost_LIBRARIES})
+target_link_libraries(TestsExecutable ${Boost_LIBRARIES})
+gtest_discover_tests(TestsExecutable)

@@ -10,7 +10,6 @@
 #include "DateView.h"
 #include <vector>
 #include <memory>
-
 class ViewService {
 
  public:
