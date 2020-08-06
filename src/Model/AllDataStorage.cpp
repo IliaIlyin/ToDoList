@@ -28,8 +28,8 @@ bool AllDataStorage::addTask(Task &task) {
   return true;
 }
 
-std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::getTask(TaskEntity &task_entity) {
-  return storage_service_.getTask(task_entity);
+std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::getTask(TaskID id) {
+  return storage_service_.getTask(id);
 }
 
 bool AllDataStorage::postponeTask(TaskEntity &task, time_t dueDate) {
@@ -77,6 +77,10 @@ std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showDueDateByLabel(time_
 
 std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showDueDateByDate(time_t date) {
   return view_service_.showDueDateByDate(date);
+}
+
+std::optional<std::vector<std::shared_ptr<TaskEntity>>> AllDataStorage::getSubtasks(TaskID id) {
+  return storage_service_.getSubtasks(id);
 }
 
 

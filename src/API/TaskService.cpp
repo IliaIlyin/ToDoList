@@ -77,9 +77,21 @@ std::vector<TaskDTO> TaskService::showDueDateByDate(time_t date) {
   return dto_convertor_.convert(storage_.showDueDateByDate(date));
 }
 
-std::optional<TaskDTO> TaskService::getTask(TaskDTO &task_entity) {
-  TaskEntity entity = dto_convertor_.convert(task_entity);
-  auto it = storage_.getTask(entity);
+std::optional<std::vector<TaskDTO>> TaskService::getSubtasks(TaskID id) {
+  auto it = storage_.getSubtasks(id);
+  if (it.has_value()) {
+    std::vector<std::shared_ptr<TaskEntity>> vector=it.value();
+    std::vector<TaskDTO> dtos;
+    for(auto i=vector.begin();i!=vector.end();i++) {
+      dtos.push_back(dto_convertor_.convert(i->operator*()));
+    }
+    return dtos;
+  }
+  return std::nullopt;
+}
+
+std::optional<TaskDTO> TaskService::getTask(TaskID id) {
+  auto it = storage_.getTask(id);
   if (it.has_value()) {
     std::shared_ptr<TaskEntity> ptr = it.value();
     return dto_convertor_.convert(ptr.operator*());

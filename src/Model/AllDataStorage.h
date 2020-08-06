@@ -19,8 +19,8 @@ class AllDataStorage {
                                                                 std::string label = "");
   bool addTask(Task &task);
   std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(TaskEntity &parent, Task &task);
-  std::optional<std::shared_ptr<TaskEntity>> getTask(TaskEntity &task_entity);
-
+  std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID  id);
+  std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubtasks(TaskID id);
  public:
   bool postponeTask(TaskEntity &task, time_t dueDate);
   bool deleteTask(TaskEntity &task);

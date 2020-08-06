@@ -15,8 +15,11 @@ class Storage {
  public:
   std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity);
   bool deleteTask(TaskEntity &task_entity);
-  std::optional<std::shared_ptr<TaskEntity>> getTask(TaskEntity &task_entity);
+  std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id);
+  std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubtasks(TaskID id);
 
+ private:
+  std::optional<std::shared_ptr<TaskEntity>> search(TaskID id, std::vector<std::shared_ptr<TaskEntity>> vector);
  private:
   std::unordered_map<TaskID, std::shared_ptr<TaskEntity>, HashTaskID> tasks_;
 };

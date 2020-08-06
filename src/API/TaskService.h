@@ -23,7 +23,8 @@ class TaskService {
                                   Task::Priority priority = Task::Priority::NONE, std::string label = "");
   bool                       addTask(Task &task);
   bool                       addSubTaskToParent(TaskDTO &parent, Task &task);
-  std::optional<TaskDTO>     getTask(TaskDTO &task_entity);
+  std::optional<TaskDTO>     getTask(TaskID id);
+  std::optional<std::vector<TaskDTO>> getSubtasks(TaskID id);
 
  public:
   bool postponeTask(TaskDTO &task, time_t dueDate);

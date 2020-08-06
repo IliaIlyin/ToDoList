@@ -27,8 +27,8 @@ std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(Ta
   return this->addSubTaskToParent(parent, taskEntity);
 }
 
-std::optional<std::shared_ptr<TaskEntity>> StorageService::getTask(TaskEntity &task_entity) {
-  return storage_.getTask(task_entity);
+std::optional<std::shared_ptr<TaskEntity>> StorageService::getTask(TaskID id) {
+  return storage_.getTask(id);
 }
 
 std::shared_ptr<TaskEntity> StorageService::addTask(Task &task) {
@@ -43,7 +43,7 @@ std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(Ta
 
 std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(TaskEntity &parent,
                                                                               TaskEntity &task_entity) {
-  auto it = storage_.getTask(parent);
+  auto it = storage_.getTask(parent.getTaskId());
   if (it.has_value()) {
     auto iter = it.value();
     iter.operator*().addsubtask(std::make_shared<TaskEntity>(task_entity));
@@ -53,7 +53,7 @@ std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(Ta
 }
 
 bool StorageService::postponeTask(TaskEntity &task, time_t dueDate) {
-  auto r = storage_.getTask(task);
+  auto r = storage_.getTask(task.getTaskId());
   if (r.has_value()) {
     auto iter = r.value();
     Task t = Task::createTask(task.getTask().getName(),
@@ -71,7 +71,7 @@ bool StorageService::postponeTask(TaskEntity &task, time_t dueDate) {
 }
 
 bool StorageService::completeTask(TaskEntity &task) {
-  auto r = storage_.getTask(task);
+  auto r = storage_.getTask(task.getTaskId());
   if (r.has_value()) {
     auto it = r.value().operator*();
     it.completeTask();
@@ -83,4 +83,7 @@ bool StorageService::completeTask(TaskEntity &task) {
     return true;
   }
   return false;
+}
+std::optional<std::vector<std::shared_ptr<TaskEntity>>> StorageService::getSubtasks(TaskID id) {
+  return storage_.getSubtasks(id);
 }
