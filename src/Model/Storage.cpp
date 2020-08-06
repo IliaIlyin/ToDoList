@@ -18,7 +18,9 @@ std::optional<std::shared_ptr<TaskEntity>> Storage::getTask(TaskID id) {
     if (i->second->getTaskId() == id) {
       return i->second;
     } else {
-      return search(id, i->second->getSubtasks());
+      std::optional<std::shared_ptr<TaskEntity>> result=search(id, i->second->getSubtasks());
+      if(result.has_value())
+        return result;
     }
   }
   return nullptr;
@@ -31,7 +33,17 @@ std::optional<std::vector<std::shared_ptr<TaskEntity>>> Storage::getSubtasks(Tas
 }
 
 std::optional<std::shared_ptr<TaskEntity>> Storage::search(TaskID id, std::vector<std::shared_ptr<TaskEntity>> vector) {
-  return std::optional<std::shared_ptr<TaskEntity>>();
+    for(auto i=vector.begin();i!=vector.end();i++){
+      if(i->operator*().getTaskId()==id) {
+        return *i;
+      }
+      else {
+        std::optional<std::shared_ptr<TaskEntity>> result = search(id, i->operator*().getSubtasks());
+        if (result.has_value())
+          return result;
+      }
+      }
+    return std::nullopt;
 }
 
 
