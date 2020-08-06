@@ -26,9 +26,15 @@ std::optional<std::shared_ptr<TaskEntity>> Storage::getTask(TaskID id) {
   return nullptr;
 }
 std::optional<std::vector<std::shared_ptr<TaskEntity>>> Storage::getSubtasks(TaskID id) {
-  auto it = tasks_.find(id);
-  if (it != tasks_.end())
-    return it->second->getSubtasks();
+  for (auto i = tasks_.begin(); i != tasks_.end(); i++) {
+    if (i->second->getTaskId() == id) {
+      return i->second->getSubtasks();
+    } else {
+      std::optional<std::shared_ptr<TaskEntity>> result=search(id, i->second->getSubtasks());
+      if(result.has_value())
+        return result->operator*().getSubtasks();
+    }
+  }
   return std::nullopt;
 }
 
