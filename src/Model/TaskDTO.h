@@ -13,8 +13,7 @@
 class TaskDTO {
  public:
 
-  TaskDTO(const Task &task, const TaskID &id, bool status,
-          const std::vector<std::shared_ptr<TaskDTO>> &subtasks); //copy
+  TaskDTO(const Task &task, const TaskID &id, bool status); //copy
 
   static TaskDTO createTaskDTO(const Task &task, IdGenerator &idGenerator);
 
@@ -26,10 +25,6 @@ class TaskDTO {
 
   bool checkStatus() const;
 
-  const std::vector<std::shared_ptr<TaskDTO>> &getSubtasks() const;
-
-  void addsubtask(std::shared_ptr<TaskDTO> TaskDTO);
-
   bool operator==(const TaskDTO &t) const;
 
  private:
@@ -37,10 +32,9 @@ class TaskDTO {
   TaskDTO(const Task &task, IdGenerator &idGenerator);
 
  private:
-  Task                                  task;
-  TaskID                                taskID;
-  bool                                  status;
-  std::vector<std::shared_ptr<TaskDTO>> subtasks;
+  Task   task;
+  TaskID taskID;
+  bool   status;
 };
 
 #endif //TODOLIST_MODEL_TASKDTO_H_

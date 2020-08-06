@@ -12,14 +12,8 @@ bool TaskDTO::checkStatus() const {
   return status;
 }
 
-const std::vector<std::shared_ptr<TaskDTO>> &TaskDTO::getSubtasks() const {
-  return subtasks;
-}
-
-TaskDTO::TaskDTO(const Task &task, const TaskID &id, bool status,
-                 const std::vector<std::shared_ptr<TaskDTO>> &subtasks) : task((task)),
-                                                                          taskID(id), status(status),
-                                                                          subtasks(subtasks) {
+TaskDTO::TaskDTO(const Task &task, const TaskID &id, bool status) : task((task)),
+                                                                    taskID(id), status(status) {
 }
 
 const Task &TaskDTO::getTask() const {
@@ -28,16 +22,11 @@ const Task &TaskDTO::getTask() const {
 
 TaskDTO::TaskDTO(const Task &task, IdGenerator &idGenerator) : task(task),
                                                                taskID(idGenerator.generateId()) {
-  this->subtasks = std::vector<std::shared_ptr<TaskDTO> >();
   this->status = false;
 }
 
 TaskDTO TaskDTO::createTaskDTO(const Task &task, IdGenerator &idGenerator) {
   return TaskDTO(task, idGenerator);
-}
-
-void TaskDTO::addsubtask(std::shared_ptr<TaskDTO> TaskDTO) {
-  this->subtasks.push_back(TaskDTO);
 }
 
 bool TaskDTO::operator==(const TaskDTO &t) const {
