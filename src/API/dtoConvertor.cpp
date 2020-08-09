@@ -2,7 +2,7 @@
 // Created by Ilya on 7/31/2020.
 //
 
-#include "dtoConvertor.h"
+#include "API/dtoConvertor.h"
 
 TaskDTO dtoConvertor::convert(TaskEntity &task_entity) {
   return TaskDTO(task_entity.getTask(), task_entity.getTaskId(), task_entity.checkStatus());
@@ -16,9 +16,17 @@ TaskEntity dtoConvertor::convert(TaskDTO &task_dto) {
 }
 
 std::vector<TaskDTO> dtoConvertor::convert(std::vector<std::weak_ptr<TaskEntity>> vec) {
-  std::vector<TaskDTO> result;
-  for (auto i = vec.begin(); i != vec.end(); i++) {
-    result.push_back(this->convert(i->lock().operator*()));
-  }
-  return result;
+    std::vector<TaskDTO> result;
+    for(auto i=vec.begin();i!=vec.end();i++){
+        result.push_back(convert(i->lock().operator*()));
+    }
+    return result;
+}
+
+std::vector<TaskDTO> dtoConvertor::convert(std::vector<std::shared_ptr<TaskEntity>> vec) {
+    std::vector<TaskDTO>result;
+    for (auto i = vec.begin(); i != vec.end(); i++) {
+        result.push_back(convert(i->operator*()));
+    }
+    return result;
 }
