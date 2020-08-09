@@ -24,6 +24,9 @@ const std::vector<std::shared_ptr<TaskEntity>> &TaskEntity::getSubtasks() const 
 
 void TaskEntity::completeTask() {
   this->status = true;
+  for(auto i=subtasks.begin();i!=subtasks.end();i++){
+      i->operator*().completeTask();
+  }
 }
 
 void TaskEntity::addsubtask(std::shared_ptr<TaskEntity> taskEntity) {
