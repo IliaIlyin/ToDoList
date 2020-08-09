@@ -5,9 +5,9 @@
 #ifndef TODOLIST_TASKSERVICE_H
 #define TODOLIST_TASKSERVICE_H
 
-#include "Model/TaskDTO.h"
+#include "TaskDTO.h"
 #include "Model/AllDataStorage.h"
-#include "Model/dtoConvertor.h"
+#include "dtoConvertor.h"
 
 #include <map>
 #include <vector>
