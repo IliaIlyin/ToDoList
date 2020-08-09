@@ -81,11 +81,7 @@ std::optional<std::vector<TaskDTO>> TaskService::getSubtasks(TaskID id) {
   auto it = storage_.getSubtasks(id);
   if (it.has_value()) {
     std::vector<std::shared_ptr<TaskEntity>> vector=it.value();
-    std::vector<TaskDTO> dtos;
-    for(auto i=vector.begin();i!=vector.end();i++) {
-      dtos.push_back(dto_convertor_.convert(i->operator*()));
-    }
-    return dtos;
+    return dto_convertor_.convert(vector);
   }
   return std::nullopt;
 }
@@ -98,7 +94,6 @@ std::optional<TaskDTO> TaskService::getTask(TaskID id) {
   }
   return std::nullopt;
 }
-
 
 
 
