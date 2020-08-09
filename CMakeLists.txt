@@ -5,49 +5,22 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 include_directories(src)
-add_executable(toDoList main.cpp
-        src/Model/Task.cpp
-        src/Model/Task.h
-        src/Model/TaskID.cpp
-        src/Model/TaskID.h
-        src/Model/TaskEntity.cpp
-        src/Model/TaskEntity.h
-        src/Display/Display.cpp
-        src/Display/Display.h
-        src/API/TaskService.cpp
-        src/API/TaskService.h
-        src/Model/IdGenerator.cpp
-        src/Model/IdGenerator.h
-        src/Model/HashTaskID.cpp
-        src/Model/HashTaskID.h
-        src/Model/TaskDTO.cpp
-        src/Model/TaskDTO.h
-        src/Views/DateView.cpp
-        src/Views/DateView.h
-        src/Views/LabelView.cpp
-        src/Views/LabelView.h
-        src/Views/PriorityView.cpp
-        src/Views/PriorityView.h
-        src/Model/dtoConvertor.cpp
-        src/Model/dtoConvertor.h
-        src/Model/Storage.cpp
-        src/Model/Storage.h
-        src/Model/StorageService.cpp
-        src/Model/StorageService.h
-        src/Views/GeneralView.h
-        src/Views/ViewService.cpp
-        src/Views/ViewService.h
-        src/Model/AllDataStorage.cpp
-        src/Model/AllDataStorage.h
-        )
+
+file(GLOB CPP_SOURCES "src/API/*.cpp" "src/Model/*.cpp" "src/Views/*.cpp" "src/Display/.*cpp")
+
+file(GLOB HEADERS "src/API/*.h" "src/Model/.*h" "src/Views/.*h" "src/Display/.*h")
+
+file(GLOB TEST_SOURCES "Tests/*.cpp")
+
+add_executable(toDoList ${HEADERS} ${CPP_SOURCES} main.cpp)
 
 include(GoogleTest)
 find_package(GTest REQUIRED)
 enable_testing()
 
 
-add_executable(TestsExecutable Tests/IdGeneratorTest.cpp
-        )
+add_executable(TestsExecutable ${TEST_SOURCES}
+                ${CPP_SOURCES})
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
 
