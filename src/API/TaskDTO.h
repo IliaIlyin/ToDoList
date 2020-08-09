@@ -5,9 +5,9 @@
 #ifndef TODOLIST_MODEL_TASKDTO_H_
 #define TODOLIST_MODEL_TASKDTO_H_
 
-#include "Task.h"
-#include "IdGenerator.h"
-#include "TaskID.h"
+#include "Model/Task.h"
+#include "Model/IdGenerator.h"
+#include "Model/TaskID.h"
 #include <memory>
 
 class TaskDTO {
