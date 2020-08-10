@@ -15,9 +15,9 @@ public:
 
     int getId() const;
 
-    bool operator == (const TaskID& id) const ;
+    bool operator==(const TaskID &id) const;
 
-    bool operator < (const TaskID& id) const;
+    bool operator<(const TaskID &id) const;
 
 private:
     int id;

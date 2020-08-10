@@ -8,5 +8,5 @@ TaskID IdGenerator::generateId() {
     return TaskID((this->id)++);
 }
 
-IdGenerator::IdGenerator(int id) : id(id){}
+IdGenerator::IdGenerator(int id) : id(id) {}
 

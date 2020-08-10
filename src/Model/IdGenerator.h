@@ -12,7 +12,7 @@ class IdGenerator {
 public:
     TaskID generateId();
 
-    IdGenerator(int id=0);
+    IdGenerator(int id = 0);
 
 private:
     int id;

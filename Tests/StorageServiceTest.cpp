@@ -5,7 +5,7 @@
 
 #include<gtest/gtest.h>
 
-#include "Model/TaskDTO.h"
+#include "API/TaskDTO.h"
 using testing::Eq;
 
 class StorageServiceTest : public ::testing::Test {

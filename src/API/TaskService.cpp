@@ -6,12 +6,14 @@
 
 #include <utility>
 
-bool TaskService::postponeTask(TaskDTO &task, time_t dueDate) {
+bool TaskService::postponeTask(TaskDTO &task, boost::gregorian::date date) {
   TaskEntity entity = dto_convertor_.convert(task);
-  return storage_.postponeTask(entity, dueDate);
+  return storage_.postponeTask(entity, date);
 }
 
-bool TaskService::addTask(std::string taskName, time_t date, Task::Priority priority, std::string label) {
+bool TaskService::addTask(std::string taskName, boost::gregorian::date date, Task::Priority priority, std::string label) {
+    if(taskName=="" || date.day()<=0 || date.day()>31 || date.month()<1 || date.month()>12)
+        return false;
   return storage_.addTask(taskName, date, priority, label);
 }
 
@@ -25,7 +27,7 @@ bool TaskService::completeTask(TaskDTO &task) {
   return storage_.completeTask(entity);
 }
 
-bool TaskService::addSubTaskToParent(TaskDTO &parent, std::string taskName, time_t date,
+bool TaskService::addSubTaskToParent(TaskDTO &parent, std::string taskName, boost::gregorian::date date,
                                      Task::Priority priority,
                                      std::string label) {
   TaskEntity entity = dto_convertor_.convert(parent);
@@ -65,15 +67,15 @@ std::vector<TaskDTO> TaskService::showTodayByLabel() {
   return dto_convertor_.convert(storage_.showTodayByLabel());
 }
 
-std::vector<TaskDTO> TaskService::showDueDateByPriority(time_t date) {
+std::vector<TaskDTO> TaskService::showDueDateByPriority(boost::gregorian::date date) {
   return dto_convertor_.convert(storage_.showDueDateByPriority(date));
 }
 
-std::vector<TaskDTO> TaskService::showDueDateByLabel(time_t date) {
+std::vector<TaskDTO> TaskService::showDueDateByLabel(boost::gregorian::date date) {
   return dto_convertor_.convert(storage_.showDueDateByLabel(date));
 }
 
-std::vector<TaskDTO> TaskService::showDueDateByDate(time_t date) {
+std::vector<TaskDTO> TaskService::showDueDateByDate(boost::gregorian::date date) {
   return dto_convertor_.convert(storage_.showDueDateByDate(date));
 }
 

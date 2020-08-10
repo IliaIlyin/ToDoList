@@ -12,41 +12,41 @@
 
 class TaskEntity {
 
- public:
+public:
 
-  static TaskEntity createTaskEntity(const Task &task, IdGenerator &idGenerator);
+    static TaskEntity createTaskEntity(const Task &task, IdGenerator &idGenerator);
 
- public:
+public:
 
-  TaskEntity(const Task &task, const TaskID &id, bool status,
-             const std::vector<std::shared_ptr<TaskEntity>> &subtasks); //copy
- public:
+    TaskEntity(const Task &task, const TaskID &id, bool status,
+               const std::vector<std::shared_ptr<TaskEntity>> &subtasks); //copy
+public:
 
-  const Task &getTask() const;
+    const Task &getTask() const;
 
-  const TaskID &getTaskId() const;
+    const TaskID &getTaskId() const;
 
-  bool checkStatus() const;
+    bool checkStatus() const;
 
-  const std::vector<std::shared_ptr<TaskEntity>> &getSubtasks() const;
+    const std::vector<std::shared_ptr<TaskEntity>> &getSubtasks() const;
 
- public:
+public:
 
-  void completeTask();
+    void completeTask();
 
-  void addsubtask(std::shared_ptr<TaskEntity> taskEntity);
+    void addsubtask(std::shared_ptr<TaskEntity> taskEntity);
 
-  bool operator==(const TaskEntity &t) const;
+    bool operator==(const TaskEntity &t) const;
 
- private:
+private:
 
-  TaskEntity(const Task &task, IdGenerator &idGenerator);
+    TaskEntity(const Task &task, IdGenerator &idGenerator);
 
- private:
-  Task                                     task;
-  TaskID                                   taskID;
-  bool                                     status;
-  std::vector<std::shared_ptr<TaskEntity>> subtasks;
+private:
+    Task task;
+    TaskID taskID;
+    bool status;
+    std::vector<std::shared_ptr<TaskEntity>> subtasks;
 };
 
 #endif //TODOLIST_TASKENTITY_H

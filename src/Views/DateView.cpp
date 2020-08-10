@@ -11,16 +11,11 @@ std::vector<std::weak_ptr<TaskEntity> > DateView::showAll() {
   return vector;
 }
 
-std::vector<std::weak_ptr<TaskEntity> > DateView::showDueDate(time_t date) {
+std::vector<std::weak_ptr<TaskEntity> > DateView::showDueDate(boost::gregorian::date date) {
   std::vector<std::weak_ptr<TaskEntity> > vector;
-  auto aTime = gmtime(&date);
-  int day = aTime->tm_mday;
-  int year = aTime->tm_year;
-  int month = aTime->tm_mon;
   for (auto i = dates.begin(); i != dates.end(); i++) {
-    time_t t = i->second.lock()->getTask().getDate();
-    auto tmp = gmtime(&t);
-    if (tmp->tm_mday < day && tmp->tm_year < year && tmp->tm_mon < month) {
+    boost::gregorian::date t = i->second.lock()->getTask().getDate();
+    if (t<date) {
       vector.push_back(i->second);
     }
   }
@@ -29,15 +24,11 @@ std::vector<std::weak_ptr<TaskEntity> > DateView::showDueDate(time_t date) {
 
 std::vector<std::weak_ptr<TaskEntity>> DateView::showToday() {
   std::vector<std::weak_ptr<TaskEntity> > vector;
-  time_t theTime = time(NULL);
-  auto aTime = localtime(&theTime);
-  int day = aTime->tm_mday;
-  int year = aTime->tm_year;
-  int month = aTime->tm_mon;
+  boost::gregorian::date today = boost::gregorian::date();
   for (auto i = dates.begin(); i != dates.end(); i++) {
-    time_t t = i->second.lock()->getTask().getDate();
-    auto tmp = gmtime(&t);
-    if (tmp->tm_mday == day && tmp->tm_year == year && tmp->tm_mon == month) {
+    boost::gregorian::date t = i->second.lock()->getTask().getDate();
+      auto tmp = boost::gregorian::day_clock::local_day();
+    if (i->first==tmp) {
       vector.push_back(i->second);
     }
   }
@@ -52,7 +43,7 @@ void DateView::clean() {
 }
 
 bool DateView::insert(std::shared_ptr<TaskEntity> taskEntity) {
-  dates.insert(std::pair<time_t, std::weak_ptr<TaskEntity> >
+  dates.insert(std::pair<boost::gregorian::date, std::weak_ptr<TaskEntity> >
                    (taskEntity.operator*().getTask().getDate(), taskEntity));
   return true;
 }

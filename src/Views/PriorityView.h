@@ -13,18 +13,22 @@
 #include <ctime>
 
 class PriorityView : public GeneralView {
- public:
+public:
 
-  std::vector<std::weak_ptr<TaskEntity>> showAll() override;
-  std::vector<std::weak_ptr<TaskEntity>> showToday() override;
-  std::vector<std::weak_ptr<TaskEntity>> showDueDate(time_t date) override;
- public:
+    std::vector<std::weak_ptr<TaskEntity>> showAll() override;
 
-  void clean() override;
-  bool insert(std::shared_ptr<TaskEntity> taskEntity) override ;
+    std::vector<std::weak_ptr<TaskEntity>> showToday() override;
 
- private:
-  std::multimap<Task::Priority, std::weak_ptr<TaskEntity>> priorities;
+    std::vector<std::weak_ptr<TaskEntity>> showDueDate(boost::gregorian::date date) override;
+
+public:
+
+    void clean() override;
+
+    bool insert(std::shared_ptr<TaskEntity> taskEntity) override;
+
+private:
+    std::multimap<Task::Priority, std::weak_ptr<TaskEntity>> priorities;
 };
 
 #endif //TODOLIST_VIEWS_PRIORITYVIEW_H_

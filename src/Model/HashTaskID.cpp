@@ -5,5 +5,5 @@
 #include "HashTaskID.h"
 
 size_t HashTaskID::operator()(TaskID task_id) const {
-return std::hash<int>()(task_id.getId());
+    return std::hash<int>()(task_id.getId());
 }

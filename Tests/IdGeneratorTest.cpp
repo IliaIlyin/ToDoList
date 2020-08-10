@@ -4,6 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "Model/IdGenerator.h"
+#include "Model/TaskID.h"
 class IdGeneratorTest : public ::testing::Test {
 
     };

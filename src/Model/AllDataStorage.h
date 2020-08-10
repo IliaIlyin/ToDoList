@@ -4,41 +4,63 @@
 
 #ifndef TODOLIST_MODEL_ALLDATASTORAGE_H_
 #define TODOLIST_MODEL_ALLDATASTORAGE_H_
-#include"Views/ViewService.h"
-#include"StorageService.h"
+
+#include "Views/ViewService.h"
+#include "StorageService.h"
+#include "boost/date_time/gregorian/gregorian.hpp"
 
 class AllDataStorage {
 
- public:
-  bool addTask(std::string taskName, time_t date = 0,
-               Task::Priority priority = Task::Priority::NONE, std::string label = "");
-  std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(TaskEntity &parent,
-                                                                std::string taskName,
-                                                                time_t date = 0,
-                                                                Task::Priority priority = Task::Priority::NONE,
-                                                                std::string label = "");
-  bool addTask(Task &task);
-  std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(TaskEntity &parent, Task &task);
-  std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID  id);
-  std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubtasks(TaskID id);
- public:
-  bool postponeTask(TaskEntity &task, time_t dueDate);
-  bool deleteTask(TaskEntity &task);
-  bool completeTask(TaskEntity &task);
+public:
+    bool
+    addTask(std::string taskName, boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
+            Task::Priority priority = Task::Priority::NONE, std::string label = "");
 
- public:
-  std::vector<std::weak_ptr<TaskEntity>> showAllByPriority();
-  std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();
-  std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
-  std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority();
-  std::vector<std::weak_ptr<TaskEntity>> showTodayByLabel();
-  std::vector<std::weak_ptr<TaskEntity>> showDueDateByPriority(time_t date);
-  std::vector<std::weak_ptr<TaskEntity>> showDueDateByLabel(time_t date);
-  std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(time_t date);
+    std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(TaskEntity &parent,
+                                                                  std::string taskName,
+                                                                  boost::gregorian::date date = boost::gregorian::date(
+                                                                          boost::gregorian::min_date_time),
+                                                                  Task::Priority priority = Task::Priority::NONE,
+                                                                  std::string label = "");
 
- private:
-  ViewService    view_service_;
-  StorageService storage_service_;
+    bool addTask(Task &task);
+
+    std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(TaskEntity &parent, Task &task);
+
+    std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id);
+
+    std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubtasks(TaskID id);
+
+public:
+    bool postponeTask(TaskEntity &task, boost::gregorian::date dueDate);
+
+    bool deleteTask(TaskEntity &task);
+
+    bool completeTask(TaskEntity &task);
+
+public:
+    std::vector<std::weak_ptr<TaskEntity>> showAllByPriority();
+
+    std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();
+
+    std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
+
+    std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority();
+
+    std::vector<std::weak_ptr<TaskEntity>> showTodayByLabel();
+
+    std::vector<std::weak_ptr<TaskEntity>>
+    showDueDateByPriority(boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time));
+
+    std::vector<std::weak_ptr<TaskEntity>>
+    showDueDateByLabel(boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time));
+
+    std::vector<std::weak_ptr<TaskEntity>>
+    showDueDateByDate(boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time));
+
+private:
+    ViewService view_service_;
+    StorageService storage_service_;
 };
 
 #endif //TODOLIST_MODEL_ALLDATASTORAGE_H_
