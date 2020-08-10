@@ -30,9 +30,11 @@ set(Boost_USE_STATIC_LIBS ON) # only find static libs
 set(Boost_USE_DEBUG_LIBS OFF)
 set(Boost_USE_RELEASE_LIBS ON)  # only find release libs
 set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
+set(Boost_USE_STATIC_RUNTIME ON)
 
-find_package(Boost REQUIRED COMPONENTS date_time)
+add_definitions( -DBOOST_ALL_NO_LIB )
+
+find_package(Boost 1.73.0 REQUIRED COMPONENTS date_time)
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif ()

@@ -11,9 +11,7 @@
 #include <unordered_set>
 #include <memory>
 #include <iostream>
-
 #include "boost/date_time/gregorian/gregorian.hpp"
-
 class Task {
 
 public:
