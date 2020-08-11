@@ -4,43 +4,39 @@
 
 #include "TaskEntity.h"
 
-TaskEntity::TaskEntity(const Task &task, IdGenerator &idGenerator) : task(task),
-                                                                     taskID(idGenerator.generateId()) {
-    this->subtasks = std::vector<std::shared_ptr<TaskEntity> >();
-    this->status = false;
+TaskEntity::TaskEntity(const Task &task, IdGenerator &idGenerator) : task_(task),
+                                                                     taskID_(idGenerator.generateId()) {
+    this->subtasks_ = std::vector<std::shared_ptr<TaskEntity> >();
+    this->status_ = false;
 }
 
 const TaskID &TaskEntity::getTaskId() const {
-    return taskID;
+    return taskID_;
 }
 
 bool TaskEntity::checkStatus() const {
-    return status;
+    return status_;
 }
 
 const std::vector<std::shared_ptr<TaskEntity>> &TaskEntity::getSubtasks() const {
-    return subtasks;
+    return subtasks_;
 }
 
 void TaskEntity::completeTask() {
-    this->status = true;
-    for (auto i = subtasks.begin(); i != subtasks.end(); i++) {
+    this->status_ = true;
+    for (auto i = subtasks_.begin(); i != subtasks_.end(); i++) {
         i->operator*().completeTask();
     }
 }
 
 void TaskEntity::addsubtask(std::shared_ptr<TaskEntity> taskEntity) {
-    this->subtasks.push_back(taskEntity);
+    this->subtasks_.push_back(taskEntity);
 }
 
-bool TaskEntity::operator==(const TaskEntity &t) const {
-    return this->getTaskId().getId() == t.getTaskId().getId();
-}
-
-TaskEntity::TaskEntity(const Task &task, const TaskID &id, bool status,
-                       const std::vector<std::shared_ptr<TaskEntity>> &subtasks) : task((task)),
-                                                                                   taskID(id), status(status),
-                                                                                   subtasks(subtasks) {
+TaskEntity::TaskEntity(const Task &task, const TaskID &id, bool status_,
+                       const std::vector<std::shared_ptr<TaskEntity>> &subtasks) : task_((task)),
+                                                                                   taskID_(id), status_(status_),
+                                                                                   subtasks_(subtasks) {
 }
 
 TaskEntity TaskEntity::createTaskEntity(const Task &task, IdGenerator &idGenerator) {
@@ -48,6 +44,9 @@ TaskEntity TaskEntity::createTaskEntity(const Task &task, IdGenerator &idGenerat
 }
 
 const Task &TaskEntity::getTask() const {
-    return task;
+    return task_;
 }
 
+bool operator==(const TaskEntity &t, const TaskEntity &t2) {
+  return t2.getTaskId().getId() == t.getTaskId().getId();
+}
