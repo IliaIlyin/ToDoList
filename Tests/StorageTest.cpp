@@ -54,5 +54,6 @@ TEST(StorageTest, shouldGetSubTasks) {
   TaskID id2(1);
   storage.addTask(taskEntity);
   EXPECT_NO_THROW(storage.getSubtasks(taskEntity.getTaskId()));
-  ASSERT_EQ(entity,storage.getSubtasks(taskEntity.getTaskId())->begin());
+  ASSERT_EQ(entity,(*(storage.getSubtasks(taskEntity.getTaskId())->begin())));
+  ASSERT_EQ(nullptr,storage.getTask(id));
 }
