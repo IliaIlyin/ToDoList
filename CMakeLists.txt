@@ -6,6 +6,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 include_directories(src)
 
+
 file(GLOB CPP_SOURCES "src/API/*.cpp" "src/Model/*.cpp" "src/Views/*.cpp" "src/Display/.*cpp")
 
 file(GLOB HEADERS "src/API/*.h" "src/Model/.*h" "src/Views/.*h" "src/Display/.*h")
@@ -20,11 +21,9 @@ enable_testing()
 
 
 add_executable(TestsExecutable ${TEST_SOURCES}
-                ${CPP_SOURCES})
+                ${CPP_SOURCES} Tests/StorageTest.cpp)
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
-
-gtest_discover_tests(TestsExecutable)
 
 set(Boost_USE_STATIC_LIBS ON) # only find static libs
 set(Boost_USE_DEBUG_LIBS OFF)
