@@ -17,7 +17,7 @@ TEST_F(IdGeneratorTest,shouldReturn3){
     TaskID id3(4);
     ASSERT_EQ(id2,id);
     ASSERT_EQ(3,id.getId());
-    ASSERT_EQ(id3,idGenerator.generateId().getId());
+    ASSERT_EQ(id3,idGenerator.generateId());
 }
 
 TEST_F(IdGeneratorTest,shouldReturn0){
