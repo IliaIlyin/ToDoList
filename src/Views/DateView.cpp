@@ -36,13 +36,28 @@ std::vector<std::weak_ptr<TaskEntity>> DateView::showToday() {
 }
 
 void DateView::clean() {
-  for (auto i = dates.begin(); i != dates.end(); i++) {
-    if (!(i->second.lock()))
-      dates.erase(i);
+  auto it = dates.begin();
+  if (it == dates.end()) {
+    return;
+  }
+  for (++it; it != dates.end(); it++) {
+    auto prv = std::prev(it);
+    if (!(prv->second.lock())) {
+      dates.erase(prv);
+    }
+  }
+  auto prv = std::prev(it);
+  if (!(prv->second.lock())) {
+    dates.erase(prv);
   }
 }
 
 bool DateView::insert(std::shared_ptr<TaskEntity> taskEntity) {
+  auto vec=dates.equal_range(taskEntity->getTask().getDate());
+  for(auto i=vec.first;i!=vec.second;i++){
+    if(i->second.lock()==taskEntity)
+      return false;
+  }
   dates.insert(std::pair<boost::gregorian::date, std::weak_ptr<TaskEntity> >
                    (taskEntity.operator*().getTask().getDate(), taskEntity));
   return true;

@@ -35,13 +35,28 @@ std::vector<std::weak_ptr<TaskEntity> > LabelView::showAll() {
 }
 
 void LabelView::clean() {
-    for (auto i = labels.begin(); i != labels.end(); i++) {
-        if (!(i->second.lock()))
-            labels.erase(i);
+  auto it = labels.begin();
+  if (it == labels.end()) {
+    return;
+  }
+  for (++it; it != labels.end(); it++) {
+    auto prv = std::prev(it);
+    if (!(prv->second.lock())) {
+      labels.erase(prv);
     }
+  }
+  auto prv = std::prev(it);
+  if (!(prv->second.lock())) {
+    labels.erase(prv);
+  }
 }
 
 bool LabelView::insert(std::shared_ptr<TaskEntity> taskEntity) {
+  auto vec=labels.equal_range(taskEntity->getTask().getLabel());
+  for(auto i=vec.first;i!=vec.second;i++){
+    if(i->second.lock()==taskEntity)
+      return false;
+  }
     labels.insert(std::pair<std::string, std::weak_ptr<TaskEntity> >
                           (taskEntity.operator*().getTask().getLabel(), taskEntity));
     return true;
