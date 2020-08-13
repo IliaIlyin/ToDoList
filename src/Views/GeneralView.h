@@ -22,6 +22,8 @@ public:
 
     virtual void clean() = 0;
 
+    virtual ~GeneralView()=default;
+
     virtual bool insert(std::shared_ptr<TaskEntity> taskEntity) = 0;
 };
 
