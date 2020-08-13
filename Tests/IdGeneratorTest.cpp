@@ -13,8 +13,11 @@ class IdGeneratorTest : public ::testing::Test {
 TEST_F(IdGeneratorTest,shouldReturn3){
     IdGenerator idGenerator(3);
     TaskID id =idGenerator.generateId();
+    TaskID id2(3);
+    TaskID id3(4);
+    ASSERT_EQ(id2,id);
     ASSERT_EQ(3,id.getId());
-    ASSERT_EQ(4,idGenerator.generateId().getId());
+    ASSERT_EQ(id3,idGenerator.generateId());
 }
 
 TEST_F(IdGeneratorTest,shouldReturn0){

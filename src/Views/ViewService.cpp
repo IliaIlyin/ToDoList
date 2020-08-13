@@ -5,9 +5,9 @@
 #include "ViewService.h"
 
 ViewService::ViewService() {
-    general_view_.push_back(std::unique_ptr<LabelView>());
-    general_view_.push_back(std::unique_ptr<PriorityView>());
-    general_view_.push_back(std::unique_ptr<DateView>());
+    general_view_.push_back(std::make_unique<PriorityView>());
+    general_view_.push_back(std::make_unique<LabelView>());
+    general_view_.push_back(std::make_unique<DateView>());
 }
 
 void ViewService::clean() {

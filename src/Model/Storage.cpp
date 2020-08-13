@@ -10,8 +10,7 @@ std::shared_ptr<TaskEntity> Storage::addTask(TaskEntity &task_entity) {
 }
 
 bool Storage::deleteTask(TaskEntity &task_entity) {
-    tasks_.erase(task_entity.getTaskId());
-    return true;
+    return tasks_.erase(task_entity.getTaskId());
 }
 
 std::optional<std::shared_ptr<TaskEntity>> Storage::getTask(TaskID id) {
