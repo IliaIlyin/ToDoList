@@ -48,40 +48,11 @@ bool AllDataStorage::completeTask(TaskEntity &task) {
     return storage_service_.completeTask(task);
 }
 
-std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showAllByPriority() {
-    return view_service_.showAllByPriority();
-}
-
-std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showAllByLabel() {
-    return view_service_.showAllByLabel();
-}
-
-std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showAllByDate() {
-    return view_service_.showAllByDate();
-}
-
-std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showTodayByPriority() {
-    return view_service_.showTodayByPriority();
-}
-
-std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showTodayByLabel() {
-    return view_service_.showTodayByLabel();
-}
-
-std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showDueDateByPriority(boost::gregorian::date date) {
-    return view_service_.showDueDateByPriority(date);
-}
-
-std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showDueDateByLabel(boost::gregorian::date date) {
-    return view_service_.showDueDateByLabel(date);
-}
-
-std::vector<std::weak_ptr<TaskEntity> > AllDataStorage::showDueDateByDate(boost::gregorian::date date) {
-    return view_service_.showDueDateByDate(date);
-}
-
 std::optional<std::vector<std::shared_ptr<TaskEntity>>> AllDataStorage::getSubtasks(TaskID id) {
     return storage_service_.getSubtasks(id);
+}
+const ViewService &AllDataStorage::getViewService() const {
+  return view_service_;
 }
 
 
