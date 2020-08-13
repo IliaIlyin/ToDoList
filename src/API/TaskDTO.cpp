@@ -5,28 +5,28 @@
 #include "TaskDTO.h"
 
 const TaskID &TaskDTO::getTaskId() const {
-    return taskID;
+    return task_id_;
 }
 
 bool TaskDTO::checkStatus() const {
-    return status;
+    return status_;
 }
 
-TaskDTO::TaskDTO(const Task &task, const TaskID &id, bool status) : task((task)),
-                                                                    taskID(id), status(status) {
+TaskDTO::TaskDTO(const Task &task_, const TaskID &id, bool status_) : task_((task_)),
+                                                                    task_id_(id), status_(status_) {
 }
 
 const Task &TaskDTO::getTask() const {
-    return task;
+    return task_;
 }
 
-TaskDTO::TaskDTO(const Task &task, IdGenerator &idGenerator) : task(task),
-                                                               taskID(idGenerator.generateId()) {
-    this->status = false;
+TaskDTO::TaskDTO(const Task &task_, IdGenerator &idGenerator) : task_(task_),
+                                                               task_id_(idGenerator.generateId()) {
+    this->status_ = false;
 }
 
-TaskDTO TaskDTO::createTaskDTO(const Task &task, IdGenerator &idGenerator) {
-    return TaskDTO(task, idGenerator);
+TaskDTO TaskDTO::createTaskDTO(const Task &task_, IdGenerator &idGenerator) {
+    return TaskDTO(task_, idGenerator);
 }
 
 bool TaskDTO::operator==(const TaskDTO &t) const {
