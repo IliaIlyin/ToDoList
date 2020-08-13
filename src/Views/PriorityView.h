@@ -21,6 +21,8 @@ public:
 
     std::vector<std::weak_ptr<TaskEntity>> showDueDate(boost::gregorian::date date) override;
 
+    ~PriorityView()=default;
+
 public:
 
     void clean() override;

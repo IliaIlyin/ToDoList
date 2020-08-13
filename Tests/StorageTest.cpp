@@ -34,7 +34,7 @@ TEST(StorageTest, shouldGetTask) {
   IdGenerator idGenerator;
   TaskEntity taskEntity = TaskEntity::createTaskEntity(task, idGenerator);
   std::shared_ptr<TaskEntity> entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task,idGenerator));
-  taskEntity.addsubtask(entity);
+  taskEntity.addSubTask(entity);
   TaskID id(40);
   TaskID id2(1);
   storage.addTask(taskEntity);
@@ -49,11 +49,11 @@ TEST(StorageTest, shouldGetSubTasks) {
   IdGenerator idGenerator;
   TaskEntity taskEntity = TaskEntity::createTaskEntity(task, idGenerator);
   std::shared_ptr<TaskEntity> entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task,idGenerator));
-  taskEntity.addsubtask(entity);
+  taskEntity.addSubTask(entity);
   TaskID id(40);
   TaskID id2(1);
   storage.addTask(taskEntity);
-  EXPECT_NO_THROW(storage.getSubtasks(taskEntity.getTaskId()));
-  ASSERT_EQ(entity,(storage.getSubtasks(taskEntity.getTaskId())->begin()).operator*());
+  EXPECT_NO_THROW(storage.getSubTasks(taskEntity.getTaskId()));
+  ASSERT_EQ(entity,(storage.getSubTasks(taskEntity.getTaskId())->begin()).operator*());
   ASSERT_EQ(nullptr,storage.getTask(id));
 }

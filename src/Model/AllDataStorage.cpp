@@ -48,8 +48,8 @@ bool AllDataStorage::completeTask(TaskEntity &task) {
     return storage_service_.completeTask(task);
 }
 
-std::optional<std::vector<std::shared_ptr<TaskEntity>>> AllDataStorage::getSubtasks(TaskID id) {
-    return storage_service_.getSubtasks(id);
+std::optional<std::vector<std::shared_ptr<TaskEntity>>> AllDataStorage::getSubTasks(TaskID id) {
+    return storage_service_.getSubTasks(id);
 }
 const ViewService &AllDataStorage::getViewService() const {
   return view_service_;

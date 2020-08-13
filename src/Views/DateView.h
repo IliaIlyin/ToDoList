@@ -20,6 +20,8 @@ public:
 
     std::vector<std::weak_ptr<TaskEntity>> showDueDate(boost::gregorian::date date) override;
 
+    ~DateView()=default;
+
 public:
     void clean() override;
 

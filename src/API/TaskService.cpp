@@ -48,8 +48,8 @@ bool TaskService::addSubTaskToParent(TaskDTO &parent, Task &task) {
 }
 
 std::vector<TaskDTO> TaskService::showAllByPriority() {
-  auto service=storage_.getViewService();
-  return dto_convertor_.convert(service.showAllByPriority());
+  ViewService service=storage_.getViewService();
+ // return dto_convertor_.convert(service.showAllByPriority());
 }
 
 std::vector<TaskDTO> TaskService::showAllByLabel() {
@@ -87,8 +87,8 @@ std::vector<TaskDTO> TaskService::showDueDateByDate(boost::gregorian::date date)
   return dto_convertor_.convert(service.showDueDateByDate(date));
 }
 
-std::optional<std::vector<TaskDTO>> TaskService::getSubtasks(TaskID id) {
-  auto it = storage_.getSubtasks(id);
+std::optional<std::vector<TaskDTO>> TaskService::getSubTasks(TaskID id) {
+  auto it = storage_.getSubTasks(id);
   if (it.has_value()) {
     std::vector<std::shared_ptr<TaskEntity>> vector=it.value();
     return dto_convertor_.convert(vector);

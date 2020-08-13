@@ -29,7 +29,7 @@ class AllDataStorage {
 
   std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id);
 
-  std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubtasks(TaskID id);
+  std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubTasks(TaskID id);
 
  public:
   bool postponeTask(TaskEntity &task, boost::gregorian::date dueDate);

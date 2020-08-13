@@ -17,7 +17,7 @@
 #include <optional>
 
 /*
- * public API for adding tasks to the Model,adding subtasks to tasks, getting tasks, getting subtasks.
+ * public API for adding tasks to the Model,adding SubTasks to tasks, getting tasks, getting SubTasks.
  * API can postpone tasks, delete and complete them.
  * Also it provides the capability of representing information in the sorted way. Current sorting options:
  * sort tasks by label, priority, date
@@ -49,7 +49,7 @@ class TaskService {
 * adds task to the model. All params are params to construct task
 * @see Task
 *
-   * @param parent TaskDTO to add subtask to
+   * @param parent TaskDTO to add SubTask to
 * @param taskName representing task name
 * @param date representing date to complete task. Set to boost::gregorian::min_date_time by default
 * @param priority Task Priority. Set to NONE by default
@@ -69,9 +69,9 @@ class TaskService {
  */
   bool addTask(Task &task);
 /*
- * adds one task as a subtask to another.
- * @param parent Parent task to add subtask to
- * @param task subtask to add to parent
+ * adds one task as a SubTask to another.
+ * @param parent Parent task to add SubTask to
+ * @param task SubTask to add to parent
  *
  * @return true, if adding was completed succesfully.
 * false, otherwise.
@@ -87,12 +87,12 @@ class TaskService {
   std::optional<TaskDTO> getTask(TaskID id);
 
   /*
-   * gets subtasks of the task by TaskId
+   * gets SubTasks of the task by TaskId
    * @param task id to look for
    * @return container of TaskDTO if task was found.
    * nullopt,otherwise.
    */
-  std::optional<std::vector<TaskDTO>> getSubtasks(TaskID id);
+  std::optional<std::vector<TaskDTO>> getSubTasks(TaskID id);
 
  public:
   /*
