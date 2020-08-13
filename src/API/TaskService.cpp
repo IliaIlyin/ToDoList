@@ -48,35 +48,43 @@ bool TaskService::addSubTaskToParent(TaskDTO &parent, Task &task) {
 }
 
 std::vector<TaskDTO> TaskService::showAllByPriority() {
-  return dto_convertor_.convert(storage_.showAllByPriority());
+  auto service=storage_.getViewService();
+  return dto_convertor_.convert(service.showAllByPriority());
 }
 
 std::vector<TaskDTO> TaskService::showAllByLabel() {
-  return dto_convertor_.convert(storage_.showAllByLabel());
+  auto service=storage_.getViewService();
+  return dto_convertor_.convert(service.showAllByLabel());
 }
 
 std::vector<TaskDTO> TaskService::showAllByDate() {
-  return dto_convertor_.convert(storage_.showAllByDate());
+  auto service=storage_.getViewService();
+  return dto_convertor_.convert(service.showAllByDate());
 }
 
 std::vector<TaskDTO> TaskService::showTodayByPriority() {
-  return dto_convertor_.convert(storage_.showTodayByPriority());
+  auto service=storage_.getViewService();
+  return dto_convertor_.convert(service.showTodayByPriority());
 }
 
 std::vector<TaskDTO> TaskService::showTodayByLabel() {
-  return dto_convertor_.convert(storage_.showTodayByLabel());
+  auto service=storage_.getViewService();
+  return dto_convertor_.convert(service.showTodayByLabel());
 }
 
 std::vector<TaskDTO> TaskService::showDueDateByPriority(boost::gregorian::date date) {
-  return dto_convertor_.convert(storage_.showDueDateByPriority(date));
+  auto service=storage_.getViewService();
+  return dto_convertor_.convert(service.showDueDateByPriority(date));
 }
 
 std::vector<TaskDTO> TaskService::showDueDateByLabel(boost::gregorian::date date) {
-  return dto_convertor_.convert(storage_.showDueDateByLabel(date));
+  auto service=storage_.getViewService();
+  return dto_convertor_.convert(service.showDueDateByLabel(date));
 }
 
 std::vector<TaskDTO> TaskService::showDueDateByDate(boost::gregorian::date date) {
-  return dto_convertor_.convert(storage_.showDueDateByDate(date));
+  auto service=storage_.getViewService();
+  return dto_convertor_.convert(service.showDueDateByDate(date));
 }
 
 std::optional<std::vector<TaskDTO>> TaskService::getSubtasks(TaskID id) {
