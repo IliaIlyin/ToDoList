@@ -15,13 +15,12 @@ public:
 
     int getId() const;
 
-    bool operator==(const TaskID &id) const;
-
-    bool operator<(const TaskID &id) const;
-
 private:
     int id;
 };
 
+bool operator==(const TaskID &id, const TaskID& id2);
+
+bool operator<(const TaskID &id, const TaskID& id2);
 
 #endif //TODOLIST_TASKID_H
