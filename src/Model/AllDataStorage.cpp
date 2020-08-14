@@ -4,24 +4,10 @@
 
 #include "AllDataStorage.h"
 
-std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::addSubTaskToParent(TaskEntity &parent, Task &task) {
+std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::addSubTaskToParent(const TaskID & parent, Task &task) {
     return storage_service_.addSubTaskToParent(parent, task);
 }
 
-bool
-AllDataStorage::addTask(std::string taskName, boost::gregorian::date date, Task::Priority priority, std::string label) {
-    auto it = storage_service_.addTask(taskName, date, priority, label);
-    view_service_.insert(it);
-    return true;
-}
-
-std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::addSubTaskToParent(TaskEntity &parent,
-                                                                              std::string taskName,
-                                                                              boost::gregorian::date date,
-                                                                              Task::Priority priority,
-                                                                              std::string label) {
-    return storage_service_.addSubTaskToParent(parent, taskName, date, priority, label);
-}
 
 bool AllDataStorage::addTask(Task &task) {
     auto it = storage_service_.addTask(task);
@@ -29,26 +15,26 @@ bool AllDataStorage::addTask(Task &task) {
     return true;
 }
 
-std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::getTask(TaskID id) {
+std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::getTask(const TaskID & id) {
     return storage_service_.getTask(id);
 }
 
-bool AllDataStorage::postponeTask(TaskEntity &task, boost::gregorian::date dueDate) {
+bool AllDataStorage::postponeTask(const TaskID & task, boost::gregorian::date dueDate) {
     storage_service_.postponeTask(task, dueDate);
     return true;
 }
 
-bool AllDataStorage::deleteTask(TaskEntity &task) {
+bool AllDataStorage::deleteTask(const TaskID & task) {
     storage_service_.deleteTask(task);
     view_service_.clean();
     return true;
 }
 
-bool AllDataStorage::completeTask(TaskEntity &task) {
+bool AllDataStorage::completeTask(const TaskID & task) {
     return storage_service_.completeTask(task);
 }
 
-std::optional<std::vector<std::shared_ptr<TaskEntity>>> AllDataStorage::getSubTasks(TaskID id) {
+std::optional<std::vector<std::shared_ptr<TaskEntity>>> AllDataStorage::getSubTasks(const TaskID & id) {
     return storage_service_.getSubTasks(id);
 }
 const ViewService &AllDataStorage::getViewService() const {

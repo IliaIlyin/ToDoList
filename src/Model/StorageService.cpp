@@ -4,30 +4,13 @@
 
 #include "StorageService.h"
 
-std::shared_ptr<TaskEntity> StorageService::addTask(std::string taskName,
-                                                    boost::gregorian::date date,
-                                                    Task::Priority priority,
-                                                    std::string label) {
-    Task task = Task::createTask(std::move(taskName), date, priority, std::move(label));
-    TaskEntity taskEntity = TaskEntity::createTaskEntity(task, this->id_generator_);
-    return storage_.addTask(taskEntity);
-}
 
-bool StorageService::deleteTask(TaskEntity &task_entity) {
+bool StorageService::deleteTask(const TaskID & task_entity) {
     return storage_.deleteTask(task_entity);
 }
 
-std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(TaskEntity &parent,
-                                                                              std::string taskName,
-                                                                              boost::gregorian::date date,
-                                                                              Task::Priority priority,
-                                                                              std::string label) {
-    Task t = Task::createTask(std::move(taskName), date, priority, std::move(label));
-    TaskEntity taskEntity = TaskEntity::createTaskEntity(t, this->id_generator_);
-    return this->addSubTaskToParent(parent, taskEntity);
-}
 
-std::optional<std::shared_ptr<TaskEntity>> StorageService::getTask(TaskID id) {
+std::optional<std::shared_ptr<TaskEntity>> StorageService::getTask(const TaskID & id) {
     return storage_.getTask(id);
 }
 
@@ -36,42 +19,37 @@ std::shared_ptr<TaskEntity> StorageService::addTask(Task &task) {
     return storage_.addTask(taskEntity);
 }
 
-std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(TaskEntity &parent, Task &task) {
+std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(const TaskID & parent, Task &task) {
     TaskEntity taskEntity = TaskEntity::createTaskEntity(task, this->id_generator_);
-    return this->addSubTaskToParent(parent, taskEntity);
+  auto it = storage_.getTask(parent);
+  if (it.has_value()) {
+    auto iter = it.value();
+    iter.operator*().addSubTask(std::make_shared<TaskEntity>(taskEntity));
+    return storage_.addTask(iter.operator*());
+  }
+  return nullptr;
 }
 
-std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(TaskEntity &parent,
-                                                                              TaskEntity &task_entity) {
-    auto it = storage_.getTask(parent.getTaskId());
-    if (it.has_value()) {
-        auto iter = it.value();
-        iter.operator*().addSubTask(std::make_shared<TaskEntity>(task_entity));
-        return storage_.addTask(iter.operator*());
-    }
-    return nullptr;
-}
-
-bool StorageService::postponeTask(TaskEntity &task, boost::gregorian::date dueDate) {
-    auto r = storage_.getTask(task.getTaskId());
+bool StorageService::postponeTask(const TaskID & task, boost::gregorian::date dueDate) {
+    auto r = storage_.getTask(task);
     if (r.has_value()) {
         auto iter = r.value();
-        Task t = Task::createTask(task.getTask().getName(),
+        Task t = Task::createTask(r->operator*().getTask().getName(),
                                   dueDate,
-                                  task.getTask().getPriority(), task.getTask().getLabel());
+                                  r->operator*().getTask().getPriority(), r->operator*().getTask().getLabel());
 
-        TaskEntity taskEntity(t, task.getTaskId(), task.checkStatus(),
-                              task.getSubTasks());
+        TaskEntity taskEntity(t,r->operator*().getTaskId(),r->operator*().checkStatus(),
+                              r->operator*().getSubTasks());
 
-        this->deleteTask(iter.operator*());
+        this->deleteTask(r->operator*().getTaskId());
         storage_.addTask(taskEntity);
         return true;
     }
     return false;
 }
 
-bool StorageService::completeTask(TaskEntity &task) {
-    auto r = storage_.getTask(task.getTaskId());
+bool StorageService::completeTask(const TaskID &task) {
+    auto r = storage_.getTask(task);
     if (r.has_value()) {
         auto it = r.value().operator*();
         it.completeTask();
@@ -85,6 +63,10 @@ bool StorageService::completeTask(TaskEntity &task) {
     return false;
 }
 
-std::optional<std::vector<std::shared_ptr<TaskEntity>>> StorageService::getSubTasks(TaskID id) {
-    return storage_.getSubTasks(id);
+std::optional<std::vector<std::shared_ptr<TaskEntity>>> StorageService::getSubTasks(const TaskID & id) {
+  auto f=storage_.getTask(id);
+  if(f.has_value()){
+    return f.value()->getSubTasks();
+  }
+  return std::nullopt;
 }

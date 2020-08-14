@@ -10,7 +10,6 @@ include_directories(src)
 file(GLOB CPP_SOURCES "src/API/*.cpp" "src/Model/*.cpp" "src/Views/*.cpp")
 
 file(GLOB HEADERS "src/API/*.h" "src/Model/.*h" "src/Views/.*h")
-
 file(GLOB TEST_SOURCES "Tests/*.cpp")
 
 add_executable(toDoList ${HEADERS} ${CPP_SOURCES} main.cpp)
@@ -21,7 +20,7 @@ enable_testing()
 
 
 add_executable(TestsExecutable ${TEST_SOURCES}
-                ${CPP_SOURCES} Tests/StorageTest.cpp Tests/ViewServiceTest.cpp Tests/PriorityViewTest.cpp Tests/DateViewTest.cpp Tests/LabelViewTest.cpp)
+                ${CPP_SOURCES})
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
 

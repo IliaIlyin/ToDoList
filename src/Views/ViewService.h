@@ -16,7 +16,7 @@
 class ViewService {
 
  public:
-  explicit ViewService();
+  ViewService();
  public:
 
   std::vector<std::weak_ptr<TaskEntity>> showAllByPriority();
@@ -42,7 +42,7 @@ class ViewService {
   bool insert(std::shared_ptr<TaskEntity> taskEntity);
 
  private:
-  std::vector<std::unique_ptr<GeneralView>> general_view_;
+  std::vector<std::shared_ptr<GeneralView>> general_view_;
 
 };
 

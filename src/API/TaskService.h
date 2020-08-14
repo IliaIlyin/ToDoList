@@ -39,7 +39,7 @@ class TaskService {
    * @param label Task label. Set empty by default
    *
    * @return true, if adding was completed succesfully.
-   * false, otherwise.
+   * @return false, otherwise.
    */
   bool
   addTask(std::string taskName, boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
@@ -56,16 +56,16 @@ class TaskService {
 * @param label Task label. Set empty by default
 *
 * @return true, if adding was completed succesfully.
-* false, otherwise.
+* @return false, otherwise.
 */
-  bool addSubTaskToParent(TaskDTO &parent, std::string taskName,
+  bool addSubTaskToParent(const TaskID & parent, std::string taskName,
                           boost::gregorian::date = boost::gregorian::date(boost::gregorian::min_date_time),
                           Task::Priority priority = Task::Priority::NONE, std::string label = "");
 /*
  * adds task to the model
  * @param task Task to add
- * * @return true, if adding was completed succesfully.
-* false, otherwise.
+ * @return true, if adding was completed succesfully.
+* @return false, otherwise.
  */
   bool addTask(Task &task);
 /*
@@ -74,25 +74,25 @@ class TaskService {
  * @param task SubTask to add to parent
  *
  * @return true, if adding was completed succesfully.
-* false, otherwise.
+* @return false, otherwise.
  */
-  bool addSubTaskToParent(TaskDTO &parent, Task &task);
+  bool addSubTaskToParent(const TaskID &parent, Task &task);
 
   /*
-   * gets task by TaskId
+   * gets task by const TaskID &
    * @param task id to look for
    * @return TaskDTO if task was found.
-   * nullopt,otherwise.
+   * @return nullopt,otherwise.
    */
-  std::optional<TaskDTO> getTask(TaskID id);
+  std::optional<TaskDTO> getTask(const TaskID & id);
 
   /*
-   * gets SubTasks of the task by TaskId
+   * gets SubTasks of the task by const TaskID &
    * @param task id to look for
    * @return container of TaskDTO if task was found.
-   * nullopt,otherwise.
+   * @return nullopt,otherwise.
    */
-  std::optional<std::vector<TaskDTO>> getSubTasks(TaskID id);
+  std::optional<std::vector<TaskDTO>> getSubTasks(const TaskID & id);
 
  public:
   /*
@@ -102,9 +102,9 @@ class TaskService {
    * @param date new date to set
    *
  * @return true, if postponing was completed succesfully.
-* false, otherwise.
+* @return false, otherwise.
    */
-  bool postponeTask(TaskDTO &task, boost::gregorian::date = boost::gregorian::date(boost::gregorian::min_date_time));
+  bool postponeTask(const TaskID & task, boost::gregorian::date = boost::gregorian::date(boost::gregorian::min_date_time));
 
   /*
   * sets task date to the new value
@@ -112,19 +112,18 @@ class TaskService {
   * @param task TaskDTO to delete
   *
 * @return true, if deleting was completed succesfully.
-* false, otherwise.
+* @return false, otherwise.
   */
-  bool deleteTask(TaskDTO &task);
-
+  bool deleteTask(const TaskID & task);
   /*
    * sets task status to true
    *
    * @param task task to complete
    *
   * @return true, if completing was completed succesfully.
-* false, otherwise.
+* @return false, otherwise.
    */
-  bool completeTask(TaskDTO &task);
+  bool completeTask(const TaskID & task);
 
  public:
   /*
@@ -179,7 +178,6 @@ class TaskService {
 
  private:
   AllDataStorage storage_;
-  dtoConvertor dto_convertor_;
 };
 
 #endif //TODOLIST_TASKSERVICE_H

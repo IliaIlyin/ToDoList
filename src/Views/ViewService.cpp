@@ -6,9 +6,9 @@
 
 ViewService::ViewService() :
 general_view_ {
-    std::make_unique<PriorityView>(),
-    std::make_unique<LabelView>(),
-    std::make_unique<DateView>()
+    std::make_shared<PriorityView>(),
+    std::make_shared<LabelView>(),
+    std::make_shared<DateView>()
         } {}
 
 void ViewService::clean() {

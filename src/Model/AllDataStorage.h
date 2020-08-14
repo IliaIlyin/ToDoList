@@ -12,31 +12,21 @@
 class AllDataStorage {
 
  public:
-  bool
-  addTask(std::string taskName, boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
-          Task::Priority priority = Task::Priority::NONE, std::string label = "");
-
-  std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(TaskEntity &parent,
-                                                                std::string taskName,
-                                                                boost::gregorian::date date = boost::gregorian::date(
-                                                                    boost::gregorian::min_date_time),
-                                                                Task::Priority priority = Task::Priority::NONE,
-                                                                std::string label = "");
 
   bool addTask(Task &task);
 
-  std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(TaskEntity &parent, Task &task);
+  std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(const TaskID  &parent, Task &task);
 
-  std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id);
+  std::optional<std::shared_ptr<TaskEntity>> getTask(const TaskID & id);
 
-  std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubTasks(TaskID id);
+  std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubTasks(const TaskID & id);
 
  public:
-  bool postponeTask(TaskEntity &task, boost::gregorian::date dueDate);
+  bool postponeTask(const TaskID & task, boost::gregorian::date dueDate);
 
-  bool deleteTask(TaskEntity &task);
+  bool deleteTask(const TaskID & task);
 
-  bool completeTask(TaskEntity &task);
+  bool completeTask(const TaskID &task);
 
  public:
   const ViewService &getViewService() const;
