@@ -6,11 +6,16 @@
 #define TODOLIST_TASKID_H
 
 #include "Task.h"
-
+/*
+ * class to represent the uniqueness of classes containing task
+ * @see Task
+ */
 class TaskID {
 
 public:
-
+  /*
+   * constructs the object on the id
+   */
     explicit TaskID(int id);
 
     int getId() const;
