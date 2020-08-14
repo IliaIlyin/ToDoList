@@ -47,7 +47,7 @@ public:
 
 public:
 /*
- * sets status = true
+ * completes task (also completes subTasks)
  */
     void completeTask();
 /*
