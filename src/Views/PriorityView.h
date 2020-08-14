@@ -5,11 +5,11 @@
 #ifndef TODOLIST_VIEWS_PRIORITYVIEW_H_
 #define TODOLIST_VIEWS_PRIORITYVIEW_H_
 
-#include"GeneralView.h"
+#include "GeneralView.h"
 
-#include<map>
-#include<vector>
-#include<memory>
+#include <map>
+#include <vector>
+#include <memory>
 #include <ctime>
 
 class PriorityView : public GeneralView {

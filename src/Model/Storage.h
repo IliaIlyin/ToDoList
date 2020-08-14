@@ -5,8 +5,8 @@
 #ifndef TODOLIST_MODEL_STORAGE_H_
 #define TODOLIST_MODEL_STORAGE_H_
 
-#include"TaskEntity.h"
-#include"HashTaskID.h"
+#include "TaskEntity.h"
+#include "HashTaskID.h"
 
 #include<optional>
 #include<unordered_map>

@@ -2,7 +2,7 @@
 // Created by illia.ilin on 8/12/2020.
 //
 
-#include<gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "Views/PriorityView.h"
 using testing::Eq;
 

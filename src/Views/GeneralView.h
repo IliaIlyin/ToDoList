@@ -5,10 +5,10 @@
 #ifndef TODOLIST_VIEWS_GENERALVIEW_H_
 #define TODOLIST_VIEWS_GENERALVIEW_H_
 
-#include"Model/TaskEntity.h"
+#include "Model/TaskEntity.h"
 
-#include<memory>
-#include<vector>
+#include <memory>
+#include <vector>
 #include "boost/date_time/gregorian/gregorian.hpp"
 
 class GeneralView {

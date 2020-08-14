@@ -5,7 +5,7 @@
 #ifndef TODOLIST_MODEL_TASKDTO_H_
 #define TODOLIST_MODEL_TASKDTO_H_
 
-#include "Model/Task.h"
+#include "Task.h"
 #include "Model/IdGenerator.h"
 #include "TaskID.h"
 #include <memory>

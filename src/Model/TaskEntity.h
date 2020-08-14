@@ -5,7 +5,7 @@
 #ifndef TODOLIST_TASKENTITY_H
 #define TODOLIST_TASKENTITY_H
 
-#include "Task.h"
+#include "API/Task.h"
 #include "IdGenerator.h"
 #include "API/TaskID.h"
 #include <memory>
