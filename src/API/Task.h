@@ -38,9 +38,6 @@ public:
 
     const std::string &getLabel() const;
 
-public:
-    bool operator==(const Task &task) const;
-
 private:
     explicit Task(std::string name,
                   boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
@@ -55,5 +52,7 @@ private:
 };
 
 std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1);
+
+bool operator==(const Task &task, const Task& task2);
 
 #endif //TODOLIST_TASK_H
