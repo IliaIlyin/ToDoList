@@ -29,6 +29,6 @@ TaskDTO TaskDTO::createTaskDTO(const Task &task_, IdGenerator &idGenerator) {
     return TaskDTO(task_, idGenerator);
 }
 
-bool TaskDTO::operator==(const TaskDTO &t) const {
-    return this->getTaskId().getId() == t.getTaskId().getId();
+bool operator==(const TaskDTO &t, const TaskDTO& t2) {
+    return t.getTaskId().getId() == t2.getTaskId().getId();
 }

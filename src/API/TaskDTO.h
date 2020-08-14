@@ -25,9 +25,7 @@ class TaskDTO {
 
   bool checkStatus() const;
 
-  bool operator==(const TaskDTO &t) const;
-
- private:
+c private:
 
   TaskDTO(const Task &task, IdGenerator &idGenerator);
 
@@ -36,5 +34,6 @@ class TaskDTO {
   TaskID task_id_;
   bool   status_;
 };
+bool operator==(const TaskDTO &t, const TaskDTO& t2);
 
 #endif //TODOLIST_MODEL_TASKDTO_H_
