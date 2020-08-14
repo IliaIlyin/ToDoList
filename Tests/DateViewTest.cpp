@@ -2,7 +2,7 @@
 // Created by illia.ilin on 8/12/2020.
 //
 
-#include<gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "Views/DateView.h"
 using testing::Eq;
 
@@ -16,7 +16,7 @@ TEST_F(DateViewTest, shouldInsertTask) {
   IdGenerator idGenerator;
   auto taskEntity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator));
   std::shared_ptr<TaskEntity> entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator));
-  taskEntity->addsubtask(entity);
+  taskEntity->addSubTask(entity);
   ASSERT_EQ(view.insert(taskEntity), true);
   ASSERT_EQ(view.insert(taskEntity), false);
   ASSERT_NO_THROW(view.insert(taskEntity));
@@ -29,7 +29,7 @@ TEST_F(DateViewTest, shouldCleanStorage) {
   IdGenerator idGenerator;
   auto taskEntity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator));
   std::shared_ptr<TaskEntity> entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator));
-  taskEntity->addsubtask(entity);
+  taskEntity->addSubTask(entity);
   view.insert(taskEntity);
   view.insert(entity);
   entity.reset();

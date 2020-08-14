@@ -5,9 +5,9 @@
 #ifndef TODOLIST_MODEL_TASKDTO_H_
 #define TODOLIST_MODEL_TASKDTO_H_
 
-#include "Model/Task.h"
+#include "Task.h"
 #include "Model/IdGenerator.h"
-#include "Model/TaskID.h"
+#include "TaskID.h"
 #include <memory>
 
 class TaskDTO {
@@ -32,9 +32,9 @@ class TaskDTO {
   TaskDTO(const Task &task, IdGenerator &idGenerator);
 
  private:
-  Task   task;
-  TaskID taskID;
-  bool   status;
+  Task   task_;
+  TaskID task_id_;
+  bool   status_;
 };
 
 #endif //TODOLIST_MODEL_TASKDTO_H_

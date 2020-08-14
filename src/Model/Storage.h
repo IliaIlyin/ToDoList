@@ -5,8 +5,8 @@
 #ifndef TODOLIST_MODEL_STORAGE_H_
 #define TODOLIST_MODEL_STORAGE_H_
 
-#include"TaskEntity.h"
-#include"HashTaskID.h"
+#include "TaskEntity.h"
+#include "HashTaskID.h"
 
 #include<optional>
 #include<unordered_map>
@@ -16,11 +16,9 @@ class Storage {
 public:
     std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity);
 
-    bool deleteTask(TaskEntity &task_entity);
+    bool deleteTask(const TaskID &task_entity);
 
     std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id);
-
-    std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubtasks(TaskID id);
 
 private:
     std::optional<std::shared_ptr<TaskEntity>> search(TaskID id, std::vector<std::shared_ptr<TaskEntity>> vector);

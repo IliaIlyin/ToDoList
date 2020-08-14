@@ -4,11 +4,12 @@
 
 #include "ViewService.h"
 
-ViewService::ViewService() {
-    general_view_.push_back(std::make_unique<PriorityView>());
-    general_view_.push_back(std::make_unique<LabelView>());
-    general_view_.push_back(std::make_unique<DateView>());
-}
+ViewService::ViewService() :
+general_view_ {
+    std::make_shared<PriorityView>(),
+    std::make_shared<LabelView>(),
+    std::make_shared<DateView>()
+        } {}
 
 void ViewService::clean() {
     for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
@@ -26,7 +27,7 @@ std::vector<std::weak_ptr<TaskEntity> > ViewService::showAllByPriority() {
 std::vector<std::weak_ptr<TaskEntity> > ViewService::showAllByLabel() {
     for (auto i = general_view_.begin(); i != general_view_.end(); i++) {
         if (dynamic_cast<std::unique_ptr<LabelView> &>(i->operator*()))
-            return i->operator*().showAll();
+            return std::move(i->operator*().showAll());
     }
 }
 
@@ -78,4 +79,5 @@ bool ViewService::insert(std::shared_ptr<TaskEntity> taskEntity) {
     }
     return true;
 }
+
 

@@ -2,20 +2,21 @@
 // Created by Ilya on 7/26/2020.
 //
 
-#include<gtest/gtest.h>
+#include <gtest/gtest.h>
 
-#include "Model/Task.h"
+#include "API/Task.h"
 
 using testing::Eq;
 
 class TaskTest : public ::testing::Test {
 
 };
+
 bool operator != (const Task& task1, const Task& task2){
 return !(task1==task2);
 }
 
-TEST_F(TaskTest,shouldCreateTask){
+ TEST_F(TaskTest,shouldCreateTask){
     Task task = Task::createTask("Lol",boost::gregorian::date{2000,12,9},Task::Priority::FIRST,"label");
     ASSERT_EQ(task.getPriority(),Task::Priority::FIRST);
     ASSERT_EQ(task.getDate(),(boost::gregorian::date{2000,12,9}));

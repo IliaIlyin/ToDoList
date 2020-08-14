@@ -3,11 +3,16 @@
 //
 
 
-#include<gtest/gtest.h>
+#include <gtest/gtest.h>
 
-#include "API/TaskDTO.h"
+#include "Model/StorageService.h"
+
 using testing::Eq;
 
 class StorageServiceTest : public ::testing::Test {
 
 };
+TEST_F(StorageServiceTest, shouldAddTask){
+
+
+}

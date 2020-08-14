@@ -3,8 +3,8 @@
 //
 
 
-#include<gtest/gtest.h>
-#include "Model/TaskID.h"
+#include <gtest/gtest.h>
+#include "API/TaskID.h"
 using testing::Eq;
 
 class TaskIdTest : public ::testing::Test {

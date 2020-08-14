@@ -15,35 +15,34 @@
 
 class ViewService {
 
-public:
-    ViewService();
+ public:
+  ViewService();
+ public:
 
-public:
+  std::vector<std::weak_ptr<TaskEntity>> showAllByPriority();
 
-    std::vector<std::weak_ptr<TaskEntity>> showAllByPriority();
+  std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();
 
-    std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();
+  std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
 
-    std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
+  std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority();
 
-    std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority();
+  std::vector<std::weak_ptr<TaskEntity>> showTodayByLabel();
 
-    std::vector<std::weak_ptr<TaskEntity>> showTodayByLabel();
+  std::vector<std::weak_ptr<TaskEntity>> showDueDateByPriority(boost::gregorian::date date);
 
-    std::vector<std::weak_ptr<TaskEntity>> showDueDateByPriority(boost::gregorian::date date);
+  std::vector<std::weak_ptr<TaskEntity>> showDueDateByLabel(boost::gregorian::date date);
 
-    std::vector<std::weak_ptr<TaskEntity>> showDueDateByLabel(boost::gregorian::date date);
+  std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(boost::gregorian::date date);
 
-    std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(boost::gregorian::date date);
+ public:
 
-public:
+  void clean();
 
-    void clean();
+  bool insert(std::shared_ptr<TaskEntity> taskEntity);
 
-    bool insert(std::shared_ptr<TaskEntity> taskEntity);
-
-private:
-    std::vector<std::unique_ptr<GeneralView>> general_view_;
+ private:
+  std::vector<std::shared_ptr<GeneralView>> general_view_;
 
 };
 

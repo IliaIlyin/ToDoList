@@ -5,13 +5,13 @@
 #ifndef TODOLIST_TASKENTITY_H
 #define TODOLIST_TASKENTITY_H
 
-#include "Task.h"
+#include "API/Task.h"
 #include "IdGenerator.h"
-#include "TaskID.h"
+#include "API/TaskID.h"
 #include <memory>
 /*
  *class that represents task information for concrete user in the model.
- * Wraps Task and additionally stores task status, subtasks, id.
+ * Wraps Task and additionally stores task status, SubTasks, id.
  *
  * @see Task
  *
@@ -34,7 +34,7 @@ public:
       * copy constructor.
       */
     TaskEntity(const Task &task, const TaskID &id, bool status,
-               const std::vector<std::shared_ptr<TaskEntity>> &subtasks);
+               const std::vector<std::shared_ptr<TaskEntity>> &SubTasks);
 public:
 
     const Task &getTask() const;
@@ -43,7 +43,7 @@ public:
 
     bool checkStatus() const;
 
-    const std::vector<std::shared_ptr<TaskEntity>> &getSubtasks() const;
+    const std::vector<std::shared_ptr<TaskEntity>> &getSubTasks() const;
 
 public:
 /*
@@ -51,11 +51,11 @@ public:
  */
     void completeTask();
 /*
- * adds subtask to the instance.
+ * adds SubTask to the instance.
  *
  * @param taskEntity shared_ptr to the entity that is to be added
  */
-    void addsubtask(std::shared_ptr<TaskEntity> taskEntity);
+    void addSubTask(std::shared_ptr<TaskEntity> taskEntity);
 
 private:
 
@@ -65,7 +65,7 @@ private:
     Task task_;
     TaskID taskID_;
     bool status_;
-    std::vector<std::shared_ptr<TaskEntity>> subtasks_;
+    std::vector<std::shared_ptr<TaskEntity>> SubTasks_;
 };
 bool operator==(const TaskEntity &t, const TaskEntity & t2);
 
