@@ -7,6 +7,9 @@
 
 #include "TaskEntity.h"
 
+/*
+ * class to hash TaskIDs
+ */
 class HashTaskID {
 public:
 

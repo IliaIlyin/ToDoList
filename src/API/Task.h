@@ -12,6 +12,10 @@
 #include <memory>
 #include <iostream>
 #include "boost/date_time/gregorian/gregorian.hpp"
+
+/*
+ * class to represents Tasks in the system
+ */
 class Task {
 
 public:
@@ -23,6 +27,16 @@ public:
     };
 
 public:
+  /*
+   * fabric method to create Task object
+   *
+  * @param name task name
+  * @param date representing the date to complete task. Set to boost::gregorian::min_date_time by default
+  * @param priority Task Priority. Set to NONE by default
+  * @param label Task label. Set empty by default
+  *
+   * @return Task object
+*/
     static Task
     createTask(std::string name, boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
                Task::Priority priority = Task::Priority::NONE,
@@ -38,9 +52,6 @@ public:
 
     const std::string &getLabel() const;
 
-public:
-    bool operator==(const Task &task) const;
-
 private:
     explicit Task(std::string name,
                   boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
@@ -55,5 +66,7 @@ private:
 };
 
 std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1);
+
+bool operator==(const Task &task, const Task& task2);
 
 #endif //TODOLIST_TASK_H

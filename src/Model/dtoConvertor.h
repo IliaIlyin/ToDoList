@@ -10,6 +10,9 @@
 
 #include <vector>
 
+/*
+ * static class to convert TaskEntities to TaskDTOs
+ */
 class dtoConvertor {
 
 public:

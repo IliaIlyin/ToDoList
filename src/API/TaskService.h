@@ -79,7 +79,7 @@ class TaskService {
   bool addSubTaskToParent(const TaskID &parent, Task &task);
 
   /*
-   * gets task by const TaskID &
+   * gets task by TaskID
    * @param task id to look for
    * @return TaskDTO if task was found.
    * @return nullopt,otherwise.

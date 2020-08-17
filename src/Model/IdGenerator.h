@@ -7,9 +7,18 @@
 
 #include "API/TaskID.h"
 
+/*
+ * class that generates TaskIDs
+ * @see TaskID
+ */
 class IdGenerator {
 
 public:
+  /*
+   * generates TaskID object
+   *
+   * @return TaskID
+   */
     TaskID generateId();
 
     IdGenerator(int id = 0);

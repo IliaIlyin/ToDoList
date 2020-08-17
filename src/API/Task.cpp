@@ -32,11 +32,11 @@ Task Task::createTask(std::string name, boost::gregorian::date date, Task::Prior
   return Task(name, date, priority, label);
 }
 
-bool Task::operator==(const Task &task) const {
-  return this->priority == task.getPriority() &&
-      this->label == task.getLabel() &&
-      this->name == task.getName() &&
-      this->date == task.getDate();
+bool operator==(const Task &task, const Task& task2)  {
+  return task.getPriority() == task2.getPriority() &&
+      task.getLabel() == task2.getLabel() &&
+      task.getName() == task2.getName() &&
+      task.getDate() == task2.getDate();
 }
 
 std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1) {

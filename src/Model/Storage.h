@@ -11,13 +11,31 @@
 #include<optional>
 #include<unordered_map>
 
+/*
+ * main storage of TaskEntity objects
+ */
 class Storage {
 
 public:
     std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity);
-
+/*
+ * deletes task from the storage
+ *
+ * @param task_entity Id of the task to delete
+ *
+ * @return true, if task was found
+ * @return false, otherwise
+ */
     bool deleteTask(const TaskID &task_entity);
 
+  /*
+* gets the task from the storage
+*
+* @param id Id of the task to delete
+*
+* @return true, if task was found
+* @return false, otherwise
+*/
     std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id);
 
 private:

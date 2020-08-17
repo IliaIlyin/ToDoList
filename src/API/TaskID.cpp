@@ -10,10 +10,10 @@ int TaskID::getId() const {
     return this->id;
 }
 
-bool TaskID::operator==(const TaskID &id) const {
-  return this->id==id.getId();
+bool operator==(const TaskID &id, const TaskID& id2)  {
+  return id2.getId()==id.getId();
 }
 
-bool TaskID::operator<(const TaskID &id) const {
-  return this->id<id.getId();
+bool operator<(const TaskID &id, const TaskID& id2)  {
+  return id.getId()<id2.getId();
 }
