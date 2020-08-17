@@ -20,7 +20,7 @@ enable_testing()
 
 
 add_executable(TestsExecutable ${TEST_SOURCES}
-                ${CPP_SOURCES} src/Model/StorageInterface.h)
+                ${CPP_SOURCES} src/Model/StorageInterface.h src/Model/AllDataStorageInterface.h)
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
 
