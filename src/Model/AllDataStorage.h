@@ -12,7 +12,8 @@
  * class to store views and main data storage
  */
 class AllDataStorage {
-
+ public:
+  AllDataStorage(std::unique_ptr<StorageServiceInterface> interface);
  public:
   /*
    * adds task to storage and updates views
@@ -84,7 +85,7 @@ class AllDataStorage {
 
  private:
   ViewService view_service_;
-  StorageService storage_service_;
+  std::unique_ptr<StorageServiceInterface> storage_service_;
 };
 
 #endif //TODOLIST_MODEL_ALLDATASTORAGE_H_

@@ -8,16 +8,16 @@
 #include "TaskEntity.h"
 #include "HashTaskID.h"
 
-#include<optional>
-#include<unordered_map>
-
+#include <optional>
+#include <unordered_map>
+#include "StorageInterface.h"
 /*
  * main storage of TaskEntity objects
  */
-class Storage {
+class Storage : public StorageInterface {
 
 public:
-    std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity);
+    std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity) override;
 /*
  * deletes task from the storage
  *
@@ -26,7 +26,7 @@ public:
  * @return true, if task was found
  * @return false, otherwise
  */
-    bool deleteTask(const TaskID &task_entity);
+    bool deleteTask(const TaskID &task_entity) override;
 
   /*
 * gets the task from the storage
@@ -36,7 +36,7 @@ public:
 * @return true, if task was found
 * @return false, otherwise
 */
-    std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id);
+    std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id) override;
 
 private:
     std::optional<std::shared_ptr<TaskEntity>> search(TaskID id, std::vector<std::shared_ptr<TaskEntity>> vector);
