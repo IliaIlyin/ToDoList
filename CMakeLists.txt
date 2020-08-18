@@ -3,10 +3,7 @@ project(toDoList LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-set(GTEST_LINKED_AS_SHARED_LIBRARY)
 include_directories(src)
-add_subdirectory(googletest/googletest-master)
-include_directories(googletest/googletest-master/googlemock/include)
 
 file(GLOB CPP_SOURCES "src/API/*.cpp" "src/Model/*.cpp" "src/Views/*.cpp")
 
@@ -17,15 +14,14 @@ add_executable(toDoList ${HEADERS} ${CPP_SOURCES} main.cpp)
 
 include(GoogleTest)
 find_package(GTest REQUIRED)
+include_directories(${GMOCK_INCLUDE_DIR})
 enable_testing()
 
 
 add_executable(TestsExecutable ${TEST_SOURCES}
                 ${CPP_SOURCES})
 
-target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
-
-include_directories(${GMock_INCLUDE_DIRS})
+target_link_libraries(TestsExecutable GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
 
 set(Boost_USE_STATIC_LIBS ON) # only find static libs
 set(Boost_USE_DEBUG_LIBS OFF)
