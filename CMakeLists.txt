@@ -3,9 +3,10 @@ project(toDoList LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-
+set(GTEST_LINKED_AS_SHARED_LIBRARY)
 include_directories(src)
-
+add_subdirectory(googletest/googletest-master)
+include_directories(googletest/googletest-master/googlemock/include)
 
 file(GLOB CPP_SOURCES "src/API/*.cpp" "src/Model/*.cpp" "src/Views/*.cpp")
 
@@ -20,7 +21,7 @@ enable_testing()
 
 
 add_executable(TestsExecutable ${TEST_SOURCES}
-                ${CPP_SOURCES} src/Model/StorageInterface.h src/Model/AllDataStorageInterface.h Tests/dtoConvertorTest.cpp)
+                ${CPP_SOURCES})
 
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main)
 

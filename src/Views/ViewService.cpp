@@ -79,5 +79,6 @@ bool ViewService::insert(std::shared_ptr<TaskEntity> taskEntity) {
     }
     return true;
 }
+ViewService::ViewService(std::vector<std::shared_ptr<GeneralView>> views) : general_view_(std::move(views)) {}
 
 

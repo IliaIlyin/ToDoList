@@ -10,7 +10,9 @@
 #include <vector>
 #include <memory>
 #include <ctime>
-
+/*
+ * class to represent views sorted by label
+ */
 class LabelView : public GeneralView {
 public:
     std::vector<std::weak_ptr<TaskEntity>> showAll() override;
