@@ -11,7 +11,9 @@
 #include <vector>
 #include <memory>
 #include <ctime>
-
+/*
+ * class to represent views sorted by priority
+ */
 class PriorityView : public GeneralView {
 public:
 

@@ -27,7 +27,8 @@
  * @author Ilya Ilyin
  */
 class TaskService {
-
+ public:
+  TaskService(std::unique_ptr<AllDataStorageInterface> interface);
  public:
   /*
    * adds task to the model. All params are params to construct task
@@ -177,7 +178,7 @@ class TaskService {
   showDueDateByDate(boost::gregorian::date = boost::gregorian::date(boost::gregorian::min_date_time));
 
  private:
-  AllDataStorage storage_;
+  std::unique_ptr<AllDataStorageInterface> storage_;
 };
 
 #endif //TODOLIST_TASKSERVICE_H
