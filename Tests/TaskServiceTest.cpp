@@ -7,7 +7,8 @@
 
 using testing::Eq;
 using testing::Return;
-
+using testing::ReturnRef;
+using testing::Mock;
 class AllDataStorageMock : public AllDataStorageInterface {
 
  public:
@@ -21,7 +22,7 @@ class AllDataStorageMock : public AllDataStorageInterface {
   MOCK_METHOD(bool, postponeTask, (const TaskID & task, boost::gregorian::date dueDate), (override));
   MOCK_METHOD(bool, deleteTask, (const TaskID & task), (override));
   MOCK_METHOD(bool, completeTask, (const TaskID &task), (override));
-  MOCK_METHOD(const ViewService &, getViewService, (), (const, override));
+  MOCK_METHOD(const ViewService &, getViewService, (), (const,override));
 
 };
 class TaskServiceTest : public ::testing::Test {
@@ -117,11 +118,11 @@ TEST_F(TaskServiceTest, completeTask) {
 }
 TEST_F(TaskServiceTest, showAllByDate) {
   auto mock = std::make_unique<AllDataStorageMock>();
-  ON_CALL(mock.operator*(), getViewService).WillByDefault(Return(ViewService()));
-  boost::gregorian::date date{2000,11,8};
-  EXPECT_CALL(mock.operator*(),getViewService());
+  ViewService p;
+  EXPECT_CALL(mock.operator*(),getViewService()).Times(1).WillOnce(ReturnRef(p));
   TaskService service(std::move(mock));
   service.showAllByDate();
+  Mock::VerifyAndClearExpectations(mock.get());
 }
 TEST_F(TaskServiceTest, showAllByLabel) {
   auto mock = std::make_unique<AllDataStorageMock>();
