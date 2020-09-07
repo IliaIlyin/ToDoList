@@ -50,7 +50,7 @@ class TaskService {
 * adds task to the model. All params are params to construct task
 * @see Task
 *
-   * @param parent TaskDTO to add SubTask to
+   * @param parent TaskDTO to Add SubTask to
 * @param taskName representing task name
 * @param date representing date to complete task. Set to boost::gregorian::min_date_time by default
 * @param priority Task Priority. Set to NONE by default
@@ -64,15 +64,15 @@ class TaskService {
                           Task::Priority priority = Task::Priority::NONE, std::string label = "");
 /*
  * adds task to the model
- * @param task Task to add
+ * @param task Task to Add
  * @return true, if adding was completed succesfully.
 * @return false, otherwise.
  */
   bool addTask(Task &task);
 /*
  * adds one task as a SubTask to another.
- * @param parent Parent task to add SubTask to
- * @param task SubTask to add to parent
+ * @param parent Parent task to Add SubTask to
+ * @param task SubTask to Add to parent
  *
  * @return true, if adding was completed succesfully.
 * @return false, otherwise.

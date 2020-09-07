@@ -5,20 +5,23 @@
 #ifndef TODOLIST_CLI_STATEMACHINE_H_
 #define TODOLIST_CLI_STATEMACHINE_H_
 
-#include "Context.h"
-#include "BaseState.h"
+#include "Contexts/Context.h"
+#include "States/BaseState.h"
+#include "CommandFactory.h"
 class StateMachine {
 
  public:
-  StateMachine();
+  StateMachine( std::unique_ptr<State> state, std::shared_ptr<Context> context);
 
  public:
-  void run();
+  [[noreturn]] void run();
 
-  const Context &GetContext() const;
+  const std::shared_ptr<Context> &GetContext() const;
+
  private:
   std::unique_ptr<State> state_;
-  Context context_;
+  std::shared_ptr<CommandFactory> command_factory_;
+  std::shared_ptr<Context> context_;
 };
 
 #endif //TODOLIST_CLI_STATEMACHINE_H_

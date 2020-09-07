@@ -4,17 +4,17 @@
 
 #include "StateMachine.h"
 
-void StateMachine::run() {
-  for(;;){
-    state_->read(context_);
+[[noreturn]] void StateMachine::run() {
+  for (;;) {
+    auto token=state_->read();
+    auto cmd = command_factory_->create(token);
     state_->execute(context_);
     state_ = std::move(state_->changeState());
   }
 }
-StateMachine::StateMachine() {
-  BaseState base_state;
-  state_ = std::make_unique<BaseState>(base_state);
-}
-const Context &StateMachine::GetContext() const {
+const std::shared_ptr<Context> &StateMachine::GetContext() const {
   return context_;
+}
+StateMachine::StateMachine(std::unique_ptr<State> state, std::shared_ptr<Context> context)
+    : state_(std::move(state)), context_(context) {
 }
