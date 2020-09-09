@@ -17,7 +17,7 @@ class AllDataStorageInterface {
   /*
    * adds task to storage and updates views
    *
-   * @param task Task to add
+   * @param task Task to Add
    *
    * @return true, if adding was completed succesfully.
    * @return false, otherwise.
@@ -26,8 +26,8 @@ class AllDataStorageInterface {
   /*
    * adds subtask to parent and updates views
    *
-   * @param parent Task to add to
-   * @param task Task to add
+   * @param parent Task to Add to
+   * @param task Task to Add
    *
    * @return true, if adding was completed succesfully.
    * @return false, otherwise.

@@ -18,8 +18,11 @@
 class ViewService {
 
  public:
-  ViewService();
-  ViewService(std::vector<std::shared_ptr<GeneralView>> views);
+  ViewService()=default;
+
+  ViewService(std::shared_ptr<GeneralView> priority_view_,
+              std::shared_ptr<GeneralView> label_view_,
+              std::shared_ptr<GeneralView> date_view_);
  public:
   /*
    * @return container of tasks that satisfy the request
@@ -67,8 +70,9 @@ class ViewService {
   bool insert(std::shared_ptr<TaskEntity> taskEntity);
 
  private:
-  std::vector<std::shared_ptr<GeneralView>> general_view_;
-
+  std::shared_ptr<GeneralView> priority_view_;
+  std::shared_ptr<GeneralView> label_view_;
+  std::shared_ptr<GeneralView> date_view_;
 };
 
 #endif //TODOLIST_VIEWS_VIEWSERVICE_H_

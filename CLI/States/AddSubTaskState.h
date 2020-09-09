@@ -1,0 +1,12 @@
+//
+// Created by illia.ilin on 9/7/2020.
+//
+
+#ifndef TODOLIST_CLI_STATES_ADDSUBTASKSTATE_H_
+#define TODOLIST_CLI_STATES_ADDSUBTASKSTATE_H_
+
+class AddSubTaskState {
+
+};
+
+#endif //TODOLIST_CLI_STATES_ADDSUBTASKSTATE_H_

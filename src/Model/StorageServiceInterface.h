@@ -17,7 +17,7 @@ class StorageServiceInterface {
  public:
 /*
  * adds task to the model. If the task already exists, it Is
- * @param task Task to add
+ * @param task Task to Add
  * @return ptr if adding was completed succesfully.
 * @return false, otherwise.
  */
@@ -25,8 +25,8 @@ class StorageServiceInterface {
   /*
     * adds subtask to parent and updates views
     *
-    * @param parent Task to add to
-    * @param task Task to add
+    * @param parent Task to Add to
+    * @param task Task to Add
     *
     * @return true, if adding was completed succesfully.
     * @return false, otherwise.
