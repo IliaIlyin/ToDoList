@@ -5,7 +5,7 @@
 #ifndef TODOLIST_CLI_COMMANDFACTORY_H_
 #define TODOLIST_CLI_COMMANDFACTORY_H_
 
-#include "Factories/validators/GeneralCommandsValidator.h"
+#include "Factories/Validators/GeneralCommandsValidator.h"
 #include "Builder.h"
 
 #include "Builders/Add/AddSubTaskCommandBuilder.h"

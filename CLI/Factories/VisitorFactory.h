@@ -5,7 +5,7 @@
 #ifndef TODOLIST_CLI_FACTORIES_VISITORFACTORY_H_
 #define TODOLIST_CLI_FACTORIES_VISITORFACTORY_H_
 #include "Visitor.h"
-#include "Factories/validators/GeneralCommandsValidator.h"
+#include "Factories/Validators/GeneralCommandsValidator.h"
 
 #include "Visitors/Add/AddTaskCommandVisitor.h"
 #include "Visitors/Add/AddSubTaskCommandVisitor.h"
