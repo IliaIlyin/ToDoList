@@ -69,4 +69,5 @@ std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1);
 
 bool operator==(const Task &task, const Task& task2);
 
+Task::Priority getPriorityFromString(std::string s);
 #endif //TODOLIST_TASK_H

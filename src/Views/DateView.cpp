@@ -6,8 +6,10 @@
 
 std::vector<std::weak_ptr<TaskEntity> > DateView::showAll() {
   std::vector<std::weak_ptr<TaskEntity> > vector;
-  for (auto i = dates.begin(); i != dates.end(); i++)
-    vector.push_back(i->second);
+  if(!dates.empty()) {
+    for (auto i = dates.begin(); i != dates.end(); i++)
+      vector.push_back(i->second);
+  }
   return vector;
 }
 

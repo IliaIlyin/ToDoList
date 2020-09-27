@@ -7,17 +7,22 @@
 
 #include "API/TaskService.h"
 #include "Command.h"
+#include "Visitor.h"
 #include <memory>
 
-class DeleteTaskCommand : public Command<bool> {
+class DeleteTaskCommand : public Command {
  public:
   DeleteTaskCommand(std::shared_ptr<TaskService> service,const TaskID& id);
-  bool execute() override;
+  void execute() override;
   void accept(std::shared_ptr<Visitor> v) override;
 
+  bool IsDeleteTaskCommandResult() const;
  private:
   std::shared_ptr<TaskService> service_;
   TaskID id_;
+
+ private:
+  bool deleteTaskCommandResult_;
 };
 
 #endif //TODOLIST_CLI_COMMANDS_DELETETASKCOMMAND_H_

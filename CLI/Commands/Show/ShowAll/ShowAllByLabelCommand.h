@@ -9,14 +9,21 @@
 #include "API/TaskService.h"
 #include <memory>
 #include <vector>
+#include "Visitor.h"
 
-class ShowAllByLabelCommand: public Command<std::vector<TaskDTO>> {
+class ShowAllByLabelCommand: public Command {
+
  public:
   ShowAllByLabelCommand(std::shared_ptr<TaskService> service);
-  std::vector<TaskDTO> execute() override;
+  void execute() override;
   void accept(std::shared_ptr<Visitor> v) override;
+
+  std::vector<TaskDTO> getCommandResult();
 
  private:
   std::shared_ptr<TaskService> service_;
+
+ private:
+  std::vector<TaskDTO> commandResult_;
 };
 #endif //TODOLIST_CLI_COMMANDS_SHOWALLBYLABELCOMMAND_H_

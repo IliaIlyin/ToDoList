@@ -4,27 +4,30 @@
 
 #ifndef TODOLIST_CLI_BASESTATE_H_
 #define TODOLIST_CLI_BASESTATE_H_
-#include "State.h"
+#include "States/State.h"
 #include "Validators/Validator.h"
-#include "CommandFactory.h"
-#include "Tokenizer.h"
+#include "Factories/BuilderFactory.h"
 #include <memory>
-#include "AddTaskState.h"
 
-
+/*
+ * Base State that operates input commands
+ *
+ * @author Ilya Ilyin
+ */
 class BaseState : public State {
 
  public:
-  Tokenizer::CommandToken read() override;
-  std::unique_ptr<State> changeState() override;
-  void execute(Context &context, std::shared_ptr<Visitor> visitor) override;
-  void print() override;
+  GeneralCommandsValidator::CommandToken read() override;
+  std::shared_ptr<State> changeState() override;
+  void execute(std::shared_ptr<Command> command,std::shared_ptr<Visitor> visitor) override;
+  void print(std::shared_ptr<Context> context) override;
+
+ public:
+  BaseState(std::shared_ptr<Validator<GeneralCommandsValidator::CommandToken>> validator);
 
  private:
-  std::unique_ptr<State> next_state_;
-  std::unique_ptr<Validator> validator_;
-  std::unique_ptr<Tokenizer> tokenizer_;
-  std::unique_ptr<CommandFactory> command_factory_;
+  std::shared_ptr<Validator< GeneralCommandsValidator::CommandToken>> validator_;
+
 };
 
 #endif //TODOLIST_CLI_BASESTATE_H_

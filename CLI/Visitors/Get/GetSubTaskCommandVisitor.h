@@ -6,40 +6,41 @@
 #define TODOLIST_CLI_VISITORS_GET_GETSUBTASKCOMMANDVISITOR_H_
 
 #include "Visitor.h"
+#include "Contexts/Context.h"
+#include "Commands/Get/GetSubtasksCommand.h"
 
-class getSubTaskCommandVisitor : public Visitor {
+class GetSubTaskCommandVisitor : public Visitor {
+ public:
+  GetSubTaskCommandVisitor(const std::shared_ptr<Context> &result);
+ public:
+  void visitAddTaskCommand(AddTaskCommand &command) override{};
+  void visitAddSubTaskCommand(AddSubTaskCommand &command) override{};
 
  public:
-  Context &visitAddTaskCommand(AddTaskCommand &command) override;
-  Context &visitAddSubTaskCommand(AddSubTaskCommand &command) override;
+  void visitGetTaskCommand(GetTaskCommand &command) override{};
+  void visitGetSubTaskCommand(GetSubTaskCommand &command) override;
 
  public:
-  Context &visitGetTaskCommand(GetTaskCommand &command) override;
-  Context &visitGetSubTaskCommand(GetSubTaskCommand &command) override;
+  void visitCompleteTaskCommand(CompleteTaskCommand &command) override{};
+  void visitDeleteTaskCommand(DeleteTaskCommand &command) override{};
+  void visitPostponeTaskCommand(PostponeTaskCommand &command) override{};
 
  public:
-  Context &visitCompleteTaskCommand(CompleteTaskCommand &command) override;
-  Context &visitDeleteTaskCommand(DeleteTaskCommand &command) override;
-  Context &visitPostponeTaskCommand(PostponeTaskCommand &command) override;
+  void visitShowAllByDateCommand(ShowAllByDateCommand &command) override{};
+  void visitShowAllByLabelCommand(ShowAllByLabelCommand &command) override{};
+  void visitShowAllByPriorityCommand(ShowAllByPriorityCommand &command) override{};
 
  public:
-  Context &visitShowAllByDateCommand(ShowAllByDateCommand &command) override;
-  Context &visitShowAllByLabelCommand(ShowAllByLabelCommand &command) override;
-  Context &visitShowAllByPriorityCommand(ShowAllByPriorityCommand &command) override;
+  void visitShowDueDateByDateCommand(ShowDueDateByDateCommand &command) override{};
+  void visitShowDueDateByLabelCommand(ShowDueDateByLabelCommand &command) override{};
+  void visitShowDueDateByPriorityCommand(ShowDueDateByPriorityCommand &command) override{};
 
  public:
-  Context &visitShowDueDateByDateCommand(ShowDueDateByDateCommand &command) override;
-  Context &visitShowDueDateByLabelCommand(ShowDueDateByLabelCommand &command) override;
-  Context &visitShowDueDateByPriorityCommand(ShowDueDateByPriorityCommand &command) override;
+  void visitShowTodayByLabelCommand(ShowTodayByLabelCommand &command) override{};
+  void visitShowTodayPriorityCommand(ShowTodayByPriorityCommand &command) override{};
 
- public:
-  Context &visitShowTodayByLabelCommand(ShowTodayByLabelCommand &command) override;
-  Context &visitShowTodayPriorityCommand(ShowTodayByPriorityCommand &command) override;
-
- public:
-  AddTaskCommandVisitor(Context &context);
  private:
-  Context &context_;
+  std::shared_ptr<Context> result_;
 };
 
 #endif //TODOLIST_CLI_VISITORS_GET_GETSUBTASKCOMMANDVISITOR_H_

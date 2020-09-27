@@ -28,6 +28,7 @@
  */
 class TaskService {
  public:
+  TaskService();
   TaskService(std::unique_ptr<AllDataStorageInterface> interface);
  public:
   /*

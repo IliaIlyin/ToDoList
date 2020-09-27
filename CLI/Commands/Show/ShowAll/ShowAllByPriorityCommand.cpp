@@ -6,9 +6,15 @@
 ShowAllByPriorityCommand::ShowAllByPriorityCommand(std::shared_ptr<TaskService> service) : service_(service){
 
 }
-std::vector<TaskDTO> ShowAllByPriorityCommand::execute() {
-  return service_->showAllByPriority();
+
+void ShowAllByPriorityCommand::execute() {
+  commandResult_=service_->showAllByPriority();
+
 }
 void ShowAllByPriorityCommand::accept(std::shared_ptr<Visitor> v) {
-  v->visitShowAllByPriorityCommand(*this);
+v->visitShowAllByPriorityCommand(*this);
 }
+std::vector<TaskDTO> ShowAllByPriorityCommand::getCommandResult() {
+  return commandResult_;
+}
+

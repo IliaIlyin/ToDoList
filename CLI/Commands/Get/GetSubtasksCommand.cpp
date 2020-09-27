@@ -3,12 +3,18 @@
 //
 
 #include "GetSubtasksCommand.h"
-GetSubTaskCommand::GetSubTaskCommand(std::shared_ptr<TaskService> service, const TaskID &id) : service_(service),id_(id){
+GetSubTaskCommand::GetSubTaskCommand(std::shared_ptr<TaskService> service, const TaskID &id)
+    : service_(service), id_(id) {
 
 }
-std::optional<std::vector<TaskDTO>> GetSubTaskCommand::execute() {
-  return service_->getSubTasks(id_);
+void GetSubTaskCommand::execute() {
+  getSubTaskCommandResult_=service_->getSubTasks(id_);
+
 }
 void GetSubTaskCommand::accept(std::shared_ptr<Visitor> v) {
   v->visitGetSubTaskCommand(*this);
 }
+const std::optional<std::vector<TaskDTO>> &GetSubTaskCommand::GetGetSubTaskCommandResult() const {
+  return getSubTaskCommandResult_;
+}
+

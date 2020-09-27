@@ -5,22 +5,49 @@
 #ifndef TODOLIST_CLI_STATEMACHINE_H_
 #define TODOLIST_CLI_STATEMACHINE_H_
 
+#include "States/State.h"
 #include "Contexts/Context.h"
+#include "Factories/VisitorFactory.h"
 #include "States/BaseState.h"
-#include "CommandFactory.h"
+#include "Factories/BuilderFactory.h"
+/*
+ * state machine that operates states that operate users' commands
+ *
+ * @author Ilya Ilyin
+ */
 class StateMachine {
 
  public:
-  StateMachine( std::unique_ptr<State> state, std::shared_ptr<Context> context);
+  StateMachine(std::shared_ptr<State> state,
+               std::shared_ptr<Context> context,
+               std::shared_ptr<BuilderFactory> builder_factory_,
+               std::shared_ptr<VisitorFactory> visitor_factory_
+  );
 
  public:
-  [[noreturn]] void run();
-
-  const std::shared_ptr<Context> &GetContext() const;
+  /*
+   * run state machine
+   *
+   * @return void
+   */
+  void run();
 
  private:
-  std::unique_ptr<State> state_;
-  std::shared_ptr<CommandFactory> command_factory_;
+  /*
+   * current state
+   */
+  std::shared_ptr<State> state_;
+  /*
+   * factory to build commands
+   */
+  std::shared_ptr<BuilderFactory> builder_factory_;
+  /*
+   * factory to build visitors
+   */
+  std::shared_ptr<VisitorFactory> visitor_factory_;
+  /*
+   * state machine context
+   */
   std::shared_ptr<Context> context_;
 };
 

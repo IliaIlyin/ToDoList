@@ -6,23 +6,33 @@
 #define TODOLIST_CLI_CONTEXT_H_
 
 #include <memory>
-#include "State.h"
+#include <optional>
+#include <map>
 #include "API/TaskDTO.h"
 #include "API/TaskService.h"
-
+/*
+ * class to represent the context of the StateMachine that operates commands
+ *
+ * @author Ilya Ilyin
+ */
 class Context {
+ public:
+  const std::optional<TaskDTO> &GetDto() const;
+  const std::optional<std::vector<TaskDTO>> &GetDtos() const;
+  void SetDto(const TaskDTO &dto);
+  void SetDtos(const std::vector<TaskDTO> &dtos);
 
  public:
-  Context(std::shared_ptr<TaskService> service);
-
- public:
-  const std::vector<std::shared_ptr<TaskDTO>> &getDtos() const;
-  std::shared_ptr<TaskService> &getService();
-
+  Context();
  private:
-  std::shared_ptr<TaskService> service_;
-  std::vector<std::shared_ptr<TaskDTO>> dtos;
-
+  /*
+   * class member to save concrete task
+   */
+  std::optional<TaskDTO> dto_;
+  /*
+ * class member to save container of tasks
+ */
+  std::optional<std::vector<TaskDTO>> dtos_;
 };
 
 #endif //TODOLIST_CLI_CONTEXT_H_

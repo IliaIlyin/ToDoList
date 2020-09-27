@@ -5,12 +5,18 @@
 #ifndef TODOLIST_CLI_VALIDATORS_VALIDATOR_H_
 #define TODOLIST_CLI_VALIDATORS_VALIDATOR_H_
 
-#include "CommandsValidator.h"
-
+#include <string>
+/*
+ * class that operates input strings
+ */
+template <typename T>
 class Validator{
 
  public:
-  virtual CommandsValidator::ValidateResult validate(const std::string&)=0;
+  /*
+   * method that validates strings as commands or task data
+   */
+  virtual T validate(const std::string&)=0;
 };
 
 #endif //TODOLIST_CLI_VALIDATORS_VALIDATOR_H_

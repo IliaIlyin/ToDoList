@@ -6,18 +6,23 @@
 #define TODOLIST_CLI_COMMANDS_GETSUBTASKSCOMMAND_H_
 #include "API/TaskService.h"
 #include "Command.h"
+#include "Visitor.h"
 #include <optional>
 #include <vector>
 
-class GetSubTaskCommand : public Command<std::optional<std::vector<TaskDTO>>> {
+class GetSubTaskCommand : public Command {
  public:
   GetSubTaskCommand(std::shared_ptr<TaskService> service, const TaskID &id);
-  std::optional<std::vector<TaskDTO>> execute() override;
+  void execute() override;
   void accept(std::shared_ptr<Visitor> v) override;
 
+  const std::optional<std::vector<TaskDTO>> &GetGetSubTaskCommandResult() const;
  private:
   std::shared_ptr<TaskService> service_;
   TaskID id_;
+
+ private:
+  std::optional<std::vector<TaskDTO>> getSubTaskCommandResult_;
 };
 
 #endif //TODOLIST_CLI_COMMANDS_GETSUBTASKSCOMMAND_H_

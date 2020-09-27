@@ -13,10 +13,11 @@
 class TaskID {
 
 public:
+   TaskID()=default;
   /*
    * constructs the object on the id
    */
-    explicit TaskID(int id);
+    TaskID(int id);
 
     int getId() const;
 

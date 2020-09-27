@@ -7,9 +7,15 @@ CompleteTaskCommand::CompleteTaskCommand(std::shared_ptr<TaskService> service, c
     : service_(service), task_id_(id) {
 
 }
-bool CompleteTaskCommand::execute() {
-  return service_->completeTask(task_id_);
+void CompleteTaskCommand::execute() {
+  completeTaskCommandResult_ = service_->completeTask(task_id_);
 }
+
 void CompleteTaskCommand::accept(std::shared_ptr<Visitor> v) {
   v->visitCompleteTaskCommand(*this);
 }
+
+bool CompleteTaskCommand::getCompleteTaskCommandResult() const {
+  return completeTaskCommandResult_;
+}
+

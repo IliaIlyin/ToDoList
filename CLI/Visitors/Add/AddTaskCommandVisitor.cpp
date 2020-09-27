@@ -3,6 +3,13 @@
 //
 
 #include "AddTaskCommandVisitor.h"
-bool AddTaskCommandVisitor::visitAddTaskCommand(AddTaskCommand &command) {
- return command.execute();
+void AddTaskCommandVisitor::visitAddTaskCommand(AddTaskCommand &command) {
+  command.execute();
+  bool result = command.getAddTaskResult();
+  if(result){
+    std::cout<<"Task was added successfully"<<std::endl;
+  }
+  else{
+    std::cout<<"Task was not added"<<std::endl;
+  }
 }

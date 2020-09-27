@@ -17,8 +17,10 @@ TaskEntity dtoConvertor::convert(const TaskDTO &task_dto) {
 
 std::vector<TaskDTO> dtoConvertor::convert(const std::vector<std::weak_ptr<TaskEntity>>& vec) {
     std::vector<TaskDTO> result;
-    for(auto i=vec.begin();i!=vec.end();i++){
+    if(!vec.empty()) {
+      for (auto i = vec.begin(); i != vec.end(); i++) {
         result.push_back(convert(i->lock().operator*()));
+      }
     }
     return result;
 }

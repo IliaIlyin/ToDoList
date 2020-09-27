@@ -3,10 +3,14 @@
 //
 
 #include "GetSubTaskCommandVisitor.h"
-Context &getSubTaskCommandVisitor::visitAddSubTaskCommand(AddSubTaskCommand &command) {
-  bool result = command.execute();
-  if(result){
-    std::cout<<"Parent was not found"<<std::endl;
+void GetSubTaskCommandVisitor::visitGetSubTaskCommand(GetSubTaskCommand &command) {
+  command.execute();
+  auto vec = command.GetGetSubTaskCommandResult();
+  if(vec.has_value()){
+    result_->SetDtos(vec.value());
   }
-  return context_;
+  else{
+    std::cout<<"Task was not found"<<std::endl;
+  }
 }
+GetSubTaskCommandVisitor::GetSubTaskCommandVisitor(const std::shared_ptr<Context> &result) : result_(result) {}

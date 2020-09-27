@@ -5,13 +5,26 @@
 #ifndef TODOLIST_CLI_VALIDATORS_COMMAND_H_
 #define TODOLIST_CLI_VALIDATORS_COMMAND_H_
 
-#include "Visitor.h"
-#include "Contexts/Context.h"
-
-template < typename T >
-class Command{
+#include <memory>
+class Visitor;
+/*
+ * class for users' commands
+ */
+class Command {
  public:
-  virtual T execute()=0;
+  /*
+   * method that executes command
+   *
+   * @return void
+   */
+  virtual void execute()=0;
+  /*
+   * method that accepts visitor
+   *
+   * @input pointer to the visitor to accept
+   *
+   * @return void
+   */
   virtual void accept(std::shared_ptr<Visitor> v)=0;
 };
 #endif //TODOLIST_CLI_VALIDATORS_COMMAND_H_

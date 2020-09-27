@@ -6,11 +6,16 @@
 DeleteTaskCommand::DeleteTaskCommand(std::shared_ptr<TaskService> service, const TaskID &id)
     : service_(service), id_(id) {
 }
-bool DeleteTaskCommand::execute() {
-  return service_->deleteTask(id_);
+
+void DeleteTaskCommand::execute() {
+  deleteTaskCommandResult_ = service_->deleteTask(id_);
 }
+
 void DeleteTaskCommand::accept(std::shared_ptr<Visitor> v) {
   v->visitDeleteTaskCommand(*this);
+}
+bool DeleteTaskCommand::IsDeleteTaskCommandResult() const {
+  return deleteTaskCommandResult_;
 }
 
 

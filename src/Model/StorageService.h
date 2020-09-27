@@ -12,7 +12,7 @@
 /*
  * class that operates storage
  */
-class StorageService : StorageServiceInterface{
+class StorageService : public StorageServiceInterface{
  public:
   StorageService(std::unique_ptr<StorageInterface> interface);
  public:

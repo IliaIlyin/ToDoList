@@ -3,11 +3,22 @@
 //
 
 #include "Contexts/Context.h"
-const std::vector<std::shared_ptr<TaskDTO>> &Context::getDtos() const {
-  return dtos;
+
+const std::optional<TaskDTO> &Context::GetDto() const {
+  return dto_;
 }
-std::shared_ptr<TaskService> &Context::getService(){
-  return service_;
+const std::optional<std::vector<TaskDTO>> &Context::GetDtos() const {
+  return dtos_;
 }
-Context::Context(std::shared_ptr<TaskService> service) : service_(std::move(service)){
+void Context::SetDto(const TaskDTO &dto) {
+  dto_.emplace(dto);
+  dtos_=std::nullopt;
+}
+void Context::SetDtos(const std::vector<TaskDTO> &dtos) {
+  dtos_.emplace(dtos);
+  dto_=std::nullopt;
+}
+Context::Context() {
+  dto_=std::nullopt;
+  dtos_=std::nullopt;
 }

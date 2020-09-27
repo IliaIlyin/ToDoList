@@ -17,7 +17,7 @@
 class Storage : public StorageInterface {
 
 public:
-    std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity) override;
+    std::shared_ptr<TaskEntity> addTask(const TaskEntity &task_entity) override;
 /*
  * deletes task from the storage
  *

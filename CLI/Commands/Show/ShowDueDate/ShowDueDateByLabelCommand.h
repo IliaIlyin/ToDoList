@@ -10,16 +10,21 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <memory>
 #include <vector>
+#include "Visitor.h"
 
-class ShowDueDateByLabelCommand: public Command<std::vector<TaskDTO>> {
+class ShowDueDateByLabelCommand: public Command {
  public:
   ShowDueDateByLabelCommand(std::shared_ptr<TaskService> service,boost::gregorian::date date);
-  std::vector<TaskDTO> execute() override;
+  void execute() override;
   void accept(std::shared_ptr<Visitor> v) override;
+  std::vector<TaskDTO> getCommandResult();
 
  private:
   std::shared_ptr<TaskService> service_;
   boost::gregorian::date date_;
+
+ private:
+  std::vector<TaskDTO> commandResult_;
 };
 
 

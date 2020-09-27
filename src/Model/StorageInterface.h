@@ -18,7 +18,7 @@
 class StorageInterface {
 
  public:
-  virtual  std::shared_ptr<TaskEntity> addTask(TaskEntity &task_entity)=0;
+  virtual  std::shared_ptr<TaskEntity> addTask(const TaskEntity &task_entity)=0;
 /*
  * deletes task from the storage
  *

@@ -3,11 +3,18 @@
 //
 
 #include "GetTaskCommand.h"
-std::optional<TaskDTO> GetTaskCommand::execute() {
-  return service_->getTask(id_);
+
+GetTaskCommand::GetTaskCommand(std::shared_ptr<TaskService> service, const TaskID &id) : service_(service), id_(id) {
 }
-GetTaskCommand::GetTaskCommand(std::shared_ptr<TaskService> service, const TaskID &id) : service_(service),id_(id){
+
+void GetTaskCommand::execute() {
+  getTaskCommandResult_ = service_->getTask(id_);
 }
+
 void GetTaskCommand::accept(std::shared_ptr<Visitor> v) {
   v->visitGetTaskCommand(*this);
 }
+const std::optional<TaskDTO> &GetTaskCommand::GetGetTaskCommandResult() const {
+  return getTaskCommandResult_;
+}
+

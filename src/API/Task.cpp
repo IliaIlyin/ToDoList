@@ -6,9 +6,13 @@
 
 #include <utility>
 
-Task::Task(std::string name, boost::gregorian::date date, Task::Priority priority, std::string label) : name(std::move(name)),
-                                                                                        date(date), priority(priority),
-                                                                                        label(std::move(label)) {
+Task::Task(std::string name, boost::gregorian::date date, Task::Priority priority, std::string label) : name(std::move(
+    name)),
+                                                                                                        date(date),
+                                                                                                        priority(
+                                                                                                            priority),
+                                                                                                        label(std::move(
+                                                                                                            label)) {
 
 }
 
@@ -16,7 +20,7 @@ const std::string &Task::getName() const {
   return name;
 }
 
-boost::gregorian::date  Task::getDate() const {
+boost::gregorian::date Task::getDate() const {
   return date;
 }
 
@@ -32,7 +36,7 @@ Task Task::createTask(std::string name, boost::gregorian::date date, Task::Prior
   return Task(name, date, priority, label);
 }
 
-bool operator==(const Task &task, const Task& task2)  {
+bool operator==(const Task &task, const Task &task2) {
   return task.getPriority() == task2.getPriority() &&
       task.getLabel() == task2.getLabel() &&
       task.getName() == task2.getName() &&
@@ -53,4 +57,15 @@ std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1) {
   return os;
 }
 
-
+Task::Priority getPriorityFromString(std::string s) {
+  if (s == "NONE" || s == "FIRST" || s == "SECOND" || s == "THIRD")
+    if (s == "FIRST")
+      return Task::Priority::FIRST;
+  if (s == "SECOND")
+    return Task::Priority::SECOND;
+  if (s == "THIRD")
+    return Task::Priority::THIRD;
+  if (s == "NONE")
+    return Task::Priority::NONE;
+  return Task::Priority::NONE;
+}

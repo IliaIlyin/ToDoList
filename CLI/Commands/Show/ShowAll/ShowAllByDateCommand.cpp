@@ -6,9 +6,14 @@
 ShowAllByDateCommand::ShowAllByDateCommand(std::shared_ptr<TaskService> service) : service_(service){
 
 }
-std::vector<TaskDTO> ShowAllByDateCommand::execute() {
-  return service_->showAllByDate();
+
+void ShowAllByDateCommand::execute() {
+  commandResult_=service_->showAllByDate();
 }
+
 void ShowAllByDateCommand::accept(std::shared_ptr<Visitor> v) {
-v->visitShowAllByDateCommand(*this);
+ v->visitShowAllByDateCommand(*this);
+}
+std::vector<TaskDTO> ShowAllByDateCommand::getCommandResult() {
+  return commandResult_;
 }

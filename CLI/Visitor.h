@@ -5,32 +5,32 @@
 #ifndef TODOLIST_CLI_VISITOR_H_
 #define TODOLIST_CLI_VISITOR_H_
 
-#include "Commands/Add/AddTaskCommand.h"
-#include "Commands/Add/AddSubTaskCommand.h"
-
-#include "Commands/Get/GetSubtasksCommand.h"
-#include "Commands/Get/GetTaskCommand.h"
-
-#include "Commands/Other/CompleteTaskCommand.h"
-#include "Commands/Other/DeleteTaskCommand.h"
-#include "Commands/Other/PostponeTaskCommand.h"
-
-#include "Commands/Show/ShowAll/ShowAllByDateCommand.h"
-#include "Commands/Show/ShowAll/ShowAllByLabelCommand.h"
-#include "Commands/Show/ShowAll/ShowAllByPriorityCommand.h"
-
-#include "Commands/Show/ShowDueDate/ShowDueDateByDateCommand.h"
-#include "Commands/Show/ShowDueDate/ShowDueDateByLabelCommand.h"
-#include "Commands/Show/ShowDueDate/ShowDueDateByPriorityCommand.h"
-
-#include "Commands/Show/ShowToday/ShowTodayByLabelCommand.h"
-#include "Commands/Show/ShowToday/ShowTodayByPriorityCommand.h"
-
+class AddTaskCommand;
+class AddSubTaskCommand;
+class GetTaskCommand;
+class GetSubTaskCommand;
+class CompleteTaskCommand;
+class DeleteTaskCommand;
+class PostponeTaskCommand;
+class ShowAllByDateCommand;
+class ShowAllByLabelCommand ;
+class ShowAllByPriorityCommand ;
+class ShowDueDateByDateCommand ;
+class ShowDueDateByLabelCommand ;
+class ShowDueDateByPriorityCommand ;
+class ShowTodayByLabelCommand ;
+class ShowTodayByPriorityCommand ;
+#include <iostream>
+/*
+ * commands' visitor
+ *
+ * @author Ilya Ilyin
+ */
 class Visitor {
 
  public:
-  virtual bool visitAddTaskCommand(AddTaskCommand &command) = 0;
-  virtual bool visitAddSubTaskCommand(AddSubTaskCommand &command) = 0;
+  virtual void visitAddTaskCommand(AddTaskCommand &command) = 0;
+  virtual void visitAddSubTaskCommand(AddSubTaskCommand &command) = 0;
 
  public:
   virtual void visitGetTaskCommand( GetTaskCommand &command) = 0;
