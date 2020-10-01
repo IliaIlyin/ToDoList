@@ -8,6 +8,8 @@
 #include "TaskDTO.h"
 #include "Model/AllDataStorage.h"
 #include "Model/dtoConvertor.h"
+#include "Model/AllDataStorageFactory.h"
+#include "Serialization/Persistor.h"
 
 #include <map>
 #include <vector>
@@ -29,7 +31,10 @@
 class TaskService {
  public:
   TaskService();
-  TaskService(std::unique_ptr<AllDataStorageInterface> interface);
+  TaskService(std::shared_ptr<AllDataStorageFactory> factory,std::shared_ptr<Persistor>);
+ public:
+  bool save(std::string fileName);
+  bool load(std::string fileName);
  public:
   /*
    * adds task to the model. All params are params to construct task
@@ -179,7 +184,9 @@ class TaskService {
   showDueDateByDate(boost::gregorian::date = boost::gregorian::date(boost::gregorian::min_date_time));
 
  private:
-  std::unique_ptr<AllDataStorageInterface> storage_;
+  std::shared_ptr<AllDataStorageInterface> storage_;
+  std::shared_ptr<AllDataStorageFactory> factory_;
+  std::shared_ptr<Persistor> persistor_;
 };
 
 #endif //TODOLIST_TASKSERVICE_H

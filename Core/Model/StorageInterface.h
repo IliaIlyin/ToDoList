@@ -39,6 +39,8 @@ class StorageInterface {
 */
   virtual  std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id)=0;
 
+  virtual  std::vector<std::shared_ptr<TaskEntity>> getAllTasks()=0;
+
 };
 
 

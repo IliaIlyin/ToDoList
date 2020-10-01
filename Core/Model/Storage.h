@@ -38,6 +38,7 @@ public:
 */
     std::optional<std::shared_ptr<TaskEntity>> getTask(TaskID id) override;
 
+    std::vector<std::shared_ptr<TaskEntity>> getAllTasks() override;
 private:
     std::optional<std::shared_ptr<TaskEntity>> search(TaskID id, std::vector<std::shared_ptr<TaskEntity>> vector);
 

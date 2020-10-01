@@ -104,13 +104,30 @@ std::optional<TaskDTO> TaskService::getTask(const TaskID &id) {
   }
   return std::nullopt;
 }
-TaskService::TaskService(std::unique_ptr<AllDataStorageInterface> interface) : storage_(std::move(interface)) {
+TaskService::TaskService(std::shared_ptr<AllDataStorageFactory> factory, std::shared_ptr<Persistor> persistor) :
+    factory_(factory), storage_(std::move(factory->create())), persistor_(persistor) {
 
 }
 TaskService::TaskService() {
-  std::unique_ptr<Storage> storage=std::make_unique<Storage>();
-  std::unique_ptr<StorageService> service = std::make_unique<StorageService>(std::move(storage));
-  storage_ = std::make_unique<AllDataStorage>(std::move(service));
+  factory_ = std::make_shared<AllDataStorageFactory>();
+  storage_ = std::move(factory_->create());
+  persistor_ = std::shared_ptr<Persistor>();
+}
+bool TaskService::save(std::string fileName) {
+    std::shared_ptr<std::fstream> file = std::make_shared<std::fstream>(fileName);
+    if(file->is_open()){
+       persistor_=std::make_shared<Persistor>(file,storage_,factory_);
+       return persistor_->Save();
+    }
+    return false;
+}
+bool TaskService::load(std::string fileName) {
+  std::shared_ptr<std::fstream> file = std::make_shared<std::fstream>(fileName);
+  if(file->is_open()){
+    persistor_=std::make_shared<Persistor>(file,storage_,factory_);
+    return persistor_->Load();
+  }
+  return false;
 }
 
 

@@ -69,3 +69,24 @@ std::optional<std::vector<std::shared_ptr<TaskEntity>>> StorageService::getSubTa
   return std::nullopt;
 }
 StorageService::StorageService(std::unique_ptr<StorageInterface> interface) : storage_(std::move(interface)) {}
+
+std::vector<std::shared_ptr<TaskEntity>> StorageService::getAllTasks() {
+  return storage_->getAllTasks();
+}
+std::shared_ptr<TaskEntity> StorageService::addTask(Task &task, bool status) {
+  TaskEntity taskEntity = TaskEntity::createTaskEntity(task, this->id_generator_,status);
+  return storage_->addTask(taskEntity);
+}
+std::optional<std::shared_ptr<TaskEntity>> StorageService::addSubTaskToParent(const TaskID &parent,
+                                                                              Task &task,
+                                                                              bool status) {
+  TaskEntity taskEntity = TaskEntity::createTaskEntity(task, this->id_generator_,status);
+  auto it = storage_->getTask(parent);
+  if (it.has_value()) {
+    auto iter = it.value();
+    iter.operator*().addSubTask(std::make_shared<TaskEntity>(taskEntity));
+    return storage_->addTask(iter.operator*());
+  }
+  return nullptr;
+}
+

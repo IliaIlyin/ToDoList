@@ -47,6 +47,21 @@ AllDataStorage::AllDataStorage(std::unique_ptr<StorageServiceInterface> interfac
   std::shared_ptr<LabelView> labels = std::make_shared<LabelView>();
   view_service_ = ViewService(priority, labels, dates);
 }
+std::vector<std::shared_ptr<TaskEntity>> AllDataStorage::getAllTasks() {
+  return storage_service_->getAllTasks();
+}
+TaskID AllDataStorage::addTask(Task &task, bool status) {
+  auto it = storage_service_->addTask(task,status);
+  view_service_.insert(it);
+  return it->getTaskId();
+}
+std::optional<TaskID> AllDataStorage::addSubTaskToParent(const TaskID &parent, Task &task, bool status) {
+  auto it = storage_service_->addSubTaskToParent(parent,task,status);
+  if(it.has_value())
+    return it->get()->getTaskId();
+  return std::nullopt;
+}
+
 
 
 

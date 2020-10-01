@@ -20,7 +20,8 @@
 class TaskEntity {
 
 public:
-/*
+  static TaskEntity createTaskEntity(const Task &task, IdGenerator &idGenerator,bool status);
+  /*
  * static method to create task entity.
  *
  * @param task to wrap

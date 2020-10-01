@@ -9,14 +9,19 @@
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include "Model/StorageServiceInterface.h"
 #include <optional>
+#include <fstream>
 /*
  * class that operates storage
  */
 class StorageService : public StorageServiceInterface{
  public:
   StorageService(std::unique_ptr<StorageInterface> interface);
- public:
-/*
+ public
+ std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(const TaskID &parent,
+                                                                        Task &task,
+                                                                        bool status) override;
+  std::shared_ptr<TaskEntity> addTask(Task& task, bool status) override;
+  /*
  * adds task to the model. If the task already exists, it Is
  * @param task Task to Add
  * @return ptr if adding was completed succesfully.
@@ -82,7 +87,12 @@ class StorageService : public StorageServiceInterface{
    */
   bool completeTask(const TaskID  &task) override;
 
- private:
+  std::vector<std::shared_ptr<TaskEntity>> getAllTasks() override;
+
+private:
+   // std::unique_ptr<SerializedTaskEntity> MakeSerializeTask(const TaskEntity& task);
+
+private:
   std::unique_ptr<StorageInterface> storage_;
   IdGenerator id_generator_;
 };
