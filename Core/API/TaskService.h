@@ -31,7 +31,7 @@
 class TaskService {
  public:
   TaskService();
-  TaskService(std::shared_ptr<AllDataStorageFactory> factory,std::shared_ptr<Persistor>);
+  TaskService(std::shared_ptr<AllDataStorageFactory> factory,std::shared_ptr<Persistor>&);
  public:
   bool save(std::string fileName);
   bool load(std::string fileName);

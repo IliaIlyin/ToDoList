@@ -9,6 +9,9 @@ class Serializer{
 public:
     virtual bool Save()=0;
     virtual bool Load()=0;
+
+ public:
+  virtual ~Serializer()=default;
 };
 
 #endif //TODOLIST_SERIALIZER_H

@@ -14,7 +14,7 @@ std::shared_ptr<serializer::Task> serializeToTask(const Task &task) {
   return std::make_shared<serializer::Task>(result);
 }
 
-std::shared_ptr<serializer::TaskEntity> serializeToTaskEntity(const TaskEntity &entity) {
+std::shared_ptr<serializer::TaskEntity> serializeToTaskEntity(TaskEntity &entity){
   serializer::TaskEntity result;
   auto task = serializeToTask(entity.getTask());
   result.set_allocated_task(task.get());

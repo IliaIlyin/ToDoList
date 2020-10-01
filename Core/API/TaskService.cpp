@@ -104,7 +104,7 @@ std::optional<TaskDTO> TaskService::getTask(const TaskID &id) {
   }
   return std::nullopt;
 }
-TaskService::TaskService(std::shared_ptr<AllDataStorageFactory> factory, std::shared_ptr<Persistor> persistor) :
+TaskService::TaskService(std::shared_ptr<AllDataStorageFactory> factory, std::shared_ptr<Persistor>& persistor) :
     factory_(factory), storage_(std::move(factory->create())), persistor_(persistor) {
 
 }

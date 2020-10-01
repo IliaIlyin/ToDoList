@@ -14,8 +14,9 @@ file(GLOB_RECURSE CPP_SOURCES
         "Core/API/*.cpp"
         "Core/Model/*.cpp"
         "Core/Views/*.cpp"
+        "Core/Serialization/*.cpp"
         "CLI/*.cpp")
-file(GLOB_RECURSE HEADERS "Core/API/*.h" "Core/Model/.*h" "Core/Views/.*h" "CLI/.*h")
+file(GLOB_RECURSE HEADERS "Core/API/*.h" "Core/Model/.*h" "Core/Views/.*h" "CLI/.*h" "Core/Serialization/.*h")
 file(GLOB TEST_SOURCES "Tests/*.cpp")
 include(GoogleTest)
 find_package(GTest REQUIRED)
@@ -35,7 +36,7 @@ SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRU
 add_executable(toDoList ${HEADERS} ${CPP_SOURCES} main.cpp ${PROTO_SRCS} ${PROTO_HDRS})
 
 add_executable(TestsExecutable ${TEST_SOURCES}
-                ${CPP_SOURCES} ${HEADERS} CLI/Validators/InputValidators/ExitValidator.cpp CLI/Validators/InputValidators/ExitValidator.h Core/Serialization/Serializer.h Core/Serialization/Persistor.cpp Core/Serialization/Persistor.h Core/Serialization/PersistorUtils.h Core/Serialization/PersitorUtils.cpp Core/Model/AllDataStorageFactory.cpp Core/Model/AllDataStorageFactory.h)
+                ${CPP_SOURCES} ${HEADERS} CLI/Validators/InputValidators/ExitValidator.cpp CLI/Validators/InputValidators/ExitValidator.h Core/Serialization/Serializer.h Core/Serialization/Persistor.cpp Core/Serialization/Persistor.h Core/Serialization/PersistorUtils.h Core/Serialization/PersistorUtils.cpp Core/Model/AllDataStorageFactory.cpp Core/Model/AllDataStorageFactory.h Tests/PersistorUtilsTest.cpp)
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
 
 set(Boost_USE_STATIC_LIBS OFF) # only find static libs
