@@ -3,58 +3,54 @@
 //
 #include "PersistorUtils.h"
 
-
-
-std::shared_ptr<serializer::Task> serializeToTask(const Task &task) {
-  serializer::Task result;
+protoStorage::Task serializeToTask(const Task &task) {
+  protoStorage::Task result;
   result.set_name(task.getName());
   result.set_date(task.getDate().day_number());
   result.set_priority(convertPriority(task.getPriority()));
   result.set_label(task.getLabel());
-  return std::make_shared<serializer::Task>(result);
+  return result;
 }
 
-std::shared_ptr<serializer::TaskEntity> serializeToTaskEntity(TaskEntity &entity){
-  serializer::TaskEntity result;
+protoStorage::TaskEntity serializeToTaskEntity(TaskEntity &entity) {
+  protoStorage::TaskEntity result;
   auto task = serializeToTask(entity.getTask());
-  result.set_allocated_task(task.get());
+  result.set_allocated_task(new protoStorage::Task(task));
   result.set_complete(entity.checkStatus());
   for (auto i = entity.getSubTasks().begin(); i < entity.getSubTasks().end(); i++) {
     auto subtask = result.add_subtasks();
-    subtask = serializeToTaskEntity(i->operator*()).get();
-  }
-  return std::make_shared<serializer::TaskEntity>(result);
-}
-
-serializer::Task_Priority convertPriority(Task::Priority priority) {
-  switch (priority) {
-    case Task::Priority::FIRST:return serializer::Task_Priority_FIRST;
-    case Task::Priority::SECOND:return serializer::Task_Priority_SECOND;
-    case Task::Priority::THIRD:return serializer::Task_Priority_THIRD;
-    case Task::Priority::NONE:return serializer::Task_Priority_NONE;
-  }
-}
-Task::Priority convertPriority(serializer::Task_Priority priority) {
-  switch (priority) {
-    case serializer::Task_Priority_NONE:return Task::Priority::NONE;
-    case serializer::Task_Priority_FIRST:return Task::Priority::FIRST;
-    case serializer::Task_Priority_SECOND:return Task::Priority::SECOND;
-    case serializer::Task_Priority_THIRD:return Task::Priority::THIRD;
-  }
-}
-serializer::Storage serializeToStorage(std::vector<std::shared_ptr<TaskEntity>> vec) {
-  serializer::Storage result;
-  if (vec.empty())
-    return result;
-  else {
-    for (auto i = vec.begin(); i != vec.end(); i++) {
-      auto taskToAdd = result.add_tasks();
-      taskToAdd = serializeToTaskEntity(i->operator*()).get();
-    }
+    subtask->CopyFrom(protoStorage::TaskEntity(serializeToTaskEntity(i->operator*())));
+    auto f = result.subtasks(0);
+    int x = 1;
   }
   return result;
 }
-Task deserializeFromTask(const serializer::Task &entity) {
+
+protoStorage::Task_Priority convertPriority(Task::Priority priority) {
+  switch (priority) {
+    case Task::Priority::FIRST:return protoStorage::Task_Priority_FIRST;
+    case Task::Priority::SECOND:return protoStorage::Task_Priority_SECOND;
+    case Task::Priority::THIRD:return protoStorage::Task_Priority_THIRD;
+    case Task::Priority::NONE:return protoStorage::Task_Priority_NONE;
+  }
+}
+Task::Priority convertPriority(protoStorage::Task_Priority priority) {
+  switch (priority) {
+    case protoStorage::Task_Priority_NONE:return Task::Priority::NONE;
+    case protoStorage::Task_Priority_FIRST:return Task::Priority::FIRST;
+    case protoStorage::Task_Priority_SECOND:return Task::Priority::SECOND;
+    case protoStorage::Task_Priority_THIRD:return Task::Priority::THIRD;
+  }
+}
+protoStorage::Storage serializeToStorage(std::vector<std::shared_ptr<TaskEntity>> vec) {
+  protoStorage::Storage result;
+  for (auto i = vec.begin(); i != vec.end(); i++) {
+    auto taskToAdd = result.add_tasks();
+    taskToAdd->CopyFrom(protoStorage::TaskEntity(serializeToTaskEntity(i->operator*())));
+  }
+  return result;
+}
+Task deserializeFromTask(const protoStorage::Task &entity) {
   return Task::createTask(entity.name(),
                           boost::gregorian::date(entity.date()),
                           convertPriority(entity.priority()),
@@ -62,3 +58,23 @@ Task deserializeFromTask(const serializer::Task &entity) {
 }
 
 
+void serializeTaskEntities(const protoStorage::Storage &storage,
+                                      std::shared_ptr<AllDataStorageInterface> ptr) {
+  for (int i = 0; i < storage.tasks_size(); i++) {
+    auto entity = storage.tasks(i);
+    Task t = deserializeFromTask(entity.task());
+    TaskID id = ptr->addTask(t, entity.complete());
+    serializeSubTasks(entity, id, ptr);
+  }
+}
+
+void serializeSubTasks(const protoStorage::TaskEntity &entity,
+                                  const TaskID &id,
+                                  std::shared_ptr<AllDataStorageInterface> ptr) {
+  for (int i = 0; i < entity.subtasks_size(); i++) {
+    auto subTask = entity.subtasks(i);
+    Task t2 = deserializeFromTask(subTask.task());
+    auto subTaskId = ptr->addSubTaskToParent(id, t2, subTask.complete());
+    serializeSubTasks(subTask, subTaskId.value(),ptr);
+  }
+}

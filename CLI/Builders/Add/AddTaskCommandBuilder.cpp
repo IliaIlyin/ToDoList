@@ -3,7 +3,7 @@
 //
 
 #include "AddTaskCommandBuilder.h"
-std::shared_ptr<Command> AddTaskCommandBuilder::buildCommand(std::shared_ptr<TaskService> service) {
+std::shared_ptr<Command> AddTaskCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
   InputStateMachine machine;
   InputContext context;
   std::shared_ptr<TaskNameValidator> validator=std::make_shared<TaskNameValidator>();

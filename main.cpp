@@ -3,10 +3,6 @@
 #include "States/BaseState.h"
 #include "StateMachine.h"
 int main() {
-    std::cout<<"main test"<<std::endl;
-    std::shared_ptr<int> ptr = std::make_shared<int>(42);
-    std::shared_ptr<int> ptr1=std::make_shared<int>(1);
-    ptr.swap(ptr1);
 
     std::shared_ptr<BaseStateValidator> validator=std::make_shared<BaseStateValidator>();
     std::shared_ptr<BaseState> base = std::make_shared<BaseState>(validator);

@@ -3,6 +3,6 @@
 //
 
 #include "ShowAllByLabelCommandBuilder.h"
-std::shared_ptr<Command> ShowAllByLabelCommandBuilder::buildCommand(std::shared_ptr<TaskService> service) {
+std::shared_ptr<Command> ShowAllByLabelCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
   return std::make_shared<ShowAllByLabelCommand>(service);
 }

@@ -3,7 +3,7 @@
 //
 
 #include "ShowAllByPriorityCommand.h"
-ShowAllByPriorityCommand::ShowAllByPriorityCommand(std::shared_ptr<TaskService> service) : service_(service){
+ShowAllByPriorityCommand::ShowAllByPriorityCommand(std::shared_ptr<CoreAPIInterface> service) : service_(service){
 
 }
 

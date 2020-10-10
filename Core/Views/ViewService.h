@@ -12,62 +12,41 @@
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include <vector>
 #include <memory>
+#include "ViewServiceInterface.h"
 /*
  * class to operate views
  */
-class ViewService {
+class ViewService : public ViewServiceInterface {
 
  public:
-  ViewService()=default;
+  ViewService() = default;
 
   ViewService(std::shared_ptr<GeneralView> priority_view_,
               std::shared_ptr<GeneralView> label_view_,
               std::shared_ptr<GeneralView> date_view_);
  public:
-  /*
-   * @return container of tasks that satisfy the request
-   */
-  std::vector<std::weak_ptr<TaskEntity>> showAllByPriority();
-  /*
-    * @return container of tasks that satisfy the request
-    */
-  std::vector<std::weak_ptr<TaskEntity>> showAllByLabel();
-  /*
-    * @return container of tasks that satisfy the request
-    */
-  std::vector<std::weak_ptr<TaskEntity>> showAllByDate();
-  /*
-    * @return container of tasks that satisfy the request
-    */
-  std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority();
-  /*
-    * @return container of tasks that satisfy the request
-    */
-  std::vector<std::weak_ptr<TaskEntity>> showTodayByLabel();
-  /*
-    * @return container of tasks that satisfy the request
-    */
-  std::vector<std::weak_ptr<TaskEntity>> showDueDateByPriority(boost::gregorian::date date);
-  /*
-    * @return container of tasks that satisfy the request
-    */
-  std::vector<std::weak_ptr<TaskEntity>> showDueDateByLabel(boost::gregorian::date date);
-  /*
-    * @return container of tasks that satisfy the request
-    */
-  std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(boost::gregorian::date date);
+
+  std::vector<std::weak_ptr<TaskEntity>> showAllByPriority() override;
+
+  std::vector<std::weak_ptr<TaskEntity>> showAllByLabel() override;
+
+  std::vector<std::weak_ptr<TaskEntity>> showAllByDate() override;
+
+  std::vector<std::weak_ptr<TaskEntity>> showTodayByPriority() override;
+
+  std::vector<std::weak_ptr<TaskEntity>> showTodayByLabel() override;
+
+  std::vector<std::weak_ptr<TaskEntity>> showDueDateByPriority(boost::gregorian::date date) override;
+
+  std::vector<std::weak_ptr<TaskEntity>> showDueDateByLabel(boost::gregorian::date date) override;
+
+  std::vector<std::weak_ptr<TaskEntity>> showDueDateByDate(boost::gregorian::date date) override;
 
  public:
-/*
- * cleans general_view_
- */
-  void clean();
-/*
- * insert task in the general_view_
- *
- * @return true,if the insertion was completed. False, otherwise.
- */
-  bool insert(std::shared_ptr<TaskEntity> taskEntity);
+
+  void clean() override;
+
+  bool insert(std::shared_ptr<TaskEntity> taskEntity) override;
 
  private:
   std::shared_ptr<GeneralView> priority_view_;

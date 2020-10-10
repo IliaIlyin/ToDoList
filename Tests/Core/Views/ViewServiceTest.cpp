@@ -6,6 +6,7 @@
 #include "Views/ViewService.h"
 #include <gmock/gmock.h>
 using testing::Eq;
+using testing::Return;
 
 class DateViewMock : public GeneralView {
  public:
@@ -36,7 +37,7 @@ class ViewServiceTest : public ::testing::Test {
 
 };
 
-TEST_F(ViewServiceTest, shouldAddTask) {
+TEST_F(ViewServiceTest, shouldInsertTask) {
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
   std::shared_ptr<PriorityViewMock> priority = std::make_shared<PriorityViewMock>();
@@ -48,7 +49,7 @@ TEST_F(ViewServiceTest, shouldAddTask) {
   EXPECT_CALL(date.operator*(), insert(entity)).Times(1);
   EXPECT_CALL(label.operator*(), insert(entity)).Times(1);
   EXPECT_CALL(priority.operator*(), insert(entity)).Times(1);
-  view_service.insert(entity);
+  ASSERT_EQ(view_service.insert(entity),true);
 }
 
 TEST_F(ViewServiceTest, shouldCleanTask) {
@@ -63,73 +64,83 @@ TEST_F(ViewServiceTest, shouldCleanTask) {
   EXPECT_CALL(date.operator*(), clean()).Times(1);
   EXPECT_CALL(label.operator*(), clean()).Times(1);
   EXPECT_CALL(priority.operator*(), clean()).Times(1);
+  EXPECT_CALL(date.operator*(), insert(entity)).Times(1);
+  EXPECT_CALL(label.operator*(), insert(entity)).Times(1);
+  EXPECT_CALL(priority.operator*(), insert(entity)).Times(1);
   view_service.insert(entity);
   entity.reset();
   view_service.clean();
 }
 TEST_F(ViewServiceTest, shouldShowAllByPriority) {
+  std::vector<std::weak_ptr<TaskEntity>> vec;
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
   std::shared_ptr<PriorityViewMock> priority = std::make_shared<PriorityViewMock>();
   ViewService view_service(priority, label, date);
-  EXPECT_CALL(priority.operator*(), showAll()).Times(1);
+  EXPECT_CALL(priority.operator*(), showAll()).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(label.operator*(), showAll()).Times(0);
   EXPECT_CALL(date.operator*(), showAll()).Times(0);
-  view_service.showAllByPriority();
+  ASSERT_EQ(view_service.showAllByPriority().empty(),vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowAllByDate) {
+  std::vector<std::weak_ptr<TaskEntity>> vec;
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
   std::shared_ptr<PriorityViewMock> priority = std::make_shared<PriorityViewMock>();
   ViewService view_service(priority, label, date);
   EXPECT_CALL(priority.operator*(), showAll()).Times(0);
   EXPECT_CALL(label.operator*(), showAll()).Times(0);
-  EXPECT_CALL(date.operator*(), showAll()).Times(1);
-  view_service.showAllByDate();
+  EXPECT_CALL(date.operator*(), showAll()).Times(1).WillOnce(Return(vec));
+  ASSERT_EQ(view_service.showAllByDate().empty(),vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowAllByLabel) {
+  std::vector<std::weak_ptr<TaskEntity>> vec;
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
   std::shared_ptr<PriorityViewMock> priority = std::make_shared<PriorityViewMock>();
   ViewService view_service(priority, label, date);
   EXPECT_CALL(priority.operator*(), showAll()).Times(0);
-  EXPECT_CALL(label.operator*(), showAll()).Times(1);
+  EXPECT_CALL(label.operator*(), showAll()).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(date.operator*(), showAll()).Times(0);
-  view_service.showAllByLabel();
+  ASSERT_EQ(view_service.showAllByLabel().empty(),vec.empty());
 }
 TEST_F(ViewServiceTest, shouldTodayByPriority) {
+  std::vector<std::weak_ptr<TaskEntity>> vec;
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
   std::shared_ptr<PriorityViewMock> priority = std::make_shared<PriorityViewMock>();
   ViewService view_service(priority, label, date);
-  EXPECT_CALL(priority.operator*(), showToday()).Times(1);
+  EXPECT_CALL(priority.operator*(), showToday()).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(label.operator*(), showToday()).Times(0);
   EXPECT_CALL(date.operator*(), showToday()).Times(0);
-  view_service.showTodayByPriority();
+  ASSERT_EQ(view_service.showTodayByPriority().empty(),vec.empty());
 }
 
 TEST_F(ViewServiceTest, shouldShowTodayByLabel) {
+  std::vector<std::weak_ptr<TaskEntity>> vec;
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
   std::shared_ptr<PriorityViewMock> priority = std::make_shared<PriorityViewMock>();
   ViewService view_service(priority, label, date);
   EXPECT_CALL(priority.operator*(), showToday()).Times(0);
-  EXPECT_CALL(label.operator*(), showToday()).Times(1);
+  EXPECT_CALL(label.operator*(), showToday()).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(date.operator*(), showToday()).Times(0);
-  view_service.showTodayByLabel();
+  ASSERT_EQ(view_service.showTodayByLabel().empty(),vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowDueDateByPriority) {
+  std::vector<std::weak_ptr<TaskEntity>> vec;
   boost::gregorian::date dat{2000, 11, 9};
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
   std::shared_ptr<PriorityViewMock> priority = std::make_shared<PriorityViewMock>();
   ViewService view_service(priority, label, date);
-  EXPECT_CALL(priority.operator*(), showDueDate(dat)).Times(1);
+  EXPECT_CALL(priority.operator*(), showDueDate(dat)).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(label.operator*(), showDueDate(dat)).Times(0);
   EXPECT_CALL(date.operator*(), showDueDate(dat)).Times(0);
-  view_service.showDueDateByPriority(dat);
+  ASSERT_EQ(view_service.showDueDateByPriority(dat).empty(),vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowDueDateByDate) {
+  std::vector<std::weak_ptr<TaskEntity>> vec;
   boost::gregorian::date dat{2000, 11, 9};
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
@@ -138,16 +149,17 @@ TEST_F(ViewServiceTest, shouldShowDueDateByDate) {
   EXPECT_CALL(priority.operator*(), showDueDate(dat)).Times(0);
   EXPECT_CALL(label.operator*(), showDueDate(dat)).Times(0);
   EXPECT_CALL(date.operator*(), showDueDate(dat)).Times(1);
-  view_service.showDueDateByDate(dat);
+  ASSERT_EQ(view_service.showDueDateByDate(dat).empty(),vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowDueDateByLabel) {
+  std::vector<std::weak_ptr<TaskEntity>> vec;
   boost::gregorian::date dat{2000, 11, 9};
   std::shared_ptr<DateViewMock> date = std::make_shared<DateViewMock>();
   std::shared_ptr<LabelViewMock> label = std::make_shared<LabelViewMock>();
   std::shared_ptr<PriorityViewMock> priority = std::make_shared<PriorityViewMock>();
   ViewService view_service(priority, label, date);
   EXPECT_CALL(priority.operator*(), showDueDate(dat)).Times(0);
-  EXPECT_CALL(label.operator*(), showDueDate(dat)).Times(1);
+  EXPECT_CALL(label.operator*(), showDueDate(dat)).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(date.operator*(), showDueDate(dat)).Times(0);
-  view_service.showDueDateByLabel(dat);
+  ASSERT_EQ(view_service.showDueDateByLabel(dat).empty(),vec.empty());
 }

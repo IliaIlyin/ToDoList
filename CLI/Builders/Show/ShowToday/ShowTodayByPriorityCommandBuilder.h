@@ -11,7 +11,7 @@
 #include "States/InputDataStates/TaskIdState.h"
 #include "Commands/Show/ShowToday/ShowTodayByPriorityCommand.h"
 class ShowTodayByPriorityCommandBuilder : public Builder {
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<TaskService> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
 };
 
 #endif //TODOLIST_CLI_BUILDERS_SHOW_SHOWTODAY_SHOWTODAYBYPRIORITYCOMMANDBUILDER_H_

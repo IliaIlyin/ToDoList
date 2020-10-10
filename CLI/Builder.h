@@ -6,7 +6,7 @@
 #define TODOLIST_CLI_BUILDER_H_
 #include <memory>
 #include "Command.h"
-#include "API/TaskService.h"
+#include "API/CoreAPIInterface.h"
 
 /*
  * interface to classes that build users commands.
@@ -23,7 +23,7 @@ class Builder{
    *
    * @return pointer to the built command
    */
-  virtual std::shared_ptr<Command> buildCommand(std::shared_ptr<TaskService> service)=0;
+  virtual std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service)=0;
 };
 
 #endif //TODOLIST_CLI_BUILDER_H_

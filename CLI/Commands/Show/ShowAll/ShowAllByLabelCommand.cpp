@@ -3,7 +3,7 @@
 //
 
 #include "ShowAllByLabelCommand.h"
-ShowAllByLabelCommand::ShowAllByLabelCommand(std::shared_ptr<TaskService> service) : service_(service) {
+ShowAllByLabelCommand::ShowAllByLabelCommand(std::shared_ptr<CoreAPIInterface> service) : service_(service) {
 
 }
 void ShowAllByLabelCommand::execute() {

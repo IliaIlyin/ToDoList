@@ -12,7 +12,7 @@
 #include "Commands/Show/ShowToday/ShowTodayByLabelCommand.h"
 
 class ShowTodayByLabelCommandBuilder: public Builder  {
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<TaskService> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
 
 };
 

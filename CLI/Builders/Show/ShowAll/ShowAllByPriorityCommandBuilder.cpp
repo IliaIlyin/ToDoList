@@ -3,6 +3,6 @@
 //
 
 #include "ShowAllByPriorityCommandBuilder.h"
-std::shared_ptr<Command> ShowAllByPriorityCommandBuilder::buildCommand(std::shared_ptr<TaskService> service) {
+std::shared_ptr<Command> ShowAllByPriorityCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
   return std::make_shared<ShowAllByPriorityCommand>(service);
 }

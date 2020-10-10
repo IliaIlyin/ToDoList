@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(toDoList LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
+set(-Dgtest_disable_pthreads=ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
@@ -17,7 +18,7 @@ file(GLOB_RECURSE CPP_SOURCES
         "Core/Serialization/*.cpp"
         "CLI/*.cpp")
 file(GLOB_RECURSE HEADERS "Core/API/*.h" "Core/Model/.*h" "Core/Views/.*h" "CLI/.*h" "Core/Serialization/.*h")
-file(GLOB TEST_SOURCES "Tests/*.cpp")
+file(GLOB_RECURSE TEST_SOURCES "Tests/*.cpp")
 include(GoogleTest)
 find_package(GTest REQUIRED)
 include_directories(${GMOCK_INCLUDE_DIR})
@@ -36,7 +37,7 @@ SET_SOURCE_FILES_PROPERTIES(${PROTO_SRCS} ${PROTO_HDRS} PROPERTIES GENERATED TRU
 add_executable(toDoList ${HEADERS} ${CPP_SOURCES} main.cpp ${PROTO_SRCS} ${PROTO_HDRS})
 
 add_executable(TestsExecutable ${TEST_SOURCES}
-                ${CPP_SOURCES} ${HEADERS} CLI/Validators/InputValidators/ExitValidator.cpp CLI/Validators/InputValidators/ExitValidator.h Core/Serialization/Serializer.h Core/Serialization/Persistor.cpp Core/Serialization/Persistor.h Core/Serialization/PersistorUtils.h Core/Serialization/PersistorUtils.cpp Core/Model/AllDataStorageFactory.cpp Core/Model/AllDataStorageFactory.h Tests/PersistorUtilsTest.cpp)
+                ${CPP_SOURCES} ${HEADERS} ${PROTO_SRCS} ${PROTO_HDRS} Tests/Core/Serialization/PersistorTest.cpp Core/Model/AllDataStorageFactoryInterface.h Core/API/CoreAPIInterface.h Tests/Core/Model/AllDataStorageTest.cpp Core/Views/ViewServiceInterface.h Tests/Core/Model/AllDataStorageFactoryTest.cpp)
 target_link_libraries(TestsExecutable GTest::GTest GTest::Main ${GMOCK_LIBRARY} ${GMOCK_MAIN_LIBRARY})
 
 set(Boost_USE_STATIC_LIBS OFF) # only find static libs
@@ -54,5 +55,7 @@ endif ()
 
 target_link_libraries(toDoList ${Boost_LIBRARIES})
 target_link_libraries(TestsExecutable ${Boost_LIBRARIES})
+target_link_libraries(TestsExecutable gmock gmock_main)
+target_link_libraries(TestsExecutable ${Protobuf_LIBRARIES})
 target_link_libraries(toDoList ${Protobuf_LIBRARIES})
 gtest_discover_tests(TestsExecutable)

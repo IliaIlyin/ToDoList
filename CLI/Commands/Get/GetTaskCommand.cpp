@@ -4,7 +4,7 @@
 
 #include "GetTaskCommand.h"
 
-GetTaskCommand::GetTaskCommand(std::shared_ptr<TaskService> service, const TaskID &id) : service_(service), id_(id) {
+GetTaskCommand::GetTaskCommand(std::shared_ptr<CoreAPIInterface> service, const TaskID &id) : service_(service), id_(id) {
 }
 
 void GetTaskCommand::execute() {

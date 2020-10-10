@@ -4,7 +4,7 @@
 
 #include "AddSubTaskCommand.h"
 
-AddSubTaskCommand::AddSubTaskCommand(std::shared_ptr<TaskService> service, const TaskID &parent, const Task &child)
+AddSubTaskCommand::AddSubTaskCommand(std::shared_ptr<CoreAPIInterface> service, const TaskID &parent, const Task &child)
     : service_(service), parent_(parent), child_(child) {
 
 }

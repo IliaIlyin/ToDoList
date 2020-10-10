@@ -4,7 +4,7 @@
 
 #include "ShowDueDateByLabelCommand.h"
 
-ShowDueDateByLabelCommand::ShowDueDateByLabelCommand(std::shared_ptr<TaskService> service, boost::gregorian::date date)
+ShowDueDateByLabelCommand::ShowDueDateByLabelCommand(std::shared_ptr<CoreAPIInterface> service, boost::gregorian::date date)
     : service_(service), date_(date) {
 }
 void ShowDueDateByLabelCommand::execute() {

@@ -3,7 +3,7 @@
 //
 
 #include "ShowTodayByPriorityCommand.h"
-ShowTodayByPriorityCommand::ShowTodayByPriorityCommand(std::shared_ptr<TaskService> service)
+ShowTodayByPriorityCommand::ShowTodayByPriorityCommand(std::shared_ptr<CoreAPIInterface> service)
     : service_(service) {
 }
 void ShowTodayByPriorityCommand::execute() {

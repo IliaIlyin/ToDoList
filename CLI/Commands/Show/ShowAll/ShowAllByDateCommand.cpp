@@ -3,7 +3,7 @@
 //
 
 #include "Commands/Show/ShowAll/ShowAllByDateCommand.h"
-ShowAllByDateCommand::ShowAllByDateCommand(std::shared_ptr<TaskService> service) : service_(service){
+ShowAllByDateCommand::ShowAllByDateCommand(std::shared_ptr<CoreAPIInterface> service) : service_(service){
 
 }
 

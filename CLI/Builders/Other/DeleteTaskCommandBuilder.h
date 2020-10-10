@@ -14,7 +14,7 @@
 #include "Commands/Other/DeleteTaskCommand.h"
 
 class DeleteTaskCommandBuilder : public Builder{
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<TaskService> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
 
 };
 

@@ -5,7 +5,7 @@
 #include "AddTaskCommand.h"
 
 
-AddTaskCommand::AddTaskCommand(std::shared_ptr<TaskService> service, const Task &parent)
+AddTaskCommand::AddTaskCommand(std::shared_ptr<CoreAPIInterface> service, const Task &parent)
     : service_(service), parent_(parent) {
 }
 

@@ -4,7 +4,7 @@
 
 #include "ShowDueDateByPriorityCommand.h"
 
-ShowDueDateByPriorityCommand::ShowDueDateByPriorityCommand(std::shared_ptr<TaskService> service,
+ShowDueDateByPriorityCommand::ShowDueDateByPriorityCommand(std::shared_ptr<CoreAPIInterface> service,
                                                            boost::gregorian::date date)
     : service_(service), date_(date) {
 }

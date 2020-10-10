@@ -3,7 +3,7 @@
 //
 
 #include "CompleteTaskCommand.h"
-CompleteTaskCommand::CompleteTaskCommand(std::shared_ptr<TaskService> service, const TaskID &id)
+CompleteTaskCommand::CompleteTaskCommand(std::shared_ptr<CoreAPIInterface> service, const TaskID &id)
     : service_(service), task_id_(id) {
 
 }

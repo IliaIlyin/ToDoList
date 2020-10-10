@@ -3,7 +3,7 @@
 //
 
 #include "DeleteTaskCommandBuilder.h"
-std::shared_ptr<Command> DeleteTaskCommandBuilder::buildCommand(std::shared_ptr<TaskService> service) {
+std::shared_ptr<Command> DeleteTaskCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
   InputStateMachine machine;
   InputContext context;
   std::shared_ptr<TaskIdValidator> validator=std::make_shared<TaskIdValidator>();

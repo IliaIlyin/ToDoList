@@ -10,6 +10,7 @@
 #include "Factories/VisitorFactory.h"
 #include "States/BaseState.h"
 #include "Factories/BuilderFactory.h"
+#include "API/CoreAPI.h"
 /*
  * state machine that operates states that operate users' commands
  *

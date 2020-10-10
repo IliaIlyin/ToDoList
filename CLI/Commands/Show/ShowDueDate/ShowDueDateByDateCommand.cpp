@@ -3,7 +3,7 @@
 //
 
 #include "ShowDueDateByDateCommand.h"
-ShowDueDateByDateCommand::ShowDueDateByDateCommand(std::shared_ptr<TaskService> service, boost::gregorian::date date)
+ShowDueDateByDateCommand::ShowDueDateByDateCommand(std::shared_ptr<CoreAPIInterface> service, boost::gregorian::date date)
     : service_(service), date_(date) {
 }
 void ShowDueDateByDateCommand::execute() {

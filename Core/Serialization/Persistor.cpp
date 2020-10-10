@@ -6,7 +6,7 @@
 
 bool Persistor::Save() {
   auto tasks = storage_->getAllTasks();
-  serializer::Storage storage(serializeToStorage(tasks));
+  protoStorage::Storage storage(serializeToStorage(tasks));
   if (!storage.SerializeToOstream(stream_.get())) {
     std::cout << "Failed to serialize" << std::endl;
     return false;
@@ -15,8 +15,7 @@ bool Persistor::Save() {
 }
 
 bool Persistor::Load() {
-
-  serializer::Storage storage;
+  protoStorage::Storage storage;
   if (!storage.ParseFromIstream(stream_.get())) {
     std::cout << "Could not read the file" << std::endl;
     return false;
@@ -27,30 +26,9 @@ bool Persistor::Load() {
   return true;
 }
 
-void Persistor::serializeTaskEntities(const serializer::Storage &storage,
-                                      std::shared_ptr<AllDataStorageInterface> ptr) {
-  for (int i = 0; i < storage.tasks_size(); i++) {
-    auto entity = storage.tasks(i);
-    Task t = deserializeFromTask(entity.task());
-    TaskID id = ptr->addTask(t, entity.complete());
-    serializeSubTasks(entity, id, ptr);
-  }
-}
-
-void Persistor::serializeSubTasks(const serializer::TaskEntity &entity,
-                                  const TaskID &id,
-                                  std::shared_ptr<AllDataStorageInterface> ptr) {
-  for (int i = 0; i < entity.subtasks_size(); i++) {
-    auto subTask = entity.subtasks(i);
-    Task t2 = deserializeFromTask(subTask.task());
-    auto subTaskId = ptr->addSubTaskToParent(id, t2, subTask.complete());
-    serializeSubTasks(subTask, subTaskId.value(),ptr);
-  }
-}
-
 Persistor::Persistor(std::shared_ptr<std::iostream> stream,
                      std::shared_ptr<AllDataStorageInterface> storage,
-                     std::shared_ptr<AllDataStorageFactory> factory) :
+                     std::shared_ptr<AllDataStorageFactoryInterface> factory) :
     stream_(stream),
     storage_(storage),
     factory_(factory) {

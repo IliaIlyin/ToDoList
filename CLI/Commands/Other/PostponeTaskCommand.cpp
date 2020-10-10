@@ -3,7 +3,7 @@
 //
 
 #include "PostponeTaskCommand.h"
-PostponeTaskCommand::PostponeTaskCommand(std::shared_ptr<TaskService> service,
+PostponeTaskCommand::PostponeTaskCommand(std::shared_ptr<CoreAPIInterface> service,
                                          const TaskID &id,
                                          const boost::gregorian::date &date) : service_(service), id_(id), date_(date) {
 

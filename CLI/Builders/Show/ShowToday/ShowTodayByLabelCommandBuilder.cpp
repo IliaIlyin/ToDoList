@@ -3,6 +3,6 @@
 //
 
 #include "ShowTodayByLabelCommandBuilder.h"
-std::shared_ptr<Command> ShowTodayByLabelCommandBuilder::buildCommand(std::shared_ptr<TaskService> service) {
+std::shared_ptr<Command> ShowTodayByLabelCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
   return std::make_shared<ShowTodayByLabelCommand>(service);
 }

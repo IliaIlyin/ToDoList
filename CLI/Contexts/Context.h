@@ -9,7 +9,7 @@
 #include <optional>
 #include <map>
 #include "API/TaskDTO.h"
-#include "API/TaskService.h"
+#include "API/CoreAPIInterface.h"
 /*
  * class to represent the context of the StateMachine that operates commands
  *

@@ -4,7 +4,7 @@
 
 #include "StateMachine.h"
 void StateMachine::run() {
-  std::shared_ptr<TaskService> service = std::make_shared<TaskService>();
+  std::shared_ptr<CoreAPIInterface> service = std::make_shared<CoreAPI>(CoreAPI::create());
   while (true) {
     state_->print(context_);
     auto token = state_->read();

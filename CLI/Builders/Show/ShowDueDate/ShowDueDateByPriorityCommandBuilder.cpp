@@ -3,7 +3,7 @@
 //
 
 #include "ShowDueDateByPriorityCommandBuilder.h"
-std::shared_ptr<Command> ShowDueDateByPriorityCommandBuilder::buildCommand(std::shared_ptr<TaskService> service) {
+std::shared_ptr<Command> ShowDueDateByPriorityCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
   InputContext context;
   InputStateMachine machine;
   std::shared_ptr<DateValidator> validator=std::make_shared<DateValidator>();;

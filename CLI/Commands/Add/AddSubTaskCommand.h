@@ -5,14 +5,14 @@
 #ifndef TODOLIST_CLI_COMMANDS_ADDSUBTASKCOMMAND_H_
 #define TODOLIST_CLI_COMMANDS_ADDSUBTASKCOMMAND_H_
 
-#include "API/TaskService.h"
+#include "API/CoreAPIInterface.h"
 #include "Command.h"
 #include "Visitor.h"
 #include <memory>
 class AddSubTaskCommand : public Command {
 
  public:
-  AddSubTaskCommand(std::shared_ptr<TaskService> service, const TaskID &parent, const Task &child);
+  AddSubTaskCommand(std::shared_ptr<CoreAPIInterface> service, const TaskID &parent, const Task &child);
 
  public:
   void execute() override;
@@ -22,7 +22,7 @@ class AddSubTaskCommand : public Command {
   bool getAddSubTaskResult() const;
 
  private:
-  std::shared_ptr<TaskService> service_;
+  std::shared_ptr<CoreAPIInterface> service_;
   TaskID parent_;
   Task child_;
 

@@ -14,7 +14,7 @@
 #include "Commands/CancelCommand.h"
 #include "Commands/Get/GetSubtasksCommand.h"
 class GetSubTasksCommandBuilder : public Builder {
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<TaskService> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
 };
 
 #endif //TODOLIST_CLI_BUILDERS_GET_GETSUBTASKSCOMMANDBUILDER_H_

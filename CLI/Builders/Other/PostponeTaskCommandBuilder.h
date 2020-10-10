@@ -17,7 +17,7 @@
 
 class PostponeTaskCommandBuilder : public Builder{
  public:
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<TaskService> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
 };
 
 #endif //TODOLIST_CLI_BUILDERS_OTHER_POSTPONETASKCOMMANDBUILDER_H_

@@ -47,60 +47,60 @@ bool TaskService::addSubTaskToParent(const TaskID &parent, Task &task) {
   return false;
 }
 
-std::vector<TaskDTO> TaskService::showAllByPriority() {
-  ViewService service = storage_->getViewService();
-  return dtoConvertor::convert(service.showAllByPriority());
-}
-
-std::vector<TaskDTO> TaskService::showAllByLabel() {
+std::vector<std::weak_ptr<TaskEntity>> TaskService::showAllByPriority() {
   auto service = storage_->getViewService();
-  return dtoConvertor::convert(service.showAllByLabel());
+  return (service->showAllByPriority());
 }
 
-std::vector<TaskDTO> TaskService::showAllByDate() {
+std::vector<std::weak_ptr<TaskEntity>>  TaskService::showAllByLabel() {
   auto service = storage_->getViewService();
-  return dtoConvertor::convert(service.showAllByDate());
+  return (service->showAllByLabel());
 }
 
-std::vector<TaskDTO> TaskService::showTodayByPriority() {
+std::vector<std::weak_ptr<TaskEntity>>  TaskService::showAllByDate() {
   auto service = storage_->getViewService();
-  return dtoConvertor::convert(service.showTodayByPriority());
+  return (service->showAllByDate());
 }
 
-std::vector<TaskDTO> TaskService::showTodayByLabel() {
+std::vector<std::weak_ptr<TaskEntity>>  TaskService::showTodayByPriority() {
   auto service = storage_->getViewService();
-  return dtoConvertor::convert(service.showTodayByLabel());
+  return (service->showTodayByPriority());
 }
 
-std::vector<TaskDTO> TaskService::showDueDateByPriority(boost::gregorian::date date) {
+std::vector<std::weak_ptr<TaskEntity>>  TaskService::showTodayByLabel() {
   auto service = storage_->getViewService();
-  return dtoConvertor::convert(service.showDueDateByPriority(date));
+  return (service->showTodayByLabel());
 }
 
-std::vector<TaskDTO> TaskService::showDueDateByLabel(boost::gregorian::date date) {
+std::vector<std::weak_ptr<TaskEntity>>  TaskService::showDueDateByPriority(boost::gregorian::date date) {
   auto service = storage_->getViewService();
-  return dtoConvertor::convert(service.showDueDateByLabel(date));
+  return (service->showDueDateByPriority(date));
 }
 
-std::vector<TaskDTO> TaskService::showDueDateByDate(boost::gregorian::date date) {
+std::vector<std::weak_ptr<TaskEntity>>  TaskService::showDueDateByLabel(boost::gregorian::date date) {
   auto service = storage_->getViewService();
-  return dtoConvertor::convert(service.showDueDateByDate(date));
+  return (service->showDueDateByLabel(date));
 }
 
-std::optional<std::vector<TaskDTO>> TaskService::getSubTasks(const TaskID &id) {
+std::vector<std::weak_ptr<TaskEntity>> TaskService::showDueDateByDate(boost::gregorian::date date) {
+  auto service = storage_->getViewService();
+  return (service->showDueDateByDate(date));
+}
+
+std::optional<std::vector<std::shared_ptr<TaskEntity>>> TaskService::getSubTasks(const TaskID &id) {
   auto it = storage_->getSubTasks(id);
   if (it.has_value()) {
     std::vector<std::shared_ptr<TaskEntity>> vector = it.value();
-    return dtoConvertor::convert(vector);
+    return (vector);
   }
   return std::nullopt;
 }
 
-std::optional<TaskDTO> TaskService::getTask(const TaskID &id) {
+std::optional<TaskEntity> TaskService::getTask(const TaskID &id) {
   auto it = storage_->getTask(id);
   if (it.has_value()) {
     std::shared_ptr<TaskEntity> ptr = it.value();
-    return dtoConvertor::convert(ptr.operator*());
+    return (ptr.operator*());
   }
   return std::nullopt;
 }
@@ -108,16 +108,14 @@ TaskService::TaskService(std::shared_ptr<AllDataStorageFactory> factory, std::sh
     factory_(factory), storage_(std::move(factory->create())), persistor_(persistor) {
 
 }
-TaskService::TaskService() {
-  factory_ = std::make_shared<AllDataStorageFactory>();
-  storage_ = std::move(factory_->create());
-  persistor_ = std::shared_ptr<Persistor>();
-}
+
 bool TaskService::save(std::string fileName) {
     std::shared_ptr<std::fstream> file = std::make_shared<std::fstream>(fileName);
     if(file->is_open()){
        persistor_=std::make_shared<Persistor>(file,storage_,factory_);
-       return persistor_->Save();
+       auto res= persistor_->Save();
+       file->close();
+       return res;
     }
     return false;
 }
@@ -125,7 +123,9 @@ bool TaskService::load(std::string fileName) {
   std::shared_ptr<std::fstream> file = std::make_shared<std::fstream>(fileName);
   if(file->is_open()){
     persistor_=std::make_shared<Persistor>(file,storage_,factory_);
-    return persistor_->Load();
+    auto res =  persistor_->Load();
+    file->close();
+    return res;
   }
   return false;
 }

@@ -9,16 +9,18 @@ using testing::Eq;
 class StorageTest : public ::testing::Test {
 
 };
-TEST(StorageTest, shouldAddTask) {
+
+TEST_F(StorageTest, shouldAddTask) {
   Storage storage;
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   IdGenerator idGenerator;
   TaskEntity taskEntity = TaskEntity::createTaskEntity(task, idGenerator);
-  EXPECT_NO_THROW(storage.addTask(taskEntity));
-  ASSERT_EQ(taskEntity, storage.addTask(taskEntity).operator*());
-  ASSERT_EQ(taskEntity, storage.addTask(taskEntity).operator*());
+  auto res = storage.addTask(taskEntity);
+  ASSERT_EQ(res.operator*(), taskEntity);
+  ASSERT_EQ(res.get(), storage.addTask(taskEntity).get());
 }
-TEST(StorageTest, shouldDeleteTask) {
+
+TEST_F(StorageTest, shouldDeleteTask) {
   Storage storage;
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   IdGenerator idGenerator;
@@ -29,7 +31,8 @@ TEST(StorageTest, shouldDeleteTask) {
   ASSERT_EQ(false,storage.deleteTask(id));
   EXPECT_NO_THROW(storage.deleteTask(id));
 }
-TEST(StorageTest, shouldGetTask) {
+
+TEST_F(StorageTest, shouldGetTask) {
   Storage storage;
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   IdGenerator idGenerator;
@@ -40,7 +43,24 @@ TEST(StorageTest, shouldGetTask) {
   TaskID id2(1);
   storage.addTask(taskEntity);
   EXPECT_NO_THROW(storage.getTask(taskEntity.getTaskId()));
-  ASSERT_EQ(nullptr,storage.getTask(id));
+  ASSERT_EQ(std::nullopt,storage.getTask(id));
   ASSERT_EQ(entity,storage.getTask(id2));
   ASSERT_EQ(taskEntity,storage.getTask(taskEntity.getTaskId())->operator*());
+}
+
+TEST_F(StorageTest,shouldGetAllTasks){
+  Storage storage;
+  std::vector<std::shared_ptr<TaskEntity>> vec;
+  ASSERT_EQ(storage.getAllTasks(),vec);
+  Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
+  IdGenerator idGenerator;
+  TaskEntity taskEntity = TaskEntity::createTaskEntity(task,idGenerator);
+  Task task2 = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
+  TaskEntity taskEntity2 = TaskEntity::createTaskEntity(task2,idGenerator);
+  storage.addTask(taskEntity);
+  storage.addTask(taskEntity2);
+  auto vec2=storage.getAllTasks();
+  ASSERT_EQ(vec2.size(),2);
+  ASSERT_EQ(vec2[1].operator*(),taskEntity);
+  ASSERT_EQ(vec2[0].operator*(),taskEntity2);
 }

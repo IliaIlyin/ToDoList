@@ -13,7 +13,7 @@
 #include "States/InputDataStates/ExitState.h"
 #include "Validators/InputValidators/ExitValidator.h"
 class GetTaskCommandBuilder : public Builder {
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<TaskService> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
 };
 
 #endif //TODOLIST_CLI_BUILDERS_GET_GETTASKCOMMANDBUILDER_H_
