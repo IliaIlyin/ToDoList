@@ -8,10 +8,10 @@
 class InputStateMachineMock : public InputStateMachineInterface {
  public:
   MOCK_METHOD(GeneralInputValidator::InputToken,
-      run,
-  (),
-  (override));
+              run,
+              (),
+              (override));
   MOCK_METHOD(InputContext, GetContext,
-  (), (const override));
+              (), (const override));
 };
 #endif //TODOLIST_TESTS_CLI_MOCKS_INPUTSTATEMACHINE_H_

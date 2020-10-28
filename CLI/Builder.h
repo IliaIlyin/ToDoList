@@ -10,7 +10,7 @@
 #include "CoreService.pb.h"
 
 /*
- * interface to classes that build users commands.
+ * interface for classes that build users commands.
  *
  * @author Ilya Ilyin
  */

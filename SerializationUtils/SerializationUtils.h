@@ -14,7 +14,9 @@
 #include "Model/TaskEntity.h"
 #include <memory>
 #include <vector>
-
+/*
+ * list of free functions to work with protobuf files
+ */
 boost::gregorian::date convertDate(protoStorage::TaskDate);
 protoStorage::TaskDate convertDate(boost::gregorian::date);
 

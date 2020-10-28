@@ -27,7 +27,7 @@ class TaskServiceInterface {
   /*
    * saves all tasks to the file
    *
-   * @input fileName name of file to save to
+   * @param fileName name of file to save to
    *
    * @return true, if saving was successful
    * @return false, otherwise
@@ -36,7 +36,7 @@ class TaskServiceInterface {
   /*
    * loads tasks from file
    *
-   * @input fileName name of file to load from
+   * @param fileName name of file to load from
    *
    * @return true, if loading was successful
    * @return false, otherwise

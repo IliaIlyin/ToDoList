@@ -20,9 +20,6 @@ class InputStateMachineInterface {
 /*
  * run state machine
  *
- * @input pointer to the state to begin with
- * @input context to fill
- *
  * @return GeneralInputValidator::InputToken::SUCCESS if the machine run was completed successfully
  * @return GeneralInputValidator::InputToken::CANCEL_COMMAND if the user decided to cancel the command
  */

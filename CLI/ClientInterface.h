@@ -19,7 +19,25 @@
 class ClientInterface {
  public:
   virtual ~ClientInterface() = default;
+  /*
+   *
+ * saves all tasks to the file
+ *
+ * @param name of file to save to
+ *
+ * @return true, if saving was successful
+ * @return false, otherwise
+   */
   virtual bool save(std::string fileName) = 0;
+  /*
+   *
+ * loads all tasks to the file
+ *
+ * @param name of file to save to
+ *
+ * @return true, if saving was successful
+ * @return false, otherwise
+   */
   virtual bool load(std::string fileName) = 0;
  public:
 /*

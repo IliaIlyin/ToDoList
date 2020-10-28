@@ -33,6 +33,6 @@ TEST_F(StateMachineTest, shouldExitStateMachine) {
   StateMachine machine(begin, context, builder_mock, visitor_mock, inputer, core, creator);
 //  EXPECT_CALL(begin.operator*(), print(context, inputer)).Times(1);
 //  EXPECT_CALL(begin.operator*(), read(inputer)).Times(1).WillOnce(Return(GeneralCommandsValidator::CommandToken::EXIT));
- // EXPECT_CALL(inputer.operator*(), print("Exiting. Thanks for using!")).Times(1);
+  // EXPECT_CALL(inputer.operator*(), print("Exiting. Thanks for using!")).Times(1);
 //  machine.run();
 }
