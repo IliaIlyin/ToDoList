@@ -3,6 +3,7 @@
 //
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <CLI/Mocks/IOStreamMock.h>
 #include "Visitors/Add/AddTaskCommandVisitor.h"
 #include "Core/Mocks/CoreAPIMock.h"
 using testing::Eq;
@@ -13,7 +14,8 @@ class AddTaskCommandVisitorTest : public testing::Test {
 
 };
 TEST_F(AddTaskCommandVisitorTest, shouldVisitAddTask) {
-  AddTaskCommandVisitor visitor;
+  std::shared_ptr<IOStreamInterface> inputer = std::make_shared<IOStreamMock>();
+  AddTaskCommandVisitor visitor(inputer);
   auto service = std::make_shared<CoreAPIMock>();
   Task task = Task::createTask("Elon", boost::gregorian::date{2000, 11, 11}, Task::Priority::FIRST, "label");
   EXPECT_CALL(service.operator*(), addTask(task)).Times(1).WillOnce(Return(true));

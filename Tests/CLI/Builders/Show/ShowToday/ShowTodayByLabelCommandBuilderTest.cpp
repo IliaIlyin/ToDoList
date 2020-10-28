@@ -17,15 +17,13 @@ using testing::Return;
 using testing::ReturnRef;
 using testing::Mock;
 
-
-
 class ShowTodayByLabelCommandBuilderTest : public testing::Test {
 
 };
 
 TEST_F(ShowTodayByLabelCommandBuilderTest, shouldCreateShowTodayByLabelCommand) {
-  auto service =  std::make_shared<CoreAPIMock>();
+  auto service = std::make_shared<CoreAPIMock>();
   ShowTodayByLabelCommandBuilder builder;
   auto res = builder.buildCommand(service);
-  ASSERT_NE(res.get(),nullptr);
+  ASSERT_NE(res.get(), nullptr);
 }

@@ -13,6 +13,7 @@ template<typename T>
 class Validator {
 
  public:
+  virtual ~Validator() = default;
   /*
    * method that validates strings as commands or task data
    */

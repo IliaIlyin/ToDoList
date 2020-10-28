@@ -14,7 +14,7 @@
 #include "Validators/InputValidators/ExitValidator.h"
 class GetTaskCommandBuilder : public Builder {
  public:
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<ClientInterface> service) override;
  public:
   GetTaskCommandBuilder(std::unique_ptr<InputStateMachineInterface> machine);
  private:

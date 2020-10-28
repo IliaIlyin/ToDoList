@@ -3,6 +3,6 @@
 //
 
 #include "ShowAllByDateCommandBuilder.h"
-std::shared_ptr<Command> ShowAllByDateCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
+std::shared_ptr<Command> ShowAllByDateCommandBuilder::buildCommand(std::shared_ptr<ClientInterface> service) {
   return std::make_shared<ShowAllByDateCommand>(service);
 }

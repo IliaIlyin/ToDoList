@@ -9,7 +9,8 @@
 #include "Commands/Add/AddSubTaskCommand.h"
 
 class AddSubTaskCommandVisitor : public Visitor {
-
+ public:
+  AddSubTaskCommandVisitor(const std::shared_ptr<IOStreamInterface> &outputer);
  public:
   void visitAddTaskCommand(AddTaskCommand &command) override {};
   void visitAddSubTaskCommand(AddSubTaskCommand &command) override;
@@ -40,6 +41,8 @@ class AddSubTaskCommandVisitor : public Visitor {
  public:
   void visitSaveCommand(SaveCommand &command) override {};
   void visitLoadCommand(LoadCommand &command) override {};
+ private:
+  std::shared_ptr<IOStreamInterface> outputer_;
 };
 
 #endif //TODOLIST_CLI_VISITORS_ADD_ADDSUBTASKCOMMANDVISITOR_H_

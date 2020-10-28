@@ -20,18 +20,18 @@
 class InputContextInterface {
 
  public:
-  virtual void setId(const TaskID &id)=0;
-  virtual void setName(const std::string &name)=0;
-  virtual void setDate(const boost::gregorian::date &date)=0;
-  virtual void setPriority(Task::Priority priority)=0;
-  virtual void setLabel(const std::string &label)=0;
+  virtual void setId(const TaskID &id) = 0;
+  virtual void setName(const std::string &name) = 0;
+  virtual void setDate(const boost::gregorian::date &date) = 0;
+  virtual void setPriority(Task::Priority priority) = 0;
+  virtual void setLabel(const std::string &label) = 0;
 
  public:
-  virtual  const std::string &getName() const=0;
-  virtual  const boost::gregorian::date &getDate() const=0;
-  virtual  Task::Priority getPriority() const=0;
-  virtual const std::string &getLabel() const=0;
-  virtual const TaskID &getId() const=0;
-  
+  virtual const std::string &getName() const = 0;
+  virtual const boost::gregorian::date &getDate() const = 0;
+  virtual Task::Priority getPriority() const = 0;
+  virtual const std::string &getLabel() const = 0;
+  virtual const TaskID &getId() const = 0;
+
 };
 #endif //TODOLIST_CLI_CONTEXTS_INPUTCONTEXTINTERFACE_H_

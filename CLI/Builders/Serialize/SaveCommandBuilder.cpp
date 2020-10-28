@@ -3,7 +3,7 @@
 //
 
 #include "SaveCommandBuilder.h"
-std::shared_ptr<Command> SaveCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
+std::shared_ptr<Command> SaveCommandBuilder::buildCommand(std::shared_ptr<ClientInterface> service) {
   if (machine_->run() == GeneralInputValidator::InputToken::SUCCESS) {
     auto context = machine_->GetContext();
     std::string fileName = context.getLabel();

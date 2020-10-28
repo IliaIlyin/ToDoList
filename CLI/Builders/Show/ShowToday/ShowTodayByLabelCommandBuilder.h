@@ -13,7 +13,7 @@
 
 class ShowTodayByLabelCommandBuilder : public Builder {
  public:
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<ClientInterface> service) override;
 };
 
 #endif //TODOLIST_CLI_BUILDERS_SHOW_SHOWTODAY_SHOWTODAYBYLABELCOMMANDBUILDER_H_

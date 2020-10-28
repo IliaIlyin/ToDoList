@@ -10,14 +10,14 @@
  *
  * @author Ilya Ilyin
  */
-class AllDataStorageFactoryInterface{
+class AllDataStorageFactoryInterface {
  public:
   /*
    * creates AllDataStorageObject
    *
    * @return pointer to the created object
    */
-  virtual std::shared_ptr<AllDataStorageInterface> create()=0;
-  virtual ~AllDataStorageFactoryInterface()=default;
+  virtual std::shared_ptr<AllDataStorageInterface> create() = 0;
+  virtual ~AllDataStorageFactoryInterface() = default;
 };
 #endif //TODOLIST_CORE_MODEL_ALLDATASTORAGEFACTORYINTERFACE_H_

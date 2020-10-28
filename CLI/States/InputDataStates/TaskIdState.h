@@ -23,10 +23,10 @@ class TaskIdState : public InputState {
   };
 
  public:
-  GeneralInputValidator::InputToken read() override {
+  GeneralInputValidator::InputToken read(std::shared_ptr<IOStreamInterface> inputer) override {
     std::string s;
-    std::cout << "Input task id or write cancel command to cancel command" << std::endl;
-    std::getline(std::cin, s);
+    inputer->print("Input task id or write cancel command to cancel command");
+    s = inputer->input();
     if (validator_->validate(s) == GeneralInputValidator::InputToken::CORRECT)
       this->id_ = TaskID(std::stoi(s));
     return validator_->validate(s);

@@ -3,10 +3,10 @@
 //
 
 #include "TaskLabelState.h"
-GeneralInputValidator::InputToken TaskLabelState::read() {
+GeneralInputValidator::InputToken TaskLabelState::read(std::shared_ptr<IOStreamInterface> inputer) {
   std::string s;
-  std::cout << print_line_ << std::endl;
-  std::getline(std::cin, s);
+  inputer->print(print_line_);
+  s = inputer->input();
   if (validator_->validate(s) == GeneralInputValidator::InputToken::CORRECT)
     this->label_ = s;
   return validator_->validate(s);

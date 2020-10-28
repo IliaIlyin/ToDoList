@@ -25,7 +25,7 @@ class TaskNameState : public InputState {
   TaskNameState(std::shared_ptr<Validator<GeneralInputValidator::InputToken>> validator);
 
  public:
-  GeneralInputValidator::InputToken read() override;
+  GeneralInputValidator::InputToken read(std::shared_ptr<IOStreamInterface> inputer) override;
   std::shared_ptr<InputState> changeState() override;
   InputContext fillContext(const InputContext &context) override;
 

@@ -23,15 +23,16 @@ TEST_F(AddSubTaskCommandTest, shouldExecuteCommand) {
   auto service = std::make_shared<CoreAPIMock>();
   TaskID id(1);
   Task parent = Task::createTask("Elon", boost::gregorian::date{2000, 11, 11}, Task::Priority::FIRST, "label");
-  EXPECT_CALL(service.operator*(), addSubTaskToParent(id,parent)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  AddSubTaskCommand command(service,id, parent);
+  EXPECT_CALL(service.operator*(),
+              addSubTaskToParent(id, parent)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
+  AddSubTaskCommand command(service, id, parent);
   command.execute();
   ASSERT_EQ(command.getAddSubTaskResult(), true);
   command.execute();
   ASSERT_EQ(command.getAddSubTaskResult(), false);
 }
 
-bool operator ==(const AddSubTaskCommand first,const AddSubTaskCommand sec){
+bool operator==(const AddSubTaskCommand first, const AddSubTaskCommand sec) {
   return true;
 }
 

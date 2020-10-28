@@ -11,7 +11,7 @@
 
 class GetSubTaskCommandVisitor : public Visitor {
  public:
-  GetSubTaskCommandVisitor(const std::shared_ptr<Context> &result);
+  GetSubTaskCommandVisitor(const std::shared_ptr<Context> &result, std::shared_ptr<IOStreamInterface> outputer);
  public:
   void visitAddTaskCommand(AddTaskCommand &command) override {};
   void visitAddSubTaskCommand(AddSubTaskCommand &command) override {};
@@ -44,6 +44,7 @@ class GetSubTaskCommandVisitor : public Visitor {
   void visitLoadCommand(LoadCommand &command) override {};
  private:
   std::shared_ptr<Context> result_;
+  std::shared_ptr<IOStreamInterface> outputer_;
 };
 
 #endif //TODOLIST_CLI_VISITORS_GET_GETSUBTASKCOMMANDVISITOR_H_

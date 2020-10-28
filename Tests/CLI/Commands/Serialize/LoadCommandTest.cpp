@@ -19,14 +19,14 @@ TEST_F(LoadCommandTest, shouldExecuteCommand) {
   auto service = std::make_shared<CoreAPIMock>();
   std::string fileName;
   EXPECT_CALL(service.operator*(), load(fileName)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  LoadCommand command(service,fileName);
+  LoadCommand command(service, fileName);
   command.execute();
   ASSERT_EQ(command.getLoadResult(), true);
   command.execute();
   ASSERT_EQ(command.getLoadResult(), false);
 }
 
-bool operator ==(const LoadCommand first,const LoadCommand sec){
+bool operator==(const LoadCommand first, const LoadCommand sec) {
   return true;
 }
 

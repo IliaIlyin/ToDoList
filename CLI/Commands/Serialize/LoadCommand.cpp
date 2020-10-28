@@ -3,7 +3,7 @@
 //
 
 #include "LoadCommand.h"
-LoadCommand::LoadCommand(std::shared_ptr<CoreAPIInterface> service, std::string fileName)
+LoadCommand::LoadCommand(std::shared_ptr<ClientInterface> service, std::string fileName)
     : service_(service), fileName_(fileName) {
 }
 

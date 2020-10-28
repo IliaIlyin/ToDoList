@@ -61,18 +61,18 @@ TEST_F(LabelViewTest, shouldGetAll) {
   view.insert(taskEntity3);
   view.insert(taskEntity4);
   view.insert(taskEntity5);
-  auto vec=view.showAll();
-  auto iter=vec.begin();
-  ASSERT_EQ(vec.size(),5);
-  ASSERT_EQ(iter->lock(),taskEntity2);
+  auto vec = view.showAll();
+  auto iter = vec.begin();
+  ASSERT_EQ(vec.size(), 5);
+  ASSERT_EQ(iter->lock(), taskEntity2);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity5);
+  ASSERT_EQ(iter->lock(), taskEntity5);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity3);
+  ASSERT_EQ(iter->lock(), taskEntity3);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity);
+  ASSERT_EQ(iter->lock(), taskEntity);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity4);
+  ASSERT_EQ(iter->lock(), taskEntity4);
 }
 TEST_F(LabelViewTest, shouldGetToday) {
   LabelView view;
@@ -89,10 +89,10 @@ TEST_F(LabelViewTest, shouldGetToday) {
   view.insert(taskEntity3);
   ASSERT_EQ(view.showToday().size(), 2);
   ASSERT_EQ(view.showToday().begin()->lock(), taskEntity3);
-  auto vec=view.showToday();
-  auto iter=vec.begin();
+  auto vec = view.showToday();
+  auto iter = vec.begin();
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity);
+  ASSERT_EQ(iter->lock(), taskEntity);
 }
 TEST_F(LabelViewTest, shouldGetAllDueDate) {
   LabelView view;
@@ -112,14 +112,14 @@ TEST_F(LabelViewTest, shouldGetAllDueDate) {
   view.insert(taskEntity3);
   view.insert(taskEntity4);
   view.insert(taskEntity5);
-  auto vec=view.showDueDate(boost::gregorian::date{2011,1,1});
-  auto iter=vec.begin();
-  ASSERT_EQ(vec.size(),4);
-  ASSERT_EQ(iter->lock(),taskEntity5);
+  auto vec = view.showDueDate(boost::gregorian::date{2011, 1, 1});
+  auto iter = vec.begin();
+  ASSERT_EQ(vec.size(), 4);
+  ASSERT_EQ(iter->lock(), taskEntity5);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity3);
+  ASSERT_EQ(iter->lock(), taskEntity3);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity);
+  ASSERT_EQ(iter->lock(), taskEntity);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity4);
+  ASSERT_EQ(iter->lock(), taskEntity4);
 }

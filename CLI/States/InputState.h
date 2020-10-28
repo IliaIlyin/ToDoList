@@ -4,7 +4,8 @@
 
 #ifndef TODOLIST_CLI_INPUTSTATE_H_
 #define TODOLIST_CLI_INPUTSTATE_H_
-
+#include "Input_Output/IOStreamInterface.h"
+#include <sstream>
 #include "Factories/Validators/GeneralInputValidator.h"
 #include <memory>
 #include "Contexts/InputContext.h"
@@ -21,7 +22,7 @@ class InputState {
    *
    * @return GeneralInputValidator::InputToken corresponding to the data token
    */
-  virtual GeneralInputValidator::InputToken read() = 0;
+  virtual GeneralInputValidator::InputToken read(std::shared_ptr<IOStreamInterface> inputer) = 0;
   /*
    * method that changes current state
    *

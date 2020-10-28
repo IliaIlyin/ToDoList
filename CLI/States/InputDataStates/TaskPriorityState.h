@@ -7,7 +7,7 @@
 
 #include "States/InputState.h"
 #include "Validators/Validator.h"
-#include "States/InputDataStates/TaskLabelState.h"
+#include "TaskLabelState.h"
 #include "Validators/InputValidators/LabelValidator.h"
 #include <memory>
 /*
@@ -21,7 +21,7 @@ class TaskPriorityState : public InputState {
   TaskPriorityState(std::shared_ptr<Validator<GeneralInputValidator::InputToken>> validator);
 
  public:
-  GeneralInputValidator::InputToken read() override;
+  GeneralInputValidator::InputToken read(std::shared_ptr<IOStreamInterface> inputer) override;
   std::shared_ptr<InputState> changeState() override;
   InputContext fillContext(const InputContext &context) override;
 

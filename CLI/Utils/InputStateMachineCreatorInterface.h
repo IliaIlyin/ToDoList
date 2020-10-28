@@ -5,9 +5,11 @@
 #ifndef TODOLIST_CLI_UTILS_INPUTSTATEMACHINECREATORINTERFACE_H_
 #define TODOLIST_CLI_UTILS_INPUTSTATEMACHINECREATORINTERFACE_H_
 #include "InputStateMachine.h"
-class InputStateMachineCreatorInterface{
+class InputStateMachineCreatorInterface {
  public:
-  virtual std::unique_ptr<InputStateMachineInterface> create(const std::shared_ptr<InputState> &begin, InputContext &context)=0;
-  virtual ~InputStateMachineCreatorInterface()=default;
+  virtual std::unique_ptr<InputStateMachineInterface> create(const std::shared_ptr<InputState> &begin,
+                                                             InputContext &context,
+                                                             std::shared_ptr<IOStreamInterface> outputer) = 0;
+  virtual ~InputStateMachineCreatorInterface() = default;
 };
 #endif //TODOLIST_CLI_UTILS_INPUTSTATEMACHINECREATORINTERFACE_H_

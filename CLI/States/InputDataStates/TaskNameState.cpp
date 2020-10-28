@@ -4,10 +4,10 @@
 
 #include "TaskNameState.h"
 
-GeneralInputValidator::InputToken TaskNameState::read() {
-  std::cout << "Input task name or write cancel command to cancel command" << std::endl;
+GeneralInputValidator::InputToken TaskNameState::read(std::shared_ptr<IOStreamInterface> inputer) {
+  inputer->print("Input task name or write cancel command to cancel command");
   std::string s;
-  std::getline(std::cin, s);
+  s = inputer->input();
   if (validator_->validate(s) == GeneralInputValidator::InputToken::CORRECT)
     this->name_ = s;
   return validator_->validate(s);

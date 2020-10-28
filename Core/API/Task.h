@@ -18,15 +18,15 @@
  */
 class Task {
 
-public:
-    enum class Priority {
-        FIRST,
-        SECOND,
-        THIRD,
-        NONE,
-    };
+ public:
+  enum class Priority {
+    FIRST,
+    SECOND,
+    THIRD,
+    NONE,
+  };
 
-public:
+ public:
   /*
    * fabric method to create Task object
    *
@@ -37,37 +37,37 @@ public:
   *
    * @return Task object
 */
-    static Task
-    createTask(std::string name, boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
-               Task::Priority priority = Task::Priority::NONE,
-               std::string label = "");
+  static Task
+  createTask(std::string name, boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
+             Task::Priority priority = Task::Priority::NONE,
+             std::string label = "");
 
-public:
+ public:
 
-    const std::string &getName() const;
+  const std::string &getName() const;
 
-    boost::gregorian::date getDate() const;
+  boost::gregorian::date getDate() const;
 
-    Priority getPriority() const;
+  Priority getPriority() const;
 
-    const std::string &getLabel() const;
+  const std::string &getLabel() const;
 
-private:
-    explicit Task(std::string name,
-                  boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
-                  Task::Priority priority = Task::Priority::NONE,
-                  std::string label = "");
+ private:
+  explicit Task(std::string name,
+                boost::gregorian::date date = boost::gregorian::date(boost::gregorian::min_date_time),
+                Task::Priority priority = Task::Priority::NONE,
+                std::string label = "");
 
-private:
-    std::string name;
-    boost::gregorian::date date;
-    Priority priority;
-    std::string label;
+ private:
+  std::string name;
+  boost::gregorian::date date;
+  Priority priority;
+  std::string label;
 };
 
 std::ostream &operator<<(std::ostream &os, const Task::Priority &priority1);
 
-bool operator==(const Task &task, const Task& task2);
+bool operator==(const Task &task, const Task &task2);
 
 Task::Priority getPriorityFromString(std::string s);
 #endif //TODOLIST_TASK_H

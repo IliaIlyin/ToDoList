@@ -126,8 +126,8 @@ bool TaskService::save(std::string fileName) {
 bool TaskService::load(std::string fileName) {
   std::shared_ptr<std::fstream> file = std::make_shared<std::fstream>();
   file->open(fileName, std::ios::in);
-  if(!file){
-    std::cout<<"File not found"<<std::endl;
+  if (!file) {
+    std::cout << "File not found" << std::endl;
     return false;
   }
   if (file->is_open()) {

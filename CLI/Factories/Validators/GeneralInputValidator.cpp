@@ -46,13 +46,16 @@ GeneralInputValidator::InputToken GeneralInputValidator::validateLabel(const std
 
 GeneralInputValidator::InputToken GeneralInputValidator::validateId(const std::string &s) {
   if (isNotCancelled(s) == InputToken::CORRECT) {
-    int num = std::stoi(s);
-    if (s == std::to_string(num))
-      return InputToken::CORRECT;
-    return InputToken::INCORRECT_INPUT_ID;
+    try {
+      int num = std::stoi(s);
+      if (s == std::to_string(num))
+        return InputToken::CORRECT;
+    }
+    catch (...) {
+      return InputToken::INCORRECT_INPUT_ID;
+    }
   }
   return InputToken::CANCEL_COMMAND;
-
 }
 std::string GeneralInputValidator::interpretResult(GeneralInputValidator::InputToken result) {
   switch (result) {

@@ -11,7 +11,7 @@
 #include "Validators/InputValidators/TaskNameValidator.h"
 #include "InputStateMachineInterface.h"
 #include <string>
-
+#include "Input_Output/IOStream.h"
 /*
  * state machine that operates states to input data needed for users' commands
  */
@@ -28,11 +28,14 @@ class InputStateMachine : public InputStateMachineInterface {
  * @return GeneralInputValidator::InputToken::CANCEL_COMMAND if the user decided to cancel the command
  */
   GeneralInputValidator::InputToken run() override;
-  InputStateMachine(const std::shared_ptr<InputState> &begin, InputContext &context);
+  InputStateMachine(const std::shared_ptr<InputState> &begin,
+                    InputContext &context,
+                    std::shared_ptr<IOStreamInterface> outputer);
   InputContext GetContext() const;
  private:
   std::shared_ptr<InputState> begin_;
   InputContext context_;
+  std::shared_ptr<IOStreamInterface> outputer_;
 };
 
 #endif //TODOLIST_CLI_INPUTSTATEMACHINE_H_

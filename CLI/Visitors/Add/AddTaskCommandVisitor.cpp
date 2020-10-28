@@ -7,8 +7,11 @@ void AddTaskCommandVisitor::visitAddTaskCommand(AddTaskCommand &command) {
   command.execute();
   bool result = command.getAddTaskResult();
   if (result) {
-    std::cout << "Task was added successfully" << std::endl;
+    outputer_->print("Task was added successfully");
   } else {
-    std::cout << "Task was not added" << std::endl;
+    outputer_->print("Task was not added");
   }
+}
+AddTaskCommandVisitor::AddTaskCommandVisitor(const std::shared_ptr<IOStreamInterface> &outputer) : outputer_(outputer) {
+
 }

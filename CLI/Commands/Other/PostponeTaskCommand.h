@@ -6,7 +6,8 @@
 #define TODOLIST_CLI_COMMANDS_POSTPONETASKCOMMAND_H_
 
 #include "Command.h"
-#include "API/CoreAPIInterface.h"
+#include "API/TaskID.h"
+#include "ClientInterface.h"
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include "Visitor.h"
 #include <memory>
@@ -14,13 +15,13 @@
 class PostponeTaskCommand : public Command {
 
  public:
-  PostponeTaskCommand(std::shared_ptr<CoreAPIInterface> service, const TaskID &id, const boost::gregorian::date &date);
+  PostponeTaskCommand(std::shared_ptr<ClientInterface> service, const TaskID &id, const boost::gregorian::date &date);
   void execute() override;
   void accept(std::shared_ptr<Visitor> v) override;
 
   bool getPostponeTaskCommandResult() const;
  private:
-  std::shared_ptr<CoreAPIInterface> service_;
+  std::shared_ptr<ClientInterface> service_;
   TaskID id_;
   boost::gregorian::date date_;
 

@@ -3,7 +3,7 @@
 //
 
 #include "ShowTodayByLabelCommand.h"
-ShowTodayByLabelCommand::ShowTodayByLabelCommand(std::shared_ptr<CoreAPIInterface> service)
+ShowTodayByLabelCommand::ShowTodayByLabelCommand(std::shared_ptr<ClientInterface> service)
     : service_(service) {
 }
 void ShowTodayByLabelCommand::execute() {

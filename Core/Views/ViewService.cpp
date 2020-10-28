@@ -39,7 +39,7 @@ std::vector<std::weak_ptr<TaskEntity> > ViewService::showDueDateByLabel(boost::g
 }
 
 std::vector<std::weak_ptr<TaskEntity> > ViewService::showDueDateByDate(boost::gregorian::date date) {
-  return  date_view_->showDueDate(date);
+  return date_view_->showDueDate(date);
 }
 
 bool ViewService::insert(std::shared_ptr<TaskEntity> taskEntity) {

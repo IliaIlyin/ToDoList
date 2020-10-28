@@ -17,15 +17,13 @@ using testing::Return;
 using testing::ReturnRef;
 using testing::Mock;
 
-
-
 class ShowAllByPriorityCommandBuilderTest : public testing::Test {
 
 };
 
 TEST_F(ShowAllByPriorityCommandBuilderTest, shouldCreateShowAllByPriorityCommand) {
-  auto service =  std::make_shared<CoreAPIMock>();
+  auto service = std::make_shared<CoreAPIMock>();
   ShowAllByPriorityCommandBuilder builder;
   auto res = builder.buildCommand(service);
-  ASSERT_NE(res.get(),nullptr);
+  ASSERT_NE(res.get(), nullptr);
 }

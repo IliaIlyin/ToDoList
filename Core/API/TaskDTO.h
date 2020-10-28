@@ -45,10 +45,10 @@ class TaskDTO {
   TaskDTO(const Task &task, IdGenerator &idGenerator);
 
  private:
-  Task   task_;
+  Task task_;
   TaskID task_id_;
-  bool   status_;
+  bool status_;
 };
-bool operator==(const TaskDTO &t, const TaskDTO& t2);
+bool operator==(const TaskDTO &t, const TaskDTO &t2);
 
 #endif //TODOLIST_MODEL_TASKDTO_H_

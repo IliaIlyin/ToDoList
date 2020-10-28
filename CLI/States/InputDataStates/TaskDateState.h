@@ -20,10 +20,10 @@ class TaskDateState : public InputState {
   TaskDateState(std::shared_ptr<Validator<GeneralInputValidator::InputToken>> validator) : validator_(validator) {};
 
  public:
-  GeneralInputValidator::InputToken read() override {
-    std::cout << "Input task date or write cancel command to cancel command" << std::endl;
+  GeneralInputValidator::InputToken read(std::shared_ptr<IOStreamInterface> inputer) override {
+    inputer->print("Input task date or write cancel command to cancel command");
     std::string s;
-    std::getline(std::cin, s);
+    s = inputer->input();
     if (validator_->validate(s) == GeneralInputValidator::InputToken::CORRECT)
       this->date_ = boost::gregorian::from_string(s);
     return validator_->validate(s);

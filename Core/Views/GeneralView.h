@@ -15,29 +15,29 @@
  */
 class GeneralView {
 
-public:
+ public:
   /*
    * shows all views
    */
-    virtual std::vector<std::weak_ptr<TaskEntity>> showAll() = 0;
+  virtual std::vector<std::weak_ptr<TaskEntity>> showAll() = 0;
 /*
    * shows all today views
    */
-    virtual std::vector<std::weak_ptr<TaskEntity>> showToday() = 0;
+  virtual std::vector<std::weak_ptr<TaskEntity>> showToday() = 0;
 /*
    * shows views due date
    */
-    virtual std::vector<std::weak_ptr<TaskEntity>> showDueDate(boost::gregorian::date date) = 0;
+  virtual std::vector<std::weak_ptr<TaskEntity>> showDueDate(boost::gregorian::date date) = 0;
 /*
  cleans the view. Deletes all nullptr objects
  */
-    virtual void clean() = 0;
+  virtual void clean() = 0;
 
-    virtual ~GeneralView()=default;
+  virtual ~GeneralView() = default;
 /*
  inserts the object to the view. Deletes all nullptr objects
  */
-    virtual bool insert(std::shared_ptr<TaskEntity> taskEntity) = 0;
+  virtual bool insert(std::shared_ptr<TaskEntity> taskEntity) = 0;
 };
 
 #endif //TODOLIST_VIEWS_GENERALVIEW_H_

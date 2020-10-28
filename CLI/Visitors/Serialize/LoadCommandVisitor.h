@@ -38,5 +38,8 @@ class LoadCommandVisitor : public Visitor {
  public:
   void visitSaveCommand(SaveCommand &command) override {};
   void visitLoadCommand(LoadCommand &command) override;
+  LoadCommandVisitor(const std::shared_ptr<IOStreamInterface> &outputer);
+ private:
+  std::shared_ptr<IOStreamInterface> outputer_;
 };
 #endif //TODOLIST_CLI_VISITORS_SERIALIZE_LOADCOMMANDVISITOR_H_

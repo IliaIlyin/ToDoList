@@ -6,21 +6,22 @@
 #define TODOLIST_CLI_COMMANDS_SHOW_SHOWTODAY_SHOWTODAYBYLABELCOMMAND_H_
 
 #include "Command.h"
-#include "API/CoreAPIInterface.h"
+#include "ClientInterface.h"
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <memory>
 #include <vector>
 #include "Visitor.h"
+#include "API/TaskDTO.h"
 
 class ShowTodayByLabelCommand : public Command {
  public:
-  ShowTodayByLabelCommand(std::shared_ptr<CoreAPIInterface> service);
+  ShowTodayByLabelCommand(std::shared_ptr<ClientInterface> service);
   void execute() override;
   void accept(std::shared_ptr<Visitor> v) override;
   std::vector<TaskDTO> getCommandResult();
 
  private:
-  std::shared_ptr<CoreAPIInterface> service_;
+  std::shared_ptr<ClientInterface> service_;
 
  private:
   std::vector<TaskDTO> commandResult_;

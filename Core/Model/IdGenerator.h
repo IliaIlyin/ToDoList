@@ -13,19 +13,18 @@
  */
 class IdGenerator {
 
-public:
+ public:
   /*
    * generates TaskID object
    *
    * @return TaskID
    */
-    TaskID generateId();
+  TaskID generateId();
 
-    IdGenerator(int id = 0);
+  IdGenerator(int id = 0);
 
-private:
-    int id;
+ private:
+  int id;
 };
-
 
 #endif //TODOLIST_IDGENERATOR_H

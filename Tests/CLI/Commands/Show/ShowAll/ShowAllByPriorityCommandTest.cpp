@@ -25,7 +25,7 @@ TEST_F(ShowAllByPriorityCommandTest, shouldExecuteCommand) {
   TaskID id(1);
   std::vector<TaskDTO> vec;
   Task parent = Task::createTask("Elon", boost::gregorian::date{2000, 11, 11}, Task::Priority::FIRST, "label");
-  TaskDTO dto(parent,id,false);
+  TaskDTO dto(parent, id, false);
   vec.push_back(dto);
   EXPECT_CALL(service.operator*(), showAllByPriority()).Times(1).WillOnce(Return(vec));
   ShowAllByPriorityCommand command(service);
@@ -33,7 +33,7 @@ TEST_F(ShowAllByPriorityCommandTest, shouldExecuteCommand) {
   ASSERT_EQ(command.getCommandResult(), vec);
 }
 
-bool operator ==(const ShowAllByPriorityCommand first,const ShowAllByPriorityCommand sec){
+bool operator==(const ShowAllByPriorityCommand first, const ShowAllByPriorityCommand sec) {
   return true;
 }
 

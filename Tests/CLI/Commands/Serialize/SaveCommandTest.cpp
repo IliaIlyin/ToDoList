@@ -20,14 +20,14 @@ TEST_F(SaveCommandTest, shouldExecuteCommand) {
   auto service = std::make_shared<CoreAPIMock>();
   std::string fileName;
   EXPECT_CALL(service.operator*(), save(fileName)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  SaveCommand command(service,fileName);
+  SaveCommand command(service, fileName);
   command.execute();
   ASSERT_EQ(command.getSaveResult(), true);
   command.execute();
   ASSERT_EQ(command.getSaveResult(), false);
 }
 
-bool operator ==(const SaveCommand first,const SaveCommand sec){
+bool operator==(const SaveCommand first, const SaveCommand sec) {
   return true;
 }
 

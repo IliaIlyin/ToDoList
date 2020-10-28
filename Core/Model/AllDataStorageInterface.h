@@ -22,7 +22,7 @@ class AllDataStorageInterface {
  *
  * @return pointer to the inserted object in the storage
  */
-  virtual TaskID addTask(Task &task, bool status)=0;
+  virtual TaskID addTask(Task &task, bool status) = 0;
   /*
 * inserts subtask with specified status in the storage and updates view
 *
@@ -33,7 +33,7 @@ class AllDataStorageInterface {
 * @return pointer to the parent with such id in the storage
  * @return nullopt if the parent was not found
 */
-  virtual std::optional<TaskID> addSubTaskToParent(const TaskID  &parent, Task &task, bool status)=0;
+  virtual std::optional<TaskID> addSubTaskToParent(const TaskID &parent, Task &task, bool status) = 0;
   /*
    * adds task to storage and updates views
    *
@@ -42,7 +42,7 @@ class AllDataStorageInterface {
    * @return true, if adding was completed succesfully.
    * @return false, otherwise.
 */
-  virtual bool addTask(Task &task)=0;
+  virtual bool addTask(Task &task) = 0;
   /*
    * adds subtask to parent and updates views
    *
@@ -52,7 +52,7 @@ class AllDataStorageInterface {
    * @return true, if adding was completed succesfully.
    * @return false, otherwise.
 */
-  virtual std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(const TaskID  &parent, Task &task)=0;
+  virtual std::optional<std::shared_ptr<TaskEntity>> addSubTaskToParent(const TaskID &parent, Task &task) = 0;
 
   /*
    * gets Task by id
@@ -60,14 +60,14 @@ class AllDataStorageInterface {
    * @return shared_ptr on task, if the task was found
    * @return nullopt, it it wasn't found
    */
- virtual std::optional<std::shared_ptr<TaskEntity>> getTask(const TaskID & id)=0;
+  virtual std::optional<std::shared_ptr<TaskEntity>> getTask(const TaskID &id) = 0;
   /*
    * gets subTasks of the Task by its id
    *
    * @return container of subTasks, if the task was found
    * @return nullopt, it it wasn't found
    */
-  virtual std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubTasks(const TaskID & id)=0;
+  virtual std::optional<std::vector<std::shared_ptr<TaskEntity>>> getSubTasks(const TaskID &id) = 0;
 
  public:
   /*
@@ -79,7 +79,7 @@ class AllDataStorageInterface {
    * @return true, if the task was found
    * @return false otherwise
    */
-  virtual bool postponeTask(const TaskID & task, boost::gregorian::date dueDate)=0;
+  virtual bool postponeTask(const TaskID &task, boost::gregorian::date dueDate) = 0;
 /*
    * deletes the task by id. Also deletes subTasks
    *
@@ -88,7 +88,7 @@ class AllDataStorageInterface {
    * @return true, if the task was found
    * @return false otherwise
    */
-  virtual bool deleteTask(const TaskID & task)=0;
+  virtual bool deleteTask(const TaskID &task) = 0;
 /*
    * completes the task by id. Also completes subTasks
    *
@@ -97,22 +97,22 @@ class AllDataStorageInterface {
    * @return true, if the task was found
    * @return false otherwise
    */
-  virtual bool completeTask(const TaskID &task)=0;
+  virtual bool completeTask(const TaskID &task) = 0;
 
   /*
    * gets all tasks from the storage
    *
    * @return container of pointers to the tasks in the storage.
    */
-  virtual std::vector<std::shared_ptr<TaskEntity>> getAllTasks()=0;
+  virtual std::vector<std::shared_ptr<TaskEntity>> getAllTasks() = 0;
 
-  virtual ~AllDataStorageInterface()=default;
+  virtual ~AllDataStorageInterface() = default;
 
  public:
   /*
    * gets view service
    */
-  virtual std::shared_ptr<ViewServiceInterface> getViewService() const =0;
+  virtual std::shared_ptr<ViewServiceInterface> getViewService() const = 0;
 
 };
 

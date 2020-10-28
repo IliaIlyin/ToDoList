@@ -9,6 +9,7 @@
 class Command;
 class Visitor;
 #include "Contexts/Context.h"
+#include "Input_Output/IOStreamInterface.h"
 
 /*
  * class that represent states that operate users' commands
@@ -21,7 +22,7 @@ class State {
    *
    * @return GeneralCommandsValidator::CommandToken corresponding to the input
    */
-  virtual GeneralCommandsValidator::CommandToken read() = 0;
+  virtual GeneralCommandsValidator::CommandToken read(std::shared_ptr<IOStreamInterface> inputer) = 0;
   /*
    * method that changes current state
    *
@@ -44,7 +45,7 @@ class State {
    *
    * @return void
    */
-  virtual void print(std::shared_ptr<Context> context) = 0;
+  virtual void print(std::shared_ptr<Context> context, std::shared_ptr<IOStreamInterface> printer) = 0;
 
  public:
   virtual ~State() = default;

@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <CLI/Mocks/IOStreamMock.h>
 #include "Visitors/Get/GetTaskCommandVisitor.h"
 #include "Core/Mocks/CoreAPIMock.h"
 #include "Contexts/Context.h"
@@ -16,14 +17,15 @@ class GetTaskCommandVisitorTest : public testing::Test {
 };
 TEST_F(GetTaskCommandVisitorTest, shouldVisitGetTask) {
   auto context = std::make_shared<Context>();
-  GetTaskCommandVisitor visitor(context);
+  std::shared_ptr<IOStreamInterface> inputer = std::make_shared<IOStreamMock>();
+  GetTaskCommandVisitor visitor(context, inputer);
   auto service = std::make_shared<CoreAPIMock>();
   TaskID id(1);
   Task parent = Task::createTask("Elon", boost::gregorian::date{2000, 11, 11}, Task::Priority::FIRST, "label");
-  TaskDTO dto(parent,id,false);
+  TaskDTO dto(parent, id, false);
   EXPECT_CALL(service.operator*(), getTask(id)).Times(1).WillOnce(Return(dto));
   GetTaskCommand command(service, id);
   ASSERT_NO_THROW(visitor.visitGetTaskCommand(command));
-  ASSERT_EQ(std::nullopt,context->GetDtos());
-  ASSERT_EQ(context->GetDto(),dto);
+  ASSERT_EQ(std::nullopt, context->GetDtos());
+  ASSERT_EQ(context->GetDto(), dto);
 }

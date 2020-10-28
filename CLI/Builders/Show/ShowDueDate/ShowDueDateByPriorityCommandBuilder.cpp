@@ -3,7 +3,7 @@
 //
 
 #include "ShowDueDateByPriorityCommandBuilder.h"
-std::shared_ptr<Command> ShowDueDateByPriorityCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
+std::shared_ptr<Command> ShowDueDateByPriorityCommandBuilder::buildCommand(std::shared_ptr<ClientInterface> service) {
   if (machine_->run()
       == GeneralInputValidator::InputToken::SUCCESS) {
     auto context = machine_->GetContext();

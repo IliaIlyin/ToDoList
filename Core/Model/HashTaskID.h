@@ -11,11 +11,10 @@
  * class to hash TaskIDs
  */
 class HashTaskID {
-public:
+ public:
 
-    size_t operator()(const TaskID task_id) const;
+  size_t operator()(const TaskID task_id) const;
 
 };
-
 
 #endif //TODOLIST_HASHTASKENTITY_H

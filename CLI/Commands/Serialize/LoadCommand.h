@@ -5,7 +5,7 @@
 #ifndef TODOLIST_CLI_COMMANDS_SERIALIZE_LOADCOMMAND_H_
 #define TODOLIST_CLI_COMMANDS_SERIALIZE_LOADCOMMAND_H_
 
-#include "API/CoreAPIInterface.h"
+#include "ClientInterface.h"
 #include "Command.h"
 #include "Visitor.h"
 #include <memory>
@@ -13,7 +13,7 @@
 class LoadCommand : public Command {
 
  public:
-  LoadCommand(std::shared_ptr<CoreAPIInterface> service, std::string fileName);
+  LoadCommand(std::shared_ptr<ClientInterface> service, std::string fileName);
   void execute() override;
   void accept(std::shared_ptr<Visitor> v) override;
 
@@ -21,7 +21,7 @@ class LoadCommand : public Command {
   bool getLoadResult() const;
 
  private:
-  std::shared_ptr<CoreAPIInterface> service_;
+  std::shared_ptr<ClientInterface> service_;
   std::string fileName_;
   bool loadResult_;
 };

@@ -39,6 +39,10 @@ class CompleteTaskCommandVisitor : public Visitor {
  public:
   void visitSaveCommand(SaveCommand &command) override {};
   void visitLoadCommand(LoadCommand &command) override {};
+ private:
+  std::shared_ptr<IOStreamInterface> outputer_;
+ public:
+  CompleteTaskCommandVisitor(const std::shared_ptr<IOStreamInterface> &outputer) : outputer_(outputer) {}
 };
 
 #endif //TODOLIST_CLI_VISITORS_OTHER_COMPLETETASKCOMMANDVISITOR_H_

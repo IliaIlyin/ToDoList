@@ -1,5 +1,7 @@
 syntax = "proto3";
-
+option java_multiple_files = true;
+option java_outer_classname = "CoreServiceProto";
+option objc_class_prefix = "HLW";
 package protoStorage;
 
 message Task{
@@ -12,7 +14,7 @@ message Task{
     THIRD = 3;
   }
   Priority priority = 3;
-  uint32 date = 4;
+  TaskDate date = 4;
 }
 
 message TaskEntity{
@@ -20,7 +22,10 @@ message TaskEntity{
   bool complete = 2;
   repeated TaskEntity subTasks = 3;
 }
-
+message TaskDate{
+  uint32 date = 1;
+}
 message Storage{
   repeated TaskEntity tasks = 1;
 }
+

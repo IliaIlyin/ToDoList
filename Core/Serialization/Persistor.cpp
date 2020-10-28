@@ -6,8 +6,8 @@
 
 bool Persistor::Save() {
   auto tasks = storage_->getAllTasks();
-  if(tasks.empty()){
-    std::cout<<"No tasks in storage. System is not changed";
+  if (tasks.empty()) {
+    std::cout << "No tasks in storage. System is not changed";
     return false;
   }
   protoStorage::Storage storage(serializeToStorage(tasks));
@@ -26,7 +26,7 @@ bool Persistor::Load() {
   }
   auto new_storage = factory_.operator*().create();
   serializeTaskEntities(storage, new_storage);
-  storage_=new_storage;
+  storage_ = new_storage;
   return true;
 }
 

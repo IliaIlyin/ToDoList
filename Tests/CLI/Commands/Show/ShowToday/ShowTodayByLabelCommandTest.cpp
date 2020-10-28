@@ -21,7 +21,7 @@ TEST_F(ShowTodayByLabelCommandTest, shouldExecuteCommand) {
   TaskID id(1);
   std::vector<TaskDTO> vec;
   Task parent = Task::createTask("Elon", boost::gregorian::date{2000, 11, 11}, Task::Priority::FIRST, "label");
-  TaskDTO dto(parent,id,false);
+  TaskDTO dto(parent, id, false);
   vec.push_back(dto);
   EXPECT_CALL(service.operator*(), showTodayByLabel()).Times(1).WillOnce(Return(vec));
   ShowTodayByLabelCommand command(service);
@@ -29,7 +29,7 @@ TEST_F(ShowTodayByLabelCommandTest, shouldExecuteCommand) {
   ASSERT_EQ(command.getCommandResult(), vec);
 }
 
-bool operator ==(const ShowTodayByLabelCommand first,const ShowTodayByLabelCommand sec){
+bool operator==(const ShowTodayByLabelCommand first, const ShowTodayByLabelCommand sec) {
   return true;
 }
 

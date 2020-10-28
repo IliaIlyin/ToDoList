@@ -37,6 +37,10 @@ class DeleteTaskCommandVisitor : public Visitor {
  public:
   void visitSaveCommand(SaveCommand &command) override {};
   void visitLoadCommand(LoadCommand &command) override {};
+ private:
+  std::shared_ptr<IOStreamInterface> outputer_;
+ public:
+  DeleteTaskCommandVisitor(const std::shared_ptr<IOStreamInterface> &outputer) : outputer_(outputer) {}
 };
 
 #endif //TODOLIST_CLI_VISITORS_OTHER_DELETETASKCOMMANDVISITOR_H_

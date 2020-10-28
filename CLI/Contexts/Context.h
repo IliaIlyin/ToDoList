@@ -9,14 +9,14 @@
 #include <optional>
 #include <map>
 #include "API/TaskDTO.h"
-#include "API/CoreAPIInterface.h"
+#include "ClientInterface.h"
 #include "ContextInterface.h"
 /*
  * class to represent the context of the StateMachine that operates commands
  *
  * @author Ilya Ilyin
  */
-class Context : public ContextInterface{
+class Context : public ContextInterface {
  public:
   const std::optional<TaskDTO> &GetDto() const override;
   const std::optional<std::vector<TaskDTO>> &GetDtos() const;

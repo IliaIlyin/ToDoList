@@ -6,8 +6,10 @@
 #define TODOLIST_CLI_UTILS_INPUTSTATEMACHINECREATOR_H_
 #include "InputStateMachine.h"
 #include "InputStateMachineCreatorInterface.h"
-class InputStateMachineCreator : public InputStateMachineCreatorInterface{
-  std::unique_ptr<InputStateMachineInterface> create( const std::shared_ptr<InputState> &begin, InputContext &context) override;
+class InputStateMachineCreator : public InputStateMachineCreatorInterface {
+  std::unique_ptr<InputStateMachineInterface> create(const std::shared_ptr<InputState> &begin,
+                                                     InputContext &context,
+                                                     std::shared_ptr<IOStreamInterface> outputer) override;
 };
 
 #endif //TODOLIST_CLI_UTILS_INPUTSTATEMACHINECREATOR_H_

@@ -15,22 +15,22 @@
  * class to represent views sorted by date
  */
 class DateView : public GeneralView {
-public:
-    std::vector<std::weak_ptr<TaskEntity>> showAll() override;
+ public:
+  std::vector<std::weak_ptr<TaskEntity>> showAll() override;
 
-    std::vector<std::weak_ptr<TaskEntity>> showToday() override;
+  std::vector<std::weak_ptr<TaskEntity>> showToday() override;
 
-    std::vector<std::weak_ptr<TaskEntity>> showDueDate(boost::gregorian::date date) override;
+  std::vector<std::weak_ptr<TaskEntity>> showDueDate(boost::gregorian::date date) override;
 
-    ~DateView()=default;
+  ~DateView() = default;
 
-public:
-    void clean() override;
+ public:
+  void clean() override;
 
-    bool insert(std::shared_ptr<TaskEntity> taskEntity) override;
+  bool insert(std::shared_ptr<TaskEntity> taskEntity) override;
 
-private:
-    std::multimap<boost::gregorian::date, std::weak_ptr<TaskEntity> > dates;
+ private:
+  std::multimap<boost::gregorian::date, std::weak_ptr<TaskEntity> > dates;
 };
 
 #endif //TODOLIST_VIEWS_DATEVIEW_H_

@@ -26,7 +26,7 @@ TEST_F(AddTaskCommandTest, shouldExecuteCommand) {
   ASSERT_EQ(command.getAddTaskResult(), false);
 }
 
-bool operator ==(const AddTaskCommand first,const AddTaskCommand sec){
+bool operator==(const AddTaskCommand first, const AddTaskCommand sec) {
   return true;
 }
 

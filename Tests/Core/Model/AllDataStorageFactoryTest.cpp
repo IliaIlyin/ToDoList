@@ -13,8 +13,8 @@ class AllDataStorageFactoryTest : public ::testing::Test {
 
 };
 
-TEST_F(AllDataStorageFactoryTest,shouldCreateAllDataStorage){
+TEST_F(AllDataStorageFactoryTest, shouldCreateAllDataStorage) {
   AllDataStorageFactory factory;
   auto result = factory.create();
-  ASSERT_NE(result.get(),nullptr);
+  ASSERT_NE(result.get(), nullptr);
 }

@@ -52,9 +52,9 @@ void PriorityView::clean() {
 }
 
 bool PriorityView::insert(std::shared_ptr<TaskEntity> taskEntity) {
-  auto vec=priorities.equal_range(taskEntity->getTask().getPriority());
-  for(auto i=vec.first;i!=vec.second;i++){
-    if(i->second.lock()==taskEntity)
+  auto vec = priorities.equal_range(taskEntity->getTask().getPriority());
+  for (auto i = vec.first; i != vec.second; i++) {
+    if (i->second.lock() == taskEntity)
       return false;
   }
   priorities.insert(std::pair<Task::Priority, std::weak_ptr<TaskEntity> >

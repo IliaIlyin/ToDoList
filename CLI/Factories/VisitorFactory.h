@@ -31,6 +31,7 @@
 #include "Visitors/Serialize/SaveCommandVisitor.h"
 #include "Visitors/Serialize/LoadCommandVisitor.h"
 #include <memory>
+#include "VisitorFactoryInterface.h"
 /*
  * factory that creates commands visitors
  *
@@ -38,7 +39,7 @@
  *
  * @author Ilya Ilyin
  */
-class VisitorFactory {
+class VisitorFactory : public VisitorFactoryInterface {
  public:
   /*
    * method that creates visitors
@@ -49,7 +50,8 @@ class VisitorFactory {
    * @return pointer to the visitor
    */
   std::shared_ptr<Visitor> createVisitor(const GeneralCommandsValidator::CommandToken &token,
-                                         std::shared_ptr<Context> context);
+                                         std::shared_ptr<Context> context,
+                                         std::shared_ptr<IOStreamInterface> outputer) override;
 };
 
 #endif //TODOLIST_CLI_FACTORIES_VISITORFACTORY_H_

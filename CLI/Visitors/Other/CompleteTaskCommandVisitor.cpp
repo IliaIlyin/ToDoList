@@ -7,9 +7,9 @@ void CompleteTaskCommandVisitor::visitCompleteTaskCommand(CompleteTaskCommand &c
   command.execute();
   bool result = command.getCompleteTaskCommandResult();
   if (result) {
-    std::cout << "Task was completed" << std::endl;
+    outputer_->print("Task was completed");
   } else {
-    std::cout << "Could not find task" << std::endl;
+    outputer_->print("Could not find task");
   }
 
 }

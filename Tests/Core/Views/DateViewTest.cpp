@@ -61,18 +61,18 @@ TEST_F(DateViewTest, shouldGetAll) {
   view.insert(taskEntity3);
   view.insert(taskEntity4);
   view.insert(taskEntity5);
-  auto vec=view.showAll();
-  auto iter=vec.begin();
-  ASSERT_EQ(vec.size(),5);
-  ASSERT_EQ(iter->lock(),taskEntity);
+  auto vec = view.showAll();
+  auto iter = vec.begin();
+  ASSERT_EQ(vec.size(), 5);
+  ASSERT_EQ(iter->lock(), taskEntity);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity5);
+  ASSERT_EQ(iter->lock(), taskEntity5);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity3);
+  ASSERT_EQ(iter->lock(), taskEntity3);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity4);
+  ASSERT_EQ(iter->lock(), taskEntity4);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity2);
+  ASSERT_EQ(iter->lock(), taskEntity2);
 }
 TEST_F(DateViewTest, shouldGetToday) {
   DateView view;
@@ -89,10 +89,10 @@ TEST_F(DateViewTest, shouldGetToday) {
   view.insert(taskEntity3);
   ASSERT_EQ(view.showToday().size(), 2);
   ASSERT_EQ(view.showToday().begin()->lock(), taskEntity);
-  auto vec=view.showToday();
-  auto iter=vec.begin();
+  auto vec = view.showToday();
+  auto iter = vec.begin();
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity3);
+  ASSERT_EQ(iter->lock(), taskEntity3);
 }
 TEST_F(DateViewTest, shouldGetAllDueDate) {
   DateView view;
@@ -112,14 +112,14 @@ TEST_F(DateViewTest, shouldGetAllDueDate) {
   view.insert(taskEntity3);
   view.insert(taskEntity4);
   view.insert(taskEntity5);
-  auto vec=view.showDueDate(boost::gregorian::date{2011,1,1});
-  auto iter=vec.begin();
-  ASSERT_EQ(vec.size(),4);
-  ASSERT_EQ(iter->lock(),taskEntity);
+  auto vec = view.showDueDate(boost::gregorian::date{2011, 1, 1});
+  auto iter = vec.begin();
+  ASSERT_EQ(vec.size(), 4);
+  ASSERT_EQ(iter->lock(), taskEntity);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity5);
+  ASSERT_EQ(iter->lock(), taskEntity5);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity3);
+  ASSERT_EQ(iter->lock(), taskEntity3);
   iter++;
-  ASSERT_EQ(iter->lock(),taskEntity4);
+  ASSERT_EQ(iter->lock(), taskEntity4);
 }

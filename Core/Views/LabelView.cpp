@@ -59,7 +59,7 @@ bool LabelView::insert(std::shared_ptr<TaskEntity> taskEntity) {
       return false;
   }
   auto f = labels.insert(std::pair<std::string, std::weak_ptr<TaskEntity> >
-                    (taskEntity.operator*().getTask().getLabel(), taskEntity));
+                             (taskEntity.operator*().getTask().getLabel(), taskEntity));
   return true;
 }
 

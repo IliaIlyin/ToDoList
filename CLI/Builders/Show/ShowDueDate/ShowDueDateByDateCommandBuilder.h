@@ -13,7 +13,7 @@
 #include "Commands/Show/ShowDueDate/ShowDueDateByDateCommand.h"
 class ShowDueDateByDateCommandBuilder : public Builder {
  public:
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<ClientInterface> service) override;
  public:
   ShowDueDateByDateCommandBuilder(std::unique_ptr<InputStateMachineInterface> machine);
  private:

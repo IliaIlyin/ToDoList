@@ -15,7 +15,7 @@
 
 class CompleteTaskCommandBuilder : public Builder {
  public:
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<ClientInterface> service) override;
  public:
   CompleteTaskCommandBuilder(std::unique_ptr<InputStateMachineInterface> machine);
  private:

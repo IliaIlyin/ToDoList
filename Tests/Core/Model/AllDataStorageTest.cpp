@@ -34,7 +34,6 @@ class StorageServiceMock : public StorageServiceInterface {
   MOCK_METHOD(std::vector<std::shared_ptr<TaskEntity>>, getAllTasks, (), (override));
 };
 
-
 class AllDataStorageTest : public ::testing::Test {
 
 };
@@ -47,8 +46,8 @@ TEST_F(AllDataStorageTest, shouldAddTask) {
   auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator));
   EXPECT_CALL(storage.operator*(), addTask(task)).WillOnce(Return(entity));
   EXPECT_CALL(views.operator*(), insert(entity));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.addTask(task),true);
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.addTask(task), true);
 }
 
 TEST_F(AllDataStorageTest, shouldAddSubTaskWithStatusReturnNullopt) {
@@ -56,11 +55,11 @@ TEST_F(AllDataStorageTest, shouldAddSubTaskWithStatusReturnNullopt) {
   auto views = std::make_shared<ViewServiceMock>();
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   TaskID id(0);
-  bool status=true;
-  auto result=std::nullopt;
-  EXPECT_CALL(storage.operator*(), addSubTaskToParent(id,task,status)).WillOnce(Return(result));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.addSubTaskToParent(id,task,status),std::nullopt);
+  bool status = true;
+  auto result = std::nullopt;
+  EXPECT_CALL(storage.operator*(), addSubTaskToParent(id, task, status)).WillOnce(Return(result));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.addSubTaskToParent(id, task, status), std::nullopt);
 }
 
 TEST_F(AllDataStorageTest, shouldAddSubTaskWithStatus) {
@@ -69,11 +68,11 @@ TEST_F(AllDataStorageTest, shouldAddSubTaskWithStatus) {
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   IdGenerator idGenerator;
   TaskID id(0);
-  bool status=true;
+  bool status = true;
   auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator));
-  EXPECT_CALL(storage.operator*(), addSubTaskToParent(id,task,status)).WillOnce(Return(entity));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.addSubTaskToParent(id,task,status),id);
+  EXPECT_CALL(storage.operator*(), addSubTaskToParent(id, task, status)).WillOnce(Return(entity));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.addSubTaskToParent(id, task, status), id);
 }
 
 TEST_F(AllDataStorageTest, shouldAddSubTask) {
@@ -83,9 +82,9 @@ TEST_F(AllDataStorageTest, shouldAddSubTask) {
   IdGenerator idGenerator;
   TaskID id(0);
   auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator));
-  EXPECT_CALL(storage.operator*(), addSubTaskToParent(id,task)).WillOnce(Return(entity));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.addSubTaskToParent(id,task),entity);
+  EXPECT_CALL(storage.operator*(), addSubTaskToParent(id, task)).WillOnce(Return(entity));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.addSubTaskToParent(id, task), entity);
 }
 
 TEST_F(AllDataStorageTest, shouldAddSubTaskReturnNullopt) {
@@ -93,10 +92,10 @@ TEST_F(AllDataStorageTest, shouldAddSubTaskReturnNullopt) {
   auto views = std::make_shared<ViewServiceMock>();
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   TaskID id(0);
-  auto result=std::nullopt;
-  EXPECT_CALL(storage.operator*(), addSubTaskToParent(id,task)).WillOnce(Return(result));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.addSubTaskToParent(id,task),std::nullopt);
+  auto result = std::nullopt;
+  EXPECT_CALL(storage.operator*(), addSubTaskToParent(id, task)).WillOnce(Return(result));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.addSubTaskToParent(id, task), std::nullopt);
 }
 
 TEST_F(AllDataStorageTest, shouldAddTaskWithStatus) {
@@ -104,11 +103,11 @@ TEST_F(AllDataStorageTest, shouldAddTaskWithStatus) {
   auto views = std::make_shared<ViewServiceMock>();
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   IdGenerator idGenerator;
-  auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator,true));
-  EXPECT_CALL(storage.operator*(), addTask(task,true)).WillOnce(Return(entity));
+  auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator, true));
+  EXPECT_CALL(storage.operator*(), addTask(task, true)).WillOnce(Return(entity));
   EXPECT_CALL(views.operator*(), insert(entity));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.addTask(task,true),entity->getTaskId());
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.addTask(task, true), entity->getTaskId());
 }
 
 TEST_F(AllDataStorageTest, shouldGetTask) {
@@ -117,28 +116,28 @@ TEST_F(AllDataStorageTest, shouldGetTask) {
   TaskID id(0);
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   IdGenerator idGenerator;
-  auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator,true));
-  EXPECT_CALL(storage.operator*(),getTask(id)).Times(1).WillOnce(Return(entity));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.getTask(id),entity);
+  auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator, true));
+  EXPECT_CALL(storage.operator*(), getTask(id)).Times(1).WillOnce(Return(entity));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.getTask(id), entity);
 }
 TEST_F(AllDataStorageTest, shouldGetTaskReturnNullopt) {
   auto storage = std::make_unique<StorageServiceMock>();
   auto views = std::make_shared<ViewServiceMock>();
   TaskID id(0);
-  auto result=std::nullopt;
-  EXPECT_CALL(storage.operator*(),getTask(id)).Times(1).WillOnce(Return(result));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.getTask(id),std::nullopt);
+  auto result = std::nullopt;
+  EXPECT_CALL(storage.operator*(), getTask(id)).Times(1).WillOnce(Return(result));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.getTask(id), std::nullopt);
 }
 TEST_F(AllDataStorageTest, shouldGetSubTasksReturnNullopt) {
   auto storage = std::make_unique<StorageServiceMock>();
   auto views = std::make_shared<ViewServiceMock>();
   TaskID id(0);
-  auto result=std::nullopt;
-  EXPECT_CALL(storage.operator*(),getSubTasks(id)).Times(1).WillOnce(Return(result));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.getSubTasks(id),std::nullopt);
+  auto result = std::nullopt;
+  EXPECT_CALL(storage.operator*(), getSubTasks(id)).Times(1).WillOnce(Return(result));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.getSubTasks(id), std::nullopt);
 }
 TEST_F(AllDataStorageTest, shouldGetSubTasks) {
   std::vector<std::shared_ptr<TaskEntity>> vec;
@@ -149,36 +148,36 @@ TEST_F(AllDataStorageTest, shouldGetSubTasks) {
   TaskID id(0);
   auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, idGenerator));
   vec.push_back(entity);
-  EXPECT_CALL(storage.operator*(),getSubTasks(id)).Times(1).WillOnce(Return(vec));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.getSubTasks(id),vec);
+  EXPECT_CALL(storage.operator*(), getSubTasks(id)).Times(1).WillOnce(Return(vec));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.getSubTasks(id), vec);
 }
 TEST_F(AllDataStorageTest, shouldPostponeTask) {
   TaskID id(0);
-  auto date = boost::gregorian::date{2200,11,8};
+  auto date = boost::gregorian::date{2200, 11, 8};
   auto storage = std::make_unique<StorageServiceMock>();
   auto views = std::make_shared<ViewServiceMock>();
-  EXPECT_CALL(storage.operator*(),postponeTask(id,date)).Times(1);
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.postponeTask(id,date),true);
+  EXPECT_CALL(storage.operator*(), postponeTask(id, date)).Times(1);
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.postponeTask(id, date), true);
 }
 TEST_F(AllDataStorageTest, shouldCompleteTask) {
   TaskID id(0);
   auto storage = std::make_unique<StorageServiceMock>();
   auto views = std::make_shared<ViewServiceMock>();
-  EXPECT_CALL(storage.operator*(),completeTask(id)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.completeTask(id),true);
-  ASSERT_EQ(data.completeTask(id),false);
+  EXPECT_CALL(storage.operator*(), completeTask(id)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.completeTask(id), true);
+  ASSERT_EQ(data.completeTask(id), false);
 }
 TEST_F(AllDataStorageTest, shouldDeleteTask) {
   TaskID id(0);
   auto storage = std::make_unique<StorageServiceMock>();
   auto views = std::make_shared<ViewServiceMock>();
-  EXPECT_CALL(storage.operator*(),deleteTask(id)).Times(1);
-  EXPECT_CALL(views.operator*(),clean()).Times(1);
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.deleteTask(id),true);
+  EXPECT_CALL(storage.operator*(), deleteTask(id)).Times(1);
+  EXPECT_CALL(views.operator*(), clean()).Times(1);
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.deleteTask(id), true);
 }
 TEST_F(AllDataStorageTest, shouldGetAllTasks) {
   std::vector<std::shared_ptr<TaskEntity>> vec;
@@ -188,7 +187,7 @@ TEST_F(AllDataStorageTest, shouldGetAllTasks) {
   vec.push_back(entity);
   auto storage = std::make_unique<StorageServiceMock>();
   auto views = std::make_shared<ViewServiceMock>();
-  EXPECT_CALL(storage.operator*(),getAllTasks()).Times(1).WillOnce(Return(vec));
-  AllDataStorage data(std::move(storage),views);
-  ASSERT_EQ(data.getAllTasks(),vec);
+  EXPECT_CALL(storage.operator*(), getAllTasks()).Times(1).WillOnce(Return(vec));
+  AllDataStorage data(std::move(storage), views);
+  ASSERT_EQ(data.getAllTasks(), vec);
 }

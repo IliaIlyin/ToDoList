@@ -3,7 +3,7 @@
 //
 
 #include "AddTaskCommandBuilder.h"
-std::shared_ptr<Command> AddTaskCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
+std::shared_ptr<Command> AddTaskCommandBuilder::buildCommand(std::shared_ptr<ClientInterface> service) {
   if (machine_->run() == GeneralInputValidator::InputToken::SUCCESS) {
     auto context = machine_->GetContext();
     Task t = Task::createTask(context.getName(), context.getDate(), context.getPriority(), context.getLabel());

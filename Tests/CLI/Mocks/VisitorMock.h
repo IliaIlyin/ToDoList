@@ -9,7 +9,6 @@
 #include <gmock/gmock.h>
 #include <string>
 
-
 #include "Commands/Add/AddSubTaskCommand.h"
 #include "Commands/Add/AddTaskCommand.h"
 
@@ -34,44 +33,43 @@
 #include "Commands/Serialize/SaveCommand.h"
 #include "Commands/Serialize/LoadCommand.h"
 
-
 using testing::Eq;
 using testing::Return;
 using testing::ReturnRef;
 using testing::Mock;
 
-class VisitorMock:public Visitor{
+class VisitorMock : public Visitor {
 
  public:
-   MOCK_METHOD(void, visitAddTaskCommand,(AddTaskCommand &command), (override));
-   MOCK_METHOD(void, visitAddSubTaskCommand,(AddSubTaskCommand &command) , (override));
+  MOCK_METHOD(void, visitAddTaskCommand, (AddTaskCommand & command), (override));
+  MOCK_METHOD(void, visitAddSubTaskCommand, (AddSubTaskCommand & command), (override));
 
  public:
-   MOCK_METHOD(void, visitGetTaskCommand,( GetTaskCommand &command) , (override));
-   MOCK_METHOD(void, visitGetSubTaskCommand,( GetSubTaskCommand &command) , (override));
+  MOCK_METHOD(void, visitGetTaskCommand, (GetTaskCommand & command), (override));
+  MOCK_METHOD(void, visitGetSubTaskCommand, (GetSubTaskCommand & command), (override));
 
  public:
-   MOCK_METHOD(void, visitCompleteTaskCommand,( CompleteTaskCommand &command) , (override));
-   MOCK_METHOD(void, visitDeleteTaskCommand,( DeleteTaskCommand &command) , (override));
-   MOCK_METHOD(void, visitPostponeTaskCommand,( PostponeTaskCommand &command) , (override));
+  MOCK_METHOD(void, visitCompleteTaskCommand, (CompleteTaskCommand & command), (override));
+  MOCK_METHOD(void, visitDeleteTaskCommand, (DeleteTaskCommand & command), (override));
+  MOCK_METHOD(void, visitPostponeTaskCommand, (PostponeTaskCommand & command), (override));
 
  public:
-   MOCK_METHOD(void, visitShowAllByDateCommand, ( ShowAllByDateCommand &command) , (override));
-   MOCK_METHOD(void, visitShowAllByLabelCommand, ( ShowAllByLabelCommand &command) , (override));
-   MOCK_METHOD(void, visitShowAllByPriorityCommand, ( ShowAllByPriorityCommand &command) , (override));
+  MOCK_METHOD(void, visitShowAllByDateCommand, (ShowAllByDateCommand & command), (override));
+  MOCK_METHOD(void, visitShowAllByLabelCommand, (ShowAllByLabelCommand & command), (override));
+  MOCK_METHOD(void, visitShowAllByPriorityCommand, (ShowAllByPriorityCommand & command), (override));
 
  public:
-   MOCK_METHOD(void, visitShowDueDateByDateCommand, ( ShowDueDateByDateCommand &command) , (override));
-   MOCK_METHOD(void, visitShowDueDateByLabelCommand, ( ShowDueDateByLabelCommand &command) , (override));
-   MOCK_METHOD(void, visitShowDueDateByPriorityCommand, ( ShowDueDateByPriorityCommand &command) , (override));
+  MOCK_METHOD(void, visitShowDueDateByDateCommand, (ShowDueDateByDateCommand & command), (override));
+  MOCK_METHOD(void, visitShowDueDateByLabelCommand, (ShowDueDateByLabelCommand & command), (override));
+  MOCK_METHOD(void, visitShowDueDateByPriorityCommand, (ShowDueDateByPriorityCommand & command), (override));
 
  public:
-   MOCK_METHOD(void, visitShowTodayByLabelCommand, ( ShowTodayByLabelCommand &command) , (override));
-   MOCK_METHOD(void, visitShowTodayPriorityCommand, ( ShowTodayByPriorityCommand &command) , (override));
+  MOCK_METHOD(void, visitShowTodayByLabelCommand, (ShowTodayByLabelCommand & command), (override));
+  MOCK_METHOD(void, visitShowTodayPriorityCommand, (ShowTodayByPriorityCommand & command), (override));
 
  public:
-   MOCK_METHOD(void, visitSaveCommand, (SaveCommand &command), (override));
-   MOCK_METHOD(void, visitLoadCommand, (LoadCommand &command), (override));
-  
+  MOCK_METHOD(void, visitSaveCommand, (SaveCommand & command), (override));
+  MOCK_METHOD(void, visitLoadCommand, (LoadCommand & command), (override));
+
 };
 #endif //TODOLIST_TESTS_CLI_MOCKS_VISITORMOCK_H_

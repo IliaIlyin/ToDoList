@@ -7,8 +7,12 @@ void AddSubTaskCommandVisitor::visitAddSubTaskCommand(AddSubTaskCommand &command
   command.execute();
   bool result = command.getAddSubTaskResult();
   if (result) {
-    std::cout << "SubTask was added successfully" << std::endl;
+    outputer_->print("SubTask was added successfully");
   } else {
-    std::cout << "Parent was not found" << std::endl;
+    outputer_->print("Parent was not found");
   }
+}
+AddSubTaskCommandVisitor::AddSubTaskCommandVisitor(const std::shared_ptr<IOStreamInterface> &outputer) : outputer_(
+    outputer) {
+
 }

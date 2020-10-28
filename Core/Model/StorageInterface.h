@@ -51,7 +51,7 @@ class StorageInterface {
 
   virtual std::vector<std::shared_ptr<TaskEntity>> getAllTasks() = 0;
 
-  virtual ~StorageInterface()=default;
+  virtual ~StorageInterface() = default;
 
 };
 

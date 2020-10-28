@@ -6,7 +6,7 @@
 class TaskPriorityValidatorTest : public testing::Test {
 
 };
-TEST_F(TaskPriorityValidatorTest,shouldValidateInput) {
+TEST_F(TaskPriorityValidatorTest, shouldValidateInput) {
   PriorityValidator validator;
   std::string f = "";
   std::string f2 = "FIRST";
@@ -14,7 +14,7 @@ TEST_F(TaskPriorityValidatorTest,shouldValidateInput) {
   std::string f4 = "SECOND";
   std::string f5 = "THIRD";
   std::string f6 = "NONE";
-  std::string f7= "FOURTH";
+  std::string f7 = "FOURTH";
   ASSERT_EQ(validator.validate(f), GeneralInputValidator::InputToken::INCORRECT_INPUT_PRIORITY);
   ASSERT_EQ(validator.validate(f2), GeneralInputValidator::InputToken::CORRECT);
   ASSERT_EQ(validator.validate(f3), GeneralInputValidator::InputToken::CANCEL_COMMAND);

@@ -21,17 +21,17 @@ TEST_F(GetSubtasksCommandTest, shouldExecuteCommand) {
   TaskID id(1);
   std::vector<TaskDTO> vec;
   Task parent = Task::createTask("Elon", boost::gregorian::date{2000, 11, 11}, Task::Priority::FIRST, "label");
-  TaskDTO dto(parent,id,false);
+  TaskDTO dto(parent, id, false);
   vec.push_back(dto);
   EXPECT_CALL(service.operator*(), getSubTasks(id)).Times(2).WillOnce(Return(vec)).WillOnce(Return(std::nullopt));
-  GetSubTaskCommand command(service,id);
+  GetSubTaskCommand command(service, id);
   command.execute();
   ASSERT_EQ(command.GetGetSubTaskCommandResult(), vec);
   command.execute();
   ASSERT_EQ(command.GetGetSubTaskCommandResult(), std::nullopt);
 }
 
-bool operator ==(const GetSubTaskCommand first,const GetSubTaskCommand sec){
+bool operator==(const GetSubTaskCommand first, const GetSubTaskCommand sec) {
   return true;
 }
 

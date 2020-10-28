@@ -18,7 +18,7 @@
  *
  * @author Ilya Ilyin
  */
-class InputContext : public InputContextInterface{
+class InputContext : public InputContextInterface {
 
  public:
   void setId(const TaskID &id) override;
@@ -41,5 +41,5 @@ class InputContext : public InputContextInterface{
   std::string label_;
   TaskID id_;
 };
-
+bool operator==(const InputContext context1, const InputContext context2);
 #endif //TODOLIST_CLI_CONTEXTS_INPUTCONTEXT_H_

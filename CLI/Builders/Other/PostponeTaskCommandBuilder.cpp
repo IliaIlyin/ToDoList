@@ -4,7 +4,7 @@
 
 #include "PostponeTaskCommandBuilder.h"
 
-std::shared_ptr<Command> PostponeTaskCommandBuilder::buildCommand(std::shared_ptr<CoreAPIInterface> service) {
+std::shared_ptr<Command> PostponeTaskCommandBuilder::buildCommand(std::shared_ptr<ClientInterface> service) {
   if (machine_->run() == GeneralInputValidator::InputToken::SUCCESS) {
     auto context = machine_->GetContext();
     TaskID id(context.getId());

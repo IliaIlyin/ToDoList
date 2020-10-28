@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "Serialization/PersistorUtils.h"
+#include "../../../SerializationUtils/SerializationUtils.h"
 #include "Core/Mocks/AllDataStorageMock.h"
 using testing::Eq;
 using testing::Eq;
@@ -15,7 +15,6 @@ using testing::Mock;
 class PersistorUtilsTest : public ::testing::Test {
 
 };
-
 
 bool equal(const protoStorage::Task proto_task, const protoStorage::Task proto_task2) {
   return proto_task.name() == proto_task2.name() &&
@@ -61,7 +60,7 @@ TEST_F(PersistorUtilsTest, shouldSerializeToTask) {
   proto_task.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
   proto_task.set_priority(protoStorage::Task_Priority_FIRST);
   proto_task.set_label("label");
-  auto task2 = serializeToTask(task);
+  auto task2 = convertTask(task);
   ASSERT_TRUE(equal(task2, proto_task));
 }
 
@@ -79,15 +78,15 @@ TEST_F(PersistorUtilsTest, shouldSerializeToTaskEntity) {
   ptr->addSubTask(ptr2);
   //proto entity creation
   protoStorage::TaskEntity result;
-  auto f1 = serializeToTask(task);
+  auto f1 = convertTask(task);
   result.set_allocated_task(new protoStorage::Task(f1));
   result.set_complete(false);
   auto entity2 = result.add_subtasks();
   entity2->set_complete(false);
-  auto f2 = serializeToTask(task2);
+  auto f2 = convertTask(task2);
   entity2->set_allocated_task(new protoStorage::Task(f2));
   auto entity3 = entity2->add_subtasks();
-  auto f3 = serializeToTask(task3);
+  auto f3 = convertTask(task3);
   entity3->set_complete(true);
   entity3->set_allocated_task(new protoStorage::Task(f3));
   //ASSERTIONS
@@ -109,7 +108,7 @@ TEST_F(PersistorUtilsTest, shouldSerializeToTaskEntity) {
 
 TEST_F(PersistorUtilsTest, shouldSerializeToStorageVectorEmpty) {
   std::vector<std::shared_ptr<TaskEntity>> vec;
-  ASSERT_ANY_THROW(   serializeToStorage(vec));
+  ASSERT_ANY_THROW(serializeToStorage(vec));
 
   // ASSERT_EQ(storage.tasks_size(), 0);
 }
@@ -130,13 +129,13 @@ TEST_F(PersistorUtilsTest, shouldSerializeToStorage) {
   vec.push_back(ptr2);
   protoStorage::Storage storage = serializeToStorage(vec);
   ASSERT_EQ(storage.tasks_size(), 2);
-  ASSERT_TRUE(equal(storage.tasks(0).task(), serializeToTask(task)));
+  ASSERT_TRUE(equal(storage.tasks(0).task(), convertTask(task)));
   ASSERT_EQ(storage.tasks(0).complete(), false);
   ASSERT_EQ(storage.tasks(0).subtasks_size(), 1);
-  ASSERT_TRUE(equal(storage.tasks(0).subtasks(0).task(), serializeToTask(task2)));
+  ASSERT_TRUE(equal(storage.tasks(0).subtasks(0).task(), convertTask(task2)));
   ASSERT_EQ(storage.tasks(0).subtasks(0).complete(), false);
   ASSERT_EQ(storage.tasks(0).subtasks(0).subtasks_size(), 0);
-  ASSERT_TRUE(equal(storage.tasks(1).task(), serializeToTask(task3)));
+  ASSERT_TRUE(equal(storage.tasks(1).task(), convertTask(task3)));
   ASSERT_EQ(storage.tasks(1).complete(), true);
   ASSERT_EQ(storage.tasks(1).subtasks_size(), 0);
 }
@@ -148,7 +147,7 @@ TEST_F(PersistorUtilsTest, shouldDeserializeFromTask) {
   proto_task.set_priority(protoStorage::Task_Priority_FIRST);
   proto_task.set_label("label");
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
-  ASSERT_EQ(deserializeFromTask(proto_task), task);
+  ASSERT_EQ(convertTask(proto_task), task);
 }
 
 TEST_F(PersistorUtilsTest, shouldSerializeSubTasks) {
@@ -181,8 +180,8 @@ TEST_F(PersistorUtilsTest, shouldSerializeSubTasks) {
   Task t3 = Task::createTask("NoName", boost::gregorian::date{2000, 5, 9}, Task::Priority::NONE, "fdsfsd");
   auto mock = std::make_shared<AllDataStorageMock>();
   EXPECT_CALL(mock.operator*(), addSubTaskToParent(TaskID(0), t2, true)).Times(1).WillOnce(Return(TaskID(1)));
-  EXPECT_CALL(mock.operator*(),addSubTaskToParent(TaskID(1),t3,false)).Times(1).WillOnce(Return(TaskID(2)));
-  serializeSubTasks(entity1,TaskID(0),mock);
+  EXPECT_CALL(mock.operator*(), addSubTaskToParent(TaskID(1), t3, false)).Times(1).WillOnce(Return(TaskID(2)));
+  serializeSubTasks(entity1, TaskID(0), mock);
 }
 TEST_F(PersistorUtilsTest, shouldSerializeTaskEntities) {
   protoStorage::Storage storage;
@@ -210,7 +209,7 @@ TEST_F(PersistorUtilsTest, shouldSerializeTaskEntities) {
   auto sub2 = sub1->add_subtasks();
   sub2->set_allocated_task(new protoStorage::Task(task3));
   sub2->set_complete(false);
-  auto vec=storage.add_tasks();
+  auto vec = storage.add_tasks();
   vec->CopyFrom(entity1);
   Task t1 = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   Task t2 = Task::createTask("Lollipop", boost::gregorian::date{2030, 12, 9}, Task::Priority::SECOND, "AAAA");
@@ -218,6 +217,6 @@ TEST_F(PersistorUtilsTest, shouldSerializeTaskEntities) {
   auto mock = std::make_shared<AllDataStorageMock>();
   EXPECT_CALL(mock.operator*(), addTask(t1, false)).Times(1).WillOnce(Return(TaskID(1)));
   EXPECT_CALL(mock.operator*(), addSubTaskToParent(TaskID(1), t2, true)).Times(1).WillOnce(Return(TaskID(2)));
-  EXPECT_CALL(mock.operator*(),addSubTaskToParent(TaskID(2),t3,false)).Times(1).WillOnce(Return(TaskID(3)));
-  serializeTaskEntities(storage,mock);
+  EXPECT_CALL(mock.operator*(), addSubTaskToParent(TaskID(2), t3, false)).Times(1).WillOnce(Return(TaskID(3)));
+  serializeTaskEntities(storage, mock);
 }

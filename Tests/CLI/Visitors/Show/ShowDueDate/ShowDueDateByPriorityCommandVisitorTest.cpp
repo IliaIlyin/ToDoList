@@ -21,12 +21,12 @@ TEST_F(ShowDueDateByPriorityCommandVisitorTest, shouldVisitShowDueDateByPriority
   TaskID id(1);
   std::vector<TaskDTO> vec;
   Task parent = Task::createTask("Elon", boost::gregorian::date{2000, 11, 11}, Task::Priority::FIRST, "label");
-  TaskDTO dto(parent,id,false);
+  TaskDTO dto(parent, id, false);
   vec.push_back(dto);
-  boost::gregorian::date date{2000,11,29};
+  boost::gregorian::date date{2000, 11, 29};
   EXPECT_CALL(service.operator*(), showDueDateByPriority(date)).Times(1).WillOnce(Return(vec));
-  ShowDueDateByPriorityCommand command(service,date);
+  ShowDueDateByPriorityCommand command(service, date);
   ASSERT_NO_THROW(visitor.visitShowDueDateByPriorityCommand(command));
-  ASSERT_EQ(vec,context->GetDtos());
-  ASSERT_EQ(context->GetDto(),std::nullopt);
+  ASSERT_EQ(vec, context->GetDtos());
+  ASSERT_EQ(context->GetDto(), std::nullopt);
 }

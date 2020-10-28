@@ -6,6 +6,7 @@
 #define TODOLIST_CLI_VALIDATORS_COMMAND_H_
 
 #include <memory>
+#include "SerializationUtils.h"
 class Visitor;
 /*
  * class for users' commands
@@ -17,7 +18,7 @@ class Command {
    *
    * @return void
    */
-  virtual void execute()=0;
+  virtual void execute() = 0;
   /*
    * method that accepts visitor
    *
@@ -25,6 +26,8 @@ class Command {
    *
    * @return void
    */
-  virtual void accept(std::shared_ptr<Visitor> v)=0;
+  virtual void accept(std::shared_ptr<Visitor> v) = 0;
+
+  virtual ~Command() = default;
 };
 #endif //TODOLIST_CLI_VALIDATORS_COMMAND_H_

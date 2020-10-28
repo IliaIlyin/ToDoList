@@ -3,7 +3,7 @@
 //
 
 #include "GetSubtasksCommand.h"
-GetSubTaskCommand::GetSubTaskCommand(std::shared_ptr<CoreAPIInterface> service, const TaskID &id)
+GetSubTaskCommand::GetSubTaskCommand(std::shared_ptr<ClientInterface> service, const TaskID &id)
     : service_(service), id_(id) {
 
 }

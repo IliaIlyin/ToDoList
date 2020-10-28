@@ -21,15 +21,13 @@ using testing::Return;
 using testing::ReturnRef;
 using testing::Mock;
 
-
-
 class ShowTodayByPriorityCommandBuilderTest : public testing::Test {
 
 };
 
 TEST_F(ShowTodayByPriorityCommandBuilderTest, shouldCreateShowTodayByPriorityCommand) {
-  auto service =  std::make_shared<CoreAPIMock>();
+  auto service = std::make_shared<CoreAPIMock>();
   ShowTodayByPriorityCommandBuilder builder;
   auto res = builder.buildCommand(service);
-  ASSERT_NE(res.get(),nullptr);
+  ASSERT_NE(res.get(), nullptr);
 }

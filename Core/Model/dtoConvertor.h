@@ -15,15 +15,15 @@
  */
 class dtoConvertor {
 
-public:
+ public:
 
-    static TaskDTO convert(const TaskEntity &task_entity);
+  static TaskDTO convert(const TaskEntity &task_entity);
 
-    static TaskEntity convert(const TaskDTO &task_dto);
+  static TaskEntity convert(const TaskDTO &task_dto);
 
-    static std::vector<TaskDTO> convert(const std::vector<std::weak_ptr<TaskEntity>>& vec);
+  static std::vector<TaskDTO> convert(const std::vector<std::weak_ptr<TaskEntity>> &vec);
 
-    static std::vector<TaskDTO> convert(const std::vector<std::shared_ptr<TaskEntity>>& vec);
+  static std::vector<TaskDTO> convert(const std::vector<std::shared_ptr<TaskEntity>> &vec);
 
 };
 

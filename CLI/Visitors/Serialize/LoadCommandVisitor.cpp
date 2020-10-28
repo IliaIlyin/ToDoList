@@ -7,8 +7,9 @@ void LoadCommandVisitor::visitLoadCommand(LoadCommand &command) {
   command.execute();
   bool result = command.getLoadResult();
   if (result) {
-    std::cout << "System has loaded" << std::endl;
+    outputer_->print("System has loaded");
   } else {
-    std::cout << "Wrong file. System is not loaded." << std::endl;
+    outputer_->print("Wrong file. System is not loaded.");
   }
 }
+LoadCommandVisitor::LoadCommandVisitor(const std::shared_ptr<IOStreamInterface> &outputer) : outputer_(outputer) {}

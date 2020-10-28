@@ -7,7 +7,7 @@
 
 #include "Factories/Validators/GeneralCommandsValidator.h"
 #include "Builder.h"
-
+#include "BuilderFactoryInterface.h"
 #include "Builders/Add/AddSubTaskCommandBuilder.h"
 #include "Builders/Add/AddTaskCommandBuilder.h"
 
@@ -40,31 +40,38 @@
  *
  * @author Ilya Ilyin
  */
-class BuilderFactory {
+class BuilderFactory : public BuilderFactoryInterface {
  public:
-  /*
-   * method that creates command builder.
-   *
-   * @input token corresponding to the needed command
-   *
-   * @return pointer to the builder
-   */
+
   std::shared_ptr<Builder> create(const GeneralCommandsValidator::CommandToken &token,
-                                  std::shared_ptr<InputStateMachineCreatorInterface> creator);
+                                  std::shared_ptr<InputStateMachineCreatorInterface> creator,
+                                  std::shared_ptr<IOStreamInterface> outpute) override;
 
  public:
-  std::shared_ptr<Builder> BuildAddTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildAddSubTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildDeleteTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildShowDueByDateCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildShowDueDateByLabelCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildShowDueDateByPriorityCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildCompleteTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildPostponeTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildGetTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildGetSubTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildSaveCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
-  std::shared_ptr<Builder> BuildLoadCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator) const;
+  std::shared_ptr<Builder> BuildAddTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                      std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildAddSubTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                         std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildDeleteTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                         std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildShowDueByDateCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                            std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildShowDueDateByLabelCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                                 std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildShowDueDateByPriorityCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                                    std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildCompleteTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                           std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildPostponeTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                           std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildGetTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                      std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildGetSubTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                         std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildSaveCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                   std::shared_ptr<IOStreamInterface> outpute) const override;
+  std::shared_ptr<Builder> BuildLoadCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
+                                                   std::shared_ptr<IOStreamInterface> outpute) const override;
 };
 
 #endif //TODOLIST_CLI_COMMANDFACTORY_H_

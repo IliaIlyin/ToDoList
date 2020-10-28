@@ -5,7 +5,7 @@
 #include "IdGenerator.h"
 
 TaskID IdGenerator::generateId() {
-    return TaskID((this->id)++);
+  return TaskID((this->id)++);
 }
 
 IdGenerator::IdGenerator(int id) : id(id) {}

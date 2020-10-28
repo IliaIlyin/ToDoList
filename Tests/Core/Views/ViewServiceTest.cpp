@@ -49,7 +49,7 @@ TEST_F(ViewServiceTest, shouldInsertTask) {
   EXPECT_CALL(date.operator*(), insert(entity)).Times(1);
   EXPECT_CALL(label.operator*(), insert(entity)).Times(1);
   EXPECT_CALL(priority.operator*(), insert(entity)).Times(1);
-  ASSERT_EQ(view_service.insert(entity),true);
+  ASSERT_EQ(view_service.insert(entity), true);
 }
 
 TEST_F(ViewServiceTest, shouldCleanTask) {
@@ -80,7 +80,7 @@ TEST_F(ViewServiceTest, shouldShowAllByPriority) {
   EXPECT_CALL(priority.operator*(), showAll()).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(label.operator*(), showAll()).Times(0);
   EXPECT_CALL(date.operator*(), showAll()).Times(0);
-  ASSERT_EQ(view_service.showAllByPriority().empty(),vec.empty());
+  ASSERT_EQ(view_service.showAllByPriority().empty(), vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowAllByDate) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
@@ -91,7 +91,7 @@ TEST_F(ViewServiceTest, shouldShowAllByDate) {
   EXPECT_CALL(priority.operator*(), showAll()).Times(0);
   EXPECT_CALL(label.operator*(), showAll()).Times(0);
   EXPECT_CALL(date.operator*(), showAll()).Times(1).WillOnce(Return(vec));
-  ASSERT_EQ(view_service.showAllByDate().empty(),vec.empty());
+  ASSERT_EQ(view_service.showAllByDate().empty(), vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowAllByLabel) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
@@ -102,7 +102,7 @@ TEST_F(ViewServiceTest, shouldShowAllByLabel) {
   EXPECT_CALL(priority.operator*(), showAll()).Times(0);
   EXPECT_CALL(label.operator*(), showAll()).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(date.operator*(), showAll()).Times(0);
-  ASSERT_EQ(view_service.showAllByLabel().empty(),vec.empty());
+  ASSERT_EQ(view_service.showAllByLabel().empty(), vec.empty());
 }
 TEST_F(ViewServiceTest, shouldTodayByPriority) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
@@ -113,7 +113,7 @@ TEST_F(ViewServiceTest, shouldTodayByPriority) {
   EXPECT_CALL(priority.operator*(), showToday()).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(label.operator*(), showToday()).Times(0);
   EXPECT_CALL(date.operator*(), showToday()).Times(0);
-  ASSERT_EQ(view_service.showTodayByPriority().empty(),vec.empty());
+  ASSERT_EQ(view_service.showTodayByPriority().empty(), vec.empty());
 }
 
 TEST_F(ViewServiceTest, shouldShowTodayByLabel) {
@@ -125,7 +125,7 @@ TEST_F(ViewServiceTest, shouldShowTodayByLabel) {
   EXPECT_CALL(priority.operator*(), showToday()).Times(0);
   EXPECT_CALL(label.operator*(), showToday()).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(date.operator*(), showToday()).Times(0);
-  ASSERT_EQ(view_service.showTodayByLabel().empty(),vec.empty());
+  ASSERT_EQ(view_service.showTodayByLabel().empty(), vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowDueDateByPriority) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
@@ -137,7 +137,7 @@ TEST_F(ViewServiceTest, shouldShowDueDateByPriority) {
   EXPECT_CALL(priority.operator*(), showDueDate(dat)).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(label.operator*(), showDueDate(dat)).Times(0);
   EXPECT_CALL(date.operator*(), showDueDate(dat)).Times(0);
-  ASSERT_EQ(view_service.showDueDateByPriority(dat).empty(),vec.empty());
+  ASSERT_EQ(view_service.showDueDateByPriority(dat).empty(), vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowDueDateByDate) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
@@ -149,7 +149,7 @@ TEST_F(ViewServiceTest, shouldShowDueDateByDate) {
   EXPECT_CALL(priority.operator*(), showDueDate(dat)).Times(0);
   EXPECT_CALL(label.operator*(), showDueDate(dat)).Times(0);
   EXPECT_CALL(date.operator*(), showDueDate(dat)).Times(1);
-  ASSERT_EQ(view_service.showDueDateByDate(dat).empty(),vec.empty());
+  ASSERT_EQ(view_service.showDueDateByDate(dat).empty(), vec.empty());
 }
 TEST_F(ViewServiceTest, shouldShowDueDateByLabel) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
@@ -161,5 +161,5 @@ TEST_F(ViewServiceTest, shouldShowDueDateByLabel) {
   EXPECT_CALL(priority.operator*(), showDueDate(dat)).Times(0);
   EXPECT_CALL(label.operator*(), showDueDate(dat)).Times(1).WillOnce(Return(vec));
   EXPECT_CALL(date.operator*(), showDueDate(dat)).Times(0);
-  ASSERT_EQ(view_service.showDueDateByLabel(dat).empty(),vec.empty());
+  ASSERT_EQ(view_service.showDueDateByLabel(dat).empty(), vec.empty());
 }

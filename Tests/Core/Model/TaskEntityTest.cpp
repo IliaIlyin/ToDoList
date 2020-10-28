@@ -24,10 +24,10 @@ TEST_F(TaskEntityTest, shouldCreateTaskEntity) {
   ASSERT_EQ((taskId.getId()), (taskEntity.getTaskId().getId()));
   ASSERT_EQ(false, taskEntity.checkStatus());
   ASSERT_EQ(vec, taskEntity.getSubTasks());
-  TaskEntity entity=TaskEntity::createTaskEntity(task,idGenerator,true);
-  TaskEntity entity2=TaskEntity::createTaskEntity(task,idGenerator,false);
-  ASSERT_EQ(entity.checkStatus(),true);
-  ASSERT_EQ(entity2.checkStatus(),false);
+  TaskEntity entity = TaskEntity::createTaskEntity(task, idGenerator, true);
+  TaskEntity entity2 = TaskEntity::createTaskEntity(task, idGenerator, false);
+  ASSERT_EQ(entity.checkStatus(), true);
+  ASSERT_EQ(entity2.checkStatus(), false);
 }
 TEST_F(TaskEntityTest, shouldAddSubTasks) {
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");

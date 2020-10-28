@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <CLI/Mocks/IOStreamMock.h>
 #include "Visitors/Other/DeleteTaskCommandVisitor.h"
 #include "Core/Mocks/CoreAPIMock.h"
 using testing::Eq;
@@ -14,7 +15,8 @@ class DeleteTaskCommandVisitorTest : public testing::Test {
 
 };
 TEST_F(DeleteTaskCommandVisitorTest, shouldVisitDeleteTask) {
-  DeleteTaskCommandVisitor visitor;
+  std::shared_ptr<IOStreamInterface> inputer = std::make_shared<IOStreamMock>();
+  DeleteTaskCommandVisitor visitor(inputer);
   auto service = std::make_shared<CoreAPIMock>();
   TaskID id(1);
   EXPECT_CALL(service.operator*(), deleteTask(id)).Times(1).WillOnce(Return(true));

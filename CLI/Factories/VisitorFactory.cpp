@@ -5,11 +5,12 @@
 #include "VisitorFactory.h"
 
 std::shared_ptr<Visitor> VisitorFactory::createVisitor(const GeneralCommandsValidator::CommandToken &token,
-                                                       std::shared_ptr<Context> context) {
+                                                       std::shared_ptr<Context> context,
+                                                       std::shared_ptr<IOStreamInterface> outputer) {
   switch (token) {
-    case GeneralCommandsValidator::CommandToken::ADD_TASK:return std::make_shared<AddTaskCommandVisitor>();
-    case GeneralCommandsValidator::CommandToken::ADD_SUBTASK:return std::make_shared<AddSubTaskCommandVisitor>();
-    case GeneralCommandsValidator::CommandToken::DELETE_TASK:return std::make_shared<DeleteTaskCommandVisitor>();
+    case GeneralCommandsValidator::CommandToken::ADD_TASK:return std::make_shared<AddTaskCommandVisitor>(outputer);
+    case GeneralCommandsValidator::CommandToken::ADD_SUBTASK:return std::make_shared<AddSubTaskCommandVisitor>(outputer);
+    case GeneralCommandsValidator::CommandToken::DELETE_TASK:return std::make_shared<DeleteTaskCommandVisitor>(outputer);
     case GeneralCommandsValidator::CommandToken::SHOW_ALL_SORT_PRIORITY:
       return std::make_shared<ShowAllByPriorityCommandVisitor>(context);
     case GeneralCommandsValidator::CommandToken::SHOW_ALL_SORT_DATE:
@@ -26,12 +27,18 @@ std::shared_ptr<Visitor> VisitorFactory::createVisitor(const GeneralCommandsVali
       return std::make_shared<ShowDueDateByLabelCommandVisitor>(context);
     case GeneralCommandsValidator::CommandToken::SHOW_DUE_DATE_SORT_PRIORITY:
       return std::make_shared<ShowDueDateByPriorityCommandVisitor>(context);
-    case GeneralCommandsValidator::CommandToken::COMPLETE_TASK:return std::make_shared<CompleteTaskCommandVisitor>();
-    case GeneralCommandsValidator::CommandToken::POSTPONE_TASK:return std::make_shared<PostponeTaskCommandVisitor>();
-    case GeneralCommandsValidator::CommandToken::GET_TASK:return std::make_shared<GetTaskCommandVisitor>(context);
-    case GeneralCommandsValidator::CommandToken::GET_SUBTASK:return std::make_shared<GetSubTaskCommandVisitor>(context);
-    case GeneralCommandsValidator::CommandToken::SAVE:return std::make_shared<SaveCommandVisitor>();
-    case GeneralCommandsValidator::CommandToken::LOAD:return std::make_shared<LoadCommandVisitor>();
+    case GeneralCommandsValidator::CommandToken::COMPLETE_TASK:
+      return std::make_shared<CompleteTaskCommandVisitor>(outputer);
+    case GeneralCommandsValidator::CommandToken::POSTPONE_TASK:
+      return std::make_shared<PostponeTaskCommandVisitor>(outputer);
+    case GeneralCommandsValidator::CommandToken::GET_TASK:
+      return std::make_shared<GetTaskCommandVisitor>(context,
+                                                     outputer);
+    case GeneralCommandsValidator::CommandToken::GET_SUBTASK:
+      return std::make_shared<GetSubTaskCommandVisitor>(context,
+                                                        outputer);
+    case GeneralCommandsValidator::CommandToken::SAVE:return std::make_shared<SaveCommandVisitor>(outputer);
+    case GeneralCommandsValidator::CommandToken::LOAD:return std::make_shared<LoadCommandVisitor>(outputer);
     case GeneralCommandsValidator::CommandToken::INCORRECT_COMMAND:break;
     case GeneralCommandsValidator::CommandToken::EXIT:break;
   }

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+import "StorageModel.proto";
+
+package coreService;
+
+service CoreAPIInterface{
+  rpc save(Name) returns (Result){}
+  rpc load(Name) returns (Result){}
+  rpc addTask(protoStorage.Task) returns(Result){}
+  rpc addSubTask(SubTask) returns(Result){}
+  rpc getTask(TaskID) returns (GetTaskResult){}
+  rpc getSubTasks(TaskID) returns (TasksContainer){}
+  rpc postponeTask(PostponeTaskRequest) returns(Result){}
+  rpc completeTask(TaskID) returns(Result){}
+  rpc deleteTask(TaskID) returns(Result){}
+  rpc showAllByPriority(showRequest)returns(TasksContainer){}
+  rpc showAllDate(showRequest)returns(TasksContainer){}
+  rpc showAllByLabel(showRequest)returns(TasksContainer){}
+  rpc showDueDateByPriority(protoStorage.TaskDate)returns(TasksContainer){}
+  rpc showDueDateByDate(protoStorage.TaskDate)returns(TasksContainer){}
+  rpc showDueDateByLabel(protoStorage.TaskDate)returns(TasksContainer){}
+  rpc showTodayByPriority(showRequest)returns(TasksContainer){}
+  rpc showTodayByLabel(showRequest)returns(TasksContainer){}
+}
+
+message showRequest{
+
+}
+message PostponeTaskRequest{
+  TaskID id = 1;
+  protoStorage.TaskDate date = 2;
+}
+message SubTask{
+  TaskID parent = 1;
+  protoStorage.Task child = 2;
+}
+message TaskID{
+  uint32 id = 1;
+}
+message Name{
+  string name = 1;
+}
+message Result{
+  bool result = 1;
+}
+message TaskDTO{
+  protoStorage.Task task = 1;
+  bool complete = 2;
+  TaskID id = 3;
+}
+message GetTaskResult{
+  bool isFound = 1;
+  TaskDTO result = 2;
+}
+message TasksContainer{
+  bool isFound = 1;
+  repeated TaskDTO result = 2;
+}

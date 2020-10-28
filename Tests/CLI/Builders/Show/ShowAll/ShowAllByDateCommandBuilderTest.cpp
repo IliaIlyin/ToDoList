@@ -20,15 +20,13 @@ using testing::Return;
 using testing::ReturnRef;
 using testing::Mock;
 
-
-
 class ShowAllByDateCommandBuilderTest : public testing::Test {
 
 };
 
 TEST_F(ShowAllByDateCommandBuilderTest, shouldCreateShowAllByDateCommand) {
-  auto service =  std::make_shared<CoreAPIMock>();
+  auto service = std::make_shared<CoreAPIMock>();
   ShowAllByDateCommandBuilder builder;
   auto res = builder.buildCommand(service);
-  ASSERT_NE(res.get(),nullptr);
+  ASSERT_NE(res.get(), nullptr);
 }

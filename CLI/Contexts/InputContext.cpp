@@ -33,3 +33,10 @@ const TaskID &InputContext::getId() const {
 void InputContext::setId(const TaskID &id) {
   id_ = id;
 }
+bool operator==(const InputContext context1, const InputContext context2) {
+  return context1.getLabel() == context2.getLabel() &&
+      context1.getName() == context2.getName() &&
+      context1.getId() == context2.getId() &&
+      context1.getPriority() == context2.getPriority() &&
+      context1.getDate() == context2.getDate();
+}

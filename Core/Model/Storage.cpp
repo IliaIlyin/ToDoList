@@ -45,11 +45,11 @@ std::optional<std::shared_ptr<TaskEntity>> Storage::search(TaskID id, std::vecto
 }
 
 std::vector<std::shared_ptr<TaskEntity>> Storage::getAllTasks() {
-    std::vector<std::shared_ptr<TaskEntity>> result;
-    for(auto i=tasks_.begin();i!=tasks_.end();i++){
-        result.push_back(i->second);
-    }
-    return result;
+  std::vector<std::shared_ptr<TaskEntity>> result;
+  for (auto i = tasks_.begin(); i != tasks_.end(); i++) {
+    result.push_back(i->second);
+  }
+  return result;
 }
 
 

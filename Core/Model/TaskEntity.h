@@ -19,8 +19,8 @@
  */
 class TaskEntity {
 
-public:
-  static TaskEntity createTaskEntity(const Task &task, IdGenerator &idGenerator,bool status);
+ public:
+  static TaskEntity createTaskEntity(const Task &task, IdGenerator &idGenerator, bool status);
   /*
  * static method to create task entity.
  *
@@ -28,46 +28,46 @@ public:
  * @param idGenerator to generate id for entity
  * @return a new TaskEntity instance
  */
-    static TaskEntity createTaskEntity(const Task &task, IdGenerator &idGenerator);
+  static TaskEntity createTaskEntity(const Task &task, IdGenerator &idGenerator);
 
-public:
-     /*
-      * copy constructor.
-      */
-    TaskEntity(const Task &task, const TaskID &id, bool status,
-               const std::vector<std::shared_ptr<TaskEntity>> &SubTasks);
-public:
+ public:
+  /*
+   * copy constructor.
+   */
+  TaskEntity(const Task &task, const TaskID &id, bool status,
+             const std::vector<std::shared_ptr<TaskEntity>> &SubTasks);
+ public:
 
-    const Task &getTask() const;
+  const Task &getTask() const;
 
-    const TaskID &getTaskId() const;
+  const TaskID &getTaskId() const;
 
-    bool checkStatus() const;
+  bool checkStatus() const;
 
-    const std::vector<std::shared_ptr<TaskEntity>> &getSubTasks() const;
+  const std::vector<std::shared_ptr<TaskEntity>> &getSubTasks() const;
 
-public:
+ public:
 /*
  * completes task (also completes subTasks)
  */
-    void completeTask();
+  void completeTask();
 /*
  * adds SubTask to the instance.
  *
  * @param taskEntity shared_ptr to the entity that is to be added
  */
-    void addSubTask(std::shared_ptr<TaskEntity> taskEntity);
+  void addSubTask(std::shared_ptr<TaskEntity> taskEntity);
 
-private:
+ private:
 
-    TaskEntity(const Task &task, IdGenerator &idGenerator);
+  TaskEntity(const Task &task, IdGenerator &idGenerator);
 
-private:
-    Task task_;
-    TaskID taskID_;
-    bool status_;
-    std::vector<std::shared_ptr<TaskEntity>> SubTasks_;
+ private:
+  Task task_;
+  TaskID taskID_;
+  bool status_;
+  std::vector<std::shared_ptr<TaskEntity>> SubTasks_;
 };
-bool operator==(const TaskEntity &t, const TaskEntity & t2);
+bool operator==(const TaskEntity &t, const TaskEntity &t2);
 
 #endif //TODOLIST_TASKENTITY_H

@@ -8,8 +8,9 @@ void SaveCommandVisitor::visitSaveCommand(SaveCommand &command) {
   command.execute();
   bool result = command.getSaveResult();
   if (result) {
-    std::cout << "System has been saved" << std::endl;
+    outputer_->print("System has been saved");
   } else {
-    std::cout << "Something went wrong. System is not saved." << std::endl;
+    outputer_->print("Something went wrong. System is not saved.");
   }
 }
+SaveCommandVisitor::SaveCommandVisitor(const std::shared_ptr<IOStreamInterface> &outputer) : outputer_(outputer) {}

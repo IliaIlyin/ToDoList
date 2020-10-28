@@ -6,7 +6,7 @@
 
 std::vector<std::weak_ptr<TaskEntity> > DateView::showAll() {
   std::vector<std::weak_ptr<TaskEntity> > vector;
-  if(!dates.empty()) {
+  if (!dates.empty()) {
     for (auto i = dates.begin(); i != dates.end(); i++)
       vector.push_back(i->second);
   }
@@ -17,7 +17,7 @@ std::vector<std::weak_ptr<TaskEntity> > DateView::showDueDate(boost::gregorian::
   std::vector<std::weak_ptr<TaskEntity> > vector;
   for (auto i = dates.begin(); i != dates.end(); i++) {
     boost::gregorian::date t = i->second.lock()->getTask().getDate();
-    if (t<date) {
+    if (t < date) {
       vector.push_back(i->second);
     }
   }
@@ -29,8 +29,8 @@ std::vector<std::weak_ptr<TaskEntity>> DateView::showToday() {
   boost::gregorian::date today = boost::gregorian::date();
   for (auto i = dates.begin(); i != dates.end(); i++) {
     boost::gregorian::date t = i->second.lock()->getTask().getDate();
-      auto tmp = boost::gregorian::day_clock::local_day();
-    if (i->first==tmp) {
+    auto tmp = boost::gregorian::day_clock::local_day();
+    if (i->first == tmp) {
       vector.push_back(i->second);
     }
   }
@@ -55,9 +55,9 @@ void DateView::clean() {
 }
 
 bool DateView::insert(std::shared_ptr<TaskEntity> taskEntity) {
-  auto vec=dates.equal_range(taskEntity->getTask().getDate());
-  for(auto i=vec.first;i!=vec.second;i++){
-    if(i->second.lock()==taskEntity)
+  auto vec = dates.equal_range(taskEntity->getTask().getDate());
+  for (auto i = vec.first; i != vec.second; i++) {
+    if (i->second.lock() == taskEntity)
       return false;
   }
   dates.insert(std::pair<boost::gregorian::date, std::weak_ptr<TaskEntity> >

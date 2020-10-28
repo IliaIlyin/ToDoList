@@ -26,7 +26,7 @@ TEST_F(TaskDTOTest, shouldCreateDTO) {
   ASSERT_EQ(taskDTO.checkStatus(), false);
   TaskDTO dto(task, taskId, true);
   ASSERT_EQ(dto.getTask(), task);
-  ASSERT_EQ( dto.getTaskId().getId(), 0);
+  ASSERT_EQ(dto.getTaskId().getId(), 0);
   ASSERT_EQ(dto.getTaskId(), taskId);
   ASSERT_EQ(dto.checkStatus(), true);
   TaskDTO dto2(task, taskId, false);

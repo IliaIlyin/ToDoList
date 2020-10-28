@@ -13,7 +13,7 @@
 
 class ShowAllByPriorityCommandBuilder : public Builder {
  public:
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<ClientInterface> service) override;
 };
 
 #endif //TODOLIST_CLI_BUILDERS_SHOW_SHOWALL_SHOWALLBYPRIORITYCOMMANDBUILDER_H_

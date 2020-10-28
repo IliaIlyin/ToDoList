@@ -9,7 +9,9 @@ void GetSubTaskCommandVisitor::visitGetSubTaskCommand(GetSubTaskCommand &command
   if (vec.has_value()) {
     result_->SetDtos(vec.value());
   } else {
-    std::cout << "Task was not found" << std::endl;
+    outputer_->print("Task was not found");
   }
 }
-GetSubTaskCommandVisitor::GetSubTaskCommandVisitor(const std::shared_ptr<Context> &result) : result_(result) {}
+GetSubTaskCommandVisitor::GetSubTaskCommandVisitor(const std::shared_ptr<Context> &result,
+                                                   std::shared_ptr<IOStreamInterface> outputer)
+    : result_(result), outputer_(outputer) {}

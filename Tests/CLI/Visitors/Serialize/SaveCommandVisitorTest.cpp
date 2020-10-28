@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <CLI/Mocks/IOStreamMock.h>
 #include "Visitors/Serialize//SaveCommandVisitor.h"
 #include "Core/Mocks/CoreAPIMock.h"
 using testing::Eq;
@@ -14,7 +15,8 @@ class SaveCommandVisitorTest : public testing::Test {
 
 };
 TEST_F(SaveCommandVisitorTest, shouldVisitSave) {
-  SaveCommandVisitor visitor;
+  std::shared_ptr<IOStreamInterface> inputer = std::make_shared<IOStreamMock>();
+  SaveCommandVisitor visitor(inputer);
   auto service = std::make_shared<CoreAPIMock>();
   std::string fileName = "lol";
   EXPECT_CALL(service.operator*(), save(fileName)).Times(1).WillOnce(Return(true));

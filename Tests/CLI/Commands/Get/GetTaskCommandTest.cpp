@@ -20,16 +20,16 @@ TEST_F(GetTaskCommandTest, shouldExecuteCommand) {
   auto service = std::make_shared<CoreAPIMock>();
   TaskID id(1);
   Task parent = Task::createTask("Elon", boost::gregorian::date{2000, 11, 11}, Task::Priority::FIRST, "label");
-  TaskDTO dto(parent,id,false);
+  TaskDTO dto(parent, id, false);
   EXPECT_CALL(service.operator*(), getTask(id)).Times(2).WillOnce(Return(dto)).WillOnce(Return(std::nullopt));
-  GetTaskCommand command(service,id);
+  GetTaskCommand command(service, id);
   command.execute();
   ASSERT_EQ(command.GetGetTaskCommandResult(), dto);
   command.execute();
   ASSERT_EQ(command.GetGetTaskCommandResult(), std::nullopt);
 }
 
-bool operator ==(const GetTaskCommand first,const GetTaskCommand sec){
+bool operator==(const GetTaskCommand first, const GetTaskCommand sec) {
   return true;
 }
 

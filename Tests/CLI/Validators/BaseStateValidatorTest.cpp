@@ -7,71 +7,71 @@
 class BaseStateValidatorTest : public testing::Test {
 
 };
-TEST_F(BaseStateValidatorTest, shouldValidateAddTask){
+TEST_F(BaseStateValidatorTest, shouldValidateAddTask) {
   std::string str = "Add task";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::ADD_TASK);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::ADD_TASK);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateAddSubTask){
+TEST_F(BaseStateValidatorTest, shouldValidateAddSubTask) {
   std::string str = "Add subTask";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::ADD_SUBTASK);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::ADD_SUBTASK);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateGetTask){
+TEST_F(BaseStateValidatorTest, shouldValidateGetTask) {
   std::string str = "get task";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::GET_TASK);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::GET_TASK);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateCompleteTask){
+TEST_F(BaseStateValidatorTest, shouldValidateCompleteTask) {
   std::string str = "complete task";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::COMPLETE_TASK);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::COMPLETE_TASK);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateGetSubTask){
+TEST_F(BaseStateValidatorTest, shouldValidateGetSubTask) {
   std::string str = "get subTasks";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::GET_SUBTASK);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::GET_SUBTASK);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateDeleteTask){
+TEST_F(BaseStateValidatorTest, shouldValidateDeleteTask) {
   std::string str = "delete task";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::DELETE_TASK);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::DELETE_TASK);
 }
-TEST_F(BaseStateValidatorTest, shouldValidatePostponeTask){
+TEST_F(BaseStateValidatorTest, shouldValidatePostponeTask) {
   std::string str = "postpone task";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::POSTPONE_TASK);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::POSTPONE_TASK);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateSave){
+TEST_F(BaseStateValidatorTest, shouldValidateSave) {
   std::string str = "save";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::SAVE);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::SAVE);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateLoad){
+TEST_F(BaseStateValidatorTest, shouldValidateLoad) {
   std::string str = "load";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::LOAD);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::LOAD);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateShowAllSortDate){
+TEST_F(BaseStateValidatorTest, shouldValidateShowAllSortDate) {
   std::string str = "show all sort date";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::SHOW_ALL_SORT_DATE);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::SHOW_ALL_SORT_DATE);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateShowAllSortLabel){
+TEST_F(BaseStateValidatorTest, shouldValidateShowAllSortLabel) {
   std::string str = "show all sort label";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::SHOW_ALL_SORT_LABEL);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::SHOW_ALL_SORT_LABEL);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateShowAllSortPriority){
+TEST_F(BaseStateValidatorTest, shouldValidateShowAllSortPriority) {
   std::string str = "show all sort priority";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::SHOW_ALL_SORT_PRIORITY);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::SHOW_ALL_SORT_PRIORITY);
 }
 
-TEST_F(BaseStateValidatorTest, shouldValidateShowTodaySortPriority){
+TEST_F(BaseStateValidatorTest, shouldValidateShowTodaySortPriority) {
   std::string str = "show today sort priority";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::SHOW_TODAY_SORT_PRIORITY);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::SHOW_TODAY_SORT_PRIORITY);
 }
 
 TEST_F(BaseStateValidatorTest, shouldValidateShowTodaySortLabel) {
@@ -79,10 +79,10 @@ TEST_F(BaseStateValidatorTest, shouldValidateShowTodaySortLabel) {
   BaseStateValidator validator;
   ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::SHOW_TODAY_SORT_LABEL);
 }
-TEST_F(BaseStateValidatorTest, shouldValidateShowDueDateSortDate){
+TEST_F(BaseStateValidatorTest, shouldValidateShowDueDateSortDate) {
   std::string str = "show due date sort date";
   BaseStateValidator validator;
-  ASSERT_EQ(validator.validate(str),GeneralCommandsValidator::CommandToken::SHOW_DUE_DATE_SORT_DATE);
+  ASSERT_EQ(validator.validate(str), GeneralCommandsValidator::CommandToken::SHOW_DUE_DATE_SORT_DATE);
 }
 TEST_F(BaseStateValidatorTest, shouldValidateShowDueDateSortPriority) {
   std::string str = "show due date sort priority";

@@ -3,7 +3,7 @@
 //
 
 #include "DeleteTaskCommand.h"
-DeleteTaskCommand::DeleteTaskCommand(std::shared_ptr<CoreAPIInterface> service, const TaskID &id)
+DeleteTaskCommand::DeleteTaskCommand(std::shared_ptr<ClientInterface> service, const TaskID &id)
     : service_(service), id_(id) {
 }
 

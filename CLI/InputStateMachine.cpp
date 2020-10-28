@@ -7,9 +7,9 @@ GeneralInputValidator::InputToken InputStateMachine::run() {
   auto result = GeneralInputValidator::InputToken::CORRECT;
   while (result != GeneralInputValidator::InputToken::CANCEL_COMMAND
       && result != GeneralInputValidator::InputToken::SUCCESS) {
-    result = begin_->read();
+    result = begin_->read(outputer_);
     if (result != GeneralInputValidator::InputToken::CORRECT && result != GeneralInputValidator::InputToken::SUCCESS) {
-      std::cout << GeneralInputValidator::interpretResult(result) << std::endl;
+      outputer_->print(GeneralInputValidator::interpretResult(result));
       continue;
     }
     context_ = begin_->fillContext(context_);
@@ -17,8 +17,10 @@ GeneralInputValidator::InputToken InputStateMachine::run() {
   }
   return result;
 }
-InputStateMachine::InputStateMachine(const std::shared_ptr<InputState> &begin, InputContext &context)
-    : begin_(begin), context_(context) {}
+InputStateMachine::InputStateMachine(const std::shared_ptr<InputState> &begin,
+                                     InputContext &context,
+                                     std::shared_ptr<IOStreamInterface> outputer)
+    : begin_(begin), context_(context), outputer_(outputer) {}
 
 InputContext InputStateMachine::GetContext() const {
   return context_;

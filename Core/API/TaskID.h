@@ -12,21 +12,21 @@
  */
 class TaskID {
 
-public:
-   TaskID()=default;
+ public:
+  TaskID() = default;
   /*
    * constructs the object on the id
    */
-    TaskID(int id);
+  TaskID(int id);
 
-    int getId() const;
+  int getId() const;
 
-private:
-    int id;
+ private:
+  int id;
 };
 
-bool operator==(const TaskID &id, const TaskID& id2);
+bool operator==(const TaskID &id, const TaskID &id2);
 
-bool operator<(const TaskID &id, const TaskID& id2);
+bool operator<(const TaskID &id, const TaskID &id2);
 
 #endif //TODOLIST_TASKID_H

@@ -26,7 +26,7 @@ class InputStateMachineInterface {
  * @return GeneralInputValidator::InputToken::SUCCESS if the machine run was completed successfully
  * @return GeneralInputValidator::InputToken::CANCEL_COMMAND if the user decided to cancel the command
  */
-  virtual ~InputStateMachineInterface()=default;
+  virtual ~InputStateMachineInterface() = default;
   virtual GeneralInputValidator::InputToken run() = 0;
   virtual InputContext GetContext() const = 0;
 

@@ -5,14 +5,16 @@
 #ifndef TODOLIST_CLI_COMMANDS_GETTASKCOMMAND_H_
 #define TODOLIST_CLI_COMMANDS_GETTASKCOMMAND_H_
 
-#include "API/CoreAPIInterface.h"
+#include "ClientInterface.h"
+#include "API/TaskDTO.h"
+#include "API/TaskID.h"
 #include "Command.h"
 #include "Visitor.h"
 #include <optional>
 class GetTaskCommand : public Command {
 
  public:
-  GetTaskCommand(std::shared_ptr<CoreAPIInterface> service, const TaskID &id);
+  GetTaskCommand(std::shared_ptr<ClientInterface> service, const TaskID &id);
 
  public:
   void execute() override;
@@ -20,7 +22,7 @@ class GetTaskCommand : public Command {
 
   const std::optional<TaskDTO> &GetGetTaskCommandResult() const;
  private:
-  std::shared_ptr<CoreAPIInterface> service_;
+  std::shared_ptr<ClientInterface> service_;
   TaskID id_;
 
  private:

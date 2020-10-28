@@ -1,110 +1,118 @@
 //
-// Created by ilya on 04.10.20.
+// Created by ilya on 26.10.20.
 //
 
 #include "CoreAPI.h"
 
-//
-// Created by Ilya on 5/20/2020
-//
-
-#include "CoreAPI.h"
-
-bool CoreAPI::postponeTask(const TaskID &task, boost::gregorian::date date) {
-  return service_->postponeTask(task, date);
+Status CoreAPI::save(ServerContext *context, const coreService::Name *request, coreService::Result *response) {
+  response->set_result(service_->save(request->name()));
+  return Status::OK;
 }
-
-bool CoreAPI::addTask(std::string taskName,
-                      boost::gregorian::date date,
-                      Task::Priority priority,
-                      std::string label) {
-  return service_->addTask(taskName, date, priority, label);
+Status CoreAPI::load(ServerContext *context, const coreService::Name *request, coreService::Result *response) {
+  response->set_result(service_->load(request->name()));
+  return Status::OK;
 }
-
-bool CoreAPI::deleteTask(const TaskID &task) {
-  return service_->deleteTask(task);
+Status CoreAPI::addTask(ServerContext *context,
+                        const protoStorage::Task *request,
+                        coreService::Result *response) {
+  Task t = convertTask(*request);
+  response->set_result(service_->addTask(t));
+  return Status::OK;
 }
-
-bool CoreAPI::completeTask(const TaskID &task) {
-  return service_->completeTask(task);
+Status CoreAPI::postponeTask(ServerContext *context,
+                             const coreService::PostponeTaskRequest *request,
+                             coreService::Result *response) {
+  auto date = convertDate(request->date());
+  TaskID id = convertTaskID(request->id());
+  response->set_result(service_->postponeTask(id, date));
+  return Status::OK;
 }
-
-bool CoreAPI::addSubTaskToParent(const TaskID &parent, std::string taskName, boost::gregorian::date date,
-                                 Task::Priority priority,
-                                 std::string label) {
-  return service_->addSubTaskToParent(parent, taskName, date, priority, label);
+Status CoreAPI::addSubTask(ServerContext *context,
+                           const coreService::SubTask *request,
+                           coreService::Result *response) {
+  Task t = convertTask(request->child());
+  TaskID id = convertTaskID(request->parent());
+  response->set_result(service_->addSubTaskToParent(id, t));
+  return Status::OK;
 }
-
-bool CoreAPI::addTask(Task &task) {
-  return service_->addTask(task);
+Status CoreAPI::getTask(ServerContext *context,
+                        const coreService::TaskID *request,
+                        coreService::GetTaskResult *response) {
+  TaskID id = convertTaskID(*request);
+  response->CopyFrom(convertGetTaskResult(service_->getTask(id)));
+  return Status::OK;
 }
-
-bool CoreAPI::addSubTaskToParent(const TaskID &parent, Task &task) {
-  return service_->addSubTaskToParent(parent, task);
+Status CoreAPI::getSubTasks(ServerContext *context,
+                            const coreService::TaskID *request,
+                            coreService::TasksContainer *response) {
+  TaskID id = convertTaskID(*request);
+  response->CopyFrom(convertTasksContainer(service_->getSubTasks(id)));
+  return Status::OK;
 }
-
-std::vector<TaskDTO> CoreAPI::showAllByPriority() {
-  auto service = service_->showAllByPriority();
-  return dtoConvertor::convert(service);
+Status CoreAPI::completeTask(ServerContext *context,
+                             const coreService::TaskID *request,
+                             coreService::Result *response) {
+  TaskID id = convertTaskID(*request);
+  response->set_result(service_->completeTask(id));
+  return Status::OK;
 }
-
-std::vector<TaskDTO> CoreAPI::showAllByLabel() {
-  auto service = service_->showAllByLabel();
-  return dtoConvertor::convert(service);
+Status CoreAPI::deleteTask(ServerContext *context,
+                           const coreService::TaskID *request,
+                           coreService::Result *response) {
+  TaskID id = convertTaskID(*request);
+  response->set_result(service_->deleteTask(id));
+  return Status::OK;
 }
-
-std::vector<TaskDTO> CoreAPI::showAllByDate() {
-  auto service = service_->showAllByDate();
-  return dtoConvertor::convert(service);
+Status CoreAPI::showAllByPriority(ServerContext *context,
+                                  const coreService::showRequest *request,
+                                  coreService::TasksContainer *response) {
+  response->CopyFrom(convertTasksContainer(service_->showAllByPriority()));
+  return Status::OK;
 }
-
-std::vector<TaskDTO> CoreAPI::showTodayByPriority() {
-  auto service = service_->showTodayByPriority();
-  return dtoConvertor::convert(service);
+Status CoreAPI::showAllDate(ServerContext *context,
+                            const coreService::showRequest *request,
+                            coreService::TasksContainer *response) {
+  response->CopyFrom(convertTasksContainer(service_->showAllByDate()));
+  return Status::OK;
 }
-
-std::vector<TaskDTO> CoreAPI::showTodayByLabel() {
-  auto service = service_->showTodayByLabel();
-  return dtoConvertor::convert(service);
+Status CoreAPI::showAllByLabel(ServerContext *context,
+                               const coreService::showRequest *request,
+                               coreService::TasksContainer *response) {
+  response->CopyFrom(convertTasksContainer(service_->showAllByLabel()));
+  return Status::OK;
 }
-
-std::vector<TaskDTO> CoreAPI::showDueDateByPriority(boost::gregorian::date date) {
-  auto service = service_->showDueDateByPriority(date);
-  return dtoConvertor::convert(service);
+Status CoreAPI::showDueDateByPriority(ServerContext *context,
+                                      const protoStorage::TaskDate *request,
+                                      coreService::TasksContainer *response) {
+  auto date = convertDate(*request);
+  response->CopyFrom(convertTasksContainer(service_->showDueDateByPriority(date)));
+  return Status::OK;
 }
-
-std::vector<TaskDTO> CoreAPI::showDueDateByLabel(boost::gregorian::date date) {
-  auto service = service_->showDueDateByLabel(date);
-  return dtoConvertor::convert(service);
+Status CoreAPI::showDueDateByDate(ServerContext *context,
+                                  const protoStorage::TaskDate *request,
+                                  coreService::TasksContainer *response) {
+  auto date = convertDate(*request);
+  response->CopyFrom(convertTasksContainer(service_->showDueDateByDate(date)));
+  return Status::OK;
 }
-
-std::vector<TaskDTO> CoreAPI::showDueDateByDate(boost::gregorian::date date) {
-  auto service = service_->showDueDateByDate(date);
-  return dtoConvertor::convert(service);
+Status CoreAPI::showDueDateByLabel(ServerContext *context,
+                                   const protoStorage::TaskDate *request,
+                                   coreService::TasksContainer *response) {
+  auto date = convertDate(*request);
+  response->CopyFrom(convertTasksContainer(service_->showDueDateByLabel(date)));
+  return Status::OK;
 }
-
-std::optional<std::vector<TaskDTO>> CoreAPI::getSubTasks(const TaskID &id) {
-  auto it = service_->getSubTasks(id);
-  if (it.has_value()) {
-    std::vector<std::shared_ptr<TaskEntity>> vector = it.value();
-    return dtoConvertor::convert(vector);
-  }
-  return std::nullopt;
+Status CoreAPI::showTodayByPriority(ServerContext *context,
+                                    const coreService::showRequest *request,
+                                    coreService::TasksContainer *response) {
+  response->CopyFrom(convertTasksContainer(service_->showTodayByPriority()));
+  return Status::OK;
 }
-
-std::optional<TaskDTO> CoreAPI::getTask(const TaskID &id) {
-  auto it = service_->getTask(id);
-  if (it.has_value()) {
-    return dtoConvertor::convert(it.value());
-  }
-  return std::nullopt;
-}
-
-bool CoreAPI::save(std::string fileName) {
-  return service_->save(fileName);
-}
-bool CoreAPI::load(std::string fileName) {
-  return service_->load(fileName);
+Status CoreAPI::showTodayByLabel(ServerContext *context,
+                                 const coreService::showRequest *request,
+                                 coreService::TasksContainer *response) {
+  response->CopyFrom(convertTasksContainer(service_->showTodayByLabel()));
+  return Status::OK;
 }
 CoreAPI CoreAPI::create() {
   auto factory = std::make_shared<AllDataStorageFactory>();
@@ -112,5 +120,22 @@ CoreAPI CoreAPI::create() {
 }
 CoreAPI::CoreAPI(std::unique_ptr<TaskServiceInterface> service) : service_(std::move(service)) {
 }
+void RunServer() {
+  std::string server_address("0.0.0.0:50051");
+  CoreAPI service = CoreAPI::create();
+  grpc::EnableDefaultHealthCheckService(true);
+  grpc::reflection::InitProtoReflectionServerBuilderPlugin();
+  ServerBuilder builder;
+  // Listen on the given address without any authentication mechanism.
+  builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+  // Register "service" as the instance through which we'll communicate with
+  // clients. In this case it corresponds to an *synchronous* service.
+  builder.RegisterService(&service);
+  // Finally assemble the server.
+  std::unique_ptr<Server> server(builder.BuildAndStart());
+  std::cout << "Server listening on " << server_address << std::endl;
 
-
+  // Wait for the server to shutdown. Note that some other thread must be
+  // responsible for shutting down the server for this call to ever return.
+  server->Wait();
+}

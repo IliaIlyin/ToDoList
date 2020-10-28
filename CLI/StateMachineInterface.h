@@ -17,16 +17,13 @@
  */
 class StateMachineInterface {
 
-
-
  public:
   /*
    * run state machine
    *
    * @return void
    */
-  virtual void run() =0;
-
+  virtual void run() = 0;
 
 };
 #endif //TODOLIST_CLI_STATEMACHINEINTERFACE_H_

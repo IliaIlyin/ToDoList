@@ -4,10 +4,10 @@
 
 #include "TaskPriorityState.h"
 
-GeneralInputValidator::InputToken TaskPriorityState::read() {
+GeneralInputValidator::InputToken TaskPriorityState::read(std::shared_ptr<IOStreamInterface> inputer) {
   std::string s;
-  std::cout << "Input task priority or write cancel command to cancel command" << std::endl;
-  std::getline(std::cin, s);
+  inputer->print("Input task priority or write cancel command to cancel command");
+  s = inputer->input();
   if (validator_->validate(s) == GeneralInputValidator::InputToken::CORRECT)
     this->priority_ = getPriorityFromString(s);
   return validator_->validate(s);

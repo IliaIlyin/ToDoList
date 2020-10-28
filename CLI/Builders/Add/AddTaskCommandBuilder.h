@@ -12,7 +12,7 @@
 class AddTaskCommandBuilder : public Builder {
  public:
 
-  std::shared_ptr<Command> buildCommand(std::shared_ptr<CoreAPIInterface> service) override;
+  std::shared_ptr<Command> buildCommand(std::shared_ptr<ClientInterface> service) override;
  public:
   AddTaskCommandBuilder(std::unique_ptr<InputStateMachineInterface> machine);
  private:

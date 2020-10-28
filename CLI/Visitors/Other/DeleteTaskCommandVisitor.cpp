@@ -7,9 +7,8 @@ void DeleteTaskCommandVisitor::visitDeleteTaskCommand(DeleteTaskCommand &command
   command.execute();
   bool result = command.getDeleteTaskCommandResult();
   if (result) {
-    std::cout << "Task was deleted" << std::endl;
+    outputer_->print("Task was deleted");
   } else {
-    std::cout << "Could not find task" << std::endl;
-
+    outputer_->print("Could not find task");
   }
 }

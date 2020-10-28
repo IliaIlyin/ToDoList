@@ -4,7 +4,7 @@
 
 #include "SaveCommand.h"
 
-SaveCommand::SaveCommand(std::shared_ptr<CoreAPIInterface> service, std::string fileName)
+SaveCommand::SaveCommand(std::shared_ptr<ClientInterface> service, std::string fileName)
     : service_(service), fileName_(fileName) {
 }
 

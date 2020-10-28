@@ -3,33 +3,54 @@
 //
 
 #include "BaseState.h"
-GeneralCommandsValidator::CommandToken BaseState::read() {
+GeneralCommandsValidator::CommandToken BaseState::read(std::shared_ptr<IOStreamInterface> inputer) {
   std::string cmd;
-  std::getline(std::cin, cmd);
+  cmd = inputer->input();
   auto token = validator_->validate(cmd);
   return token;
 }
 
-void BaseState::print(std::shared_ptr<Context> context) {
+void BaseState::print(std::shared_ptr<Context> context, std::shared_ptr<IOStreamInterface> printer) {
   auto task = context->GetDto();
   if (task.has_value()) {
-    std::cout << "Task Name: " << task.value().getTask().getName() << std::endl;
-    std::cout << "Task Date: " << task.value().getTask().getDate() << std::endl;
-    std::cout << "Task Label: " << task.value().getTask().getLabel() << std::endl;
-    std::cout << "Task Priority: " << task.value().getTask().getPriority() << std::endl;
-    std::cout << "Task status: " << task.value().checkStatus() << std::endl;
+    std::stringstream str;
+    str << "Task Name: ";
+    str << task.value().getTask().getName();
+    printer->print(str.str());
+    str.str(std::string());//clears stringstream
+    str << "Task Date: " << task.value().getTask().getDate();
+    printer->print(str.str());
+    str.str(std::string());
+    str << "Task Label: " << task.value().getTask().getLabel();
+    printer->print(str.str());
+    str.str(std::string());
+    str << "Task Priority: " << task.value().getTask().getPriority();
+    printer->print(str.str());
+    str.str(std::string());
+    str << "Task status: " << task.value().checkStatus();
+    printer->print(str.str());
+    str.str(std::string());
   }
   auto vec = context->GetDtos();
   if (vec.has_value()) {
     if (!vec.value().empty()) {
       for (auto i = vec.value().begin(); i != vec.value().end(); i++) {
-        std::cout << "Task Id: " << i->getTaskId().getId() << std::endl;
-        std::cout << "Task Name: " << i->getTask().getName() << std::endl;
+        std::stringstream str;
+        str << "Task Id: " << i->getTaskId().getId();
+        printer->print(str.str());
+        str.str(std::string());
+        str << "Task Name: " << i->getTask().getName();
+        printer->print(str.str());
+        str.str(std::string());
       }
     } else {
-      std::cout << "No tasks" << std::endl;
+      std::stringstream str;
+      str << "No tasks";
+      printer->print(str.str());
+      str.str(std::string());
     }
   }
+  std::stringstream str;
   std::string input = "Welcome User! Available commands: \n"
                       "Add task\n"
                       "Add subTask\n"
@@ -49,7 +70,9 @@ void BaseState::print(std::shared_ptr<Context> context) {
                       "exit\n"
                       "save\n"
                       "load\n";
-  std::cout << input << std::endl;
+  str << input;
+  printer->print(str.str());
+  str.str(std::string());
 }
 
 void BaseState::execute(std::shared_ptr<Command> command, std::shared_ptr<Visitor> visitor) {
