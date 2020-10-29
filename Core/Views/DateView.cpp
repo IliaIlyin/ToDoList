@@ -5,7 +5,7 @@
 #include "DateView.h"
 
 std::vector<std::weak_ptr<TaskEntity> > DateView::showAll() {
-  std::vector<std::weak_ptr<TaskEntity> > vector;
+  std::vector<std::weak_ptr<TaskEntity>> vector;
   if (!dates.empty()) {
     for (auto i = dates.begin(); i != dates.end(); i++)
       vector.push_back(i->second);

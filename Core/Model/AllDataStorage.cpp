@@ -11,6 +11,7 @@ std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::addSubTaskToParent(co
 
 bool AllDataStorage::addTask(Task &task) {
   auto it = storage_service_->addTask(task);
+  view_service_->clean();
   view_service_->insert(it);
   return true;
 }
@@ -20,8 +21,7 @@ std::optional<std::shared_ptr<TaskEntity>> AllDataStorage::getTask(const TaskID 
 }
 
 bool AllDataStorage::postponeTask(const TaskID &task, boost::gregorian::date dueDate) {
-  storage_service_->postponeTask(task, dueDate);
-  return true;
+  return storage_service_->postponeTask(task, dueDate);
 }
 
 bool AllDataStorage::deleteTask(const TaskID &task) {

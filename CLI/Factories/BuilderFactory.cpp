@@ -128,7 +128,7 @@ std::shared_ptr<Builder> BuilderFactory::BuildDeleteTaskCommandBuilder(std::shar
 }
 std::shared_ptr<Builder> BuilderFactory::BuildAddSubTaskCommandBuilder(std::shared_ptr<InputStateMachineCreatorInterface> &creator,
                                                                        std::shared_ptr<IOStreamInterface> outputer) const {
-  std::shared_ptr<TaskIdValidator> validator;
+  std::shared_ptr<TaskIdValidator> validator=std::make_shared<TaskIdValidator>();
   auto begin = std::make_shared<TaskIdState<TaskNameState, TaskNameValidator>>(validator);
   InputContext context;
   auto machine = creator->create(begin, context, outputer);

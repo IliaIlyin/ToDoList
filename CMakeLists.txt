@@ -15,11 +15,11 @@ include_directories(Tests)
 include_directories(SerializationUtils)
 
 file(GLOB_RECURSE CORE_HEADERS "Core/*.h" "SerializationUtils.h")
-file(GLOB_RECURSE CLI_HEADERS "CLI/*.h" "SerializationUtils.h")
+file(GLOB_RECURSE CLI_HEADERS "CLI/*.h" "Core/*.h" "SerializationUtils.h")
 file(GLOB_RECURSE CORE_SOURCES "Core/*.cpp" "SerializationUtils.cpp")
-file(GLOB_RECURSE CLI_SOURCES "CLI/*.cpp" "SerializationUtils.cpp")
+file(GLOB_RECURSE CLI_SOURCES "CLI/*.cpp" "Core/*.cpp" "SerializationUtils.cpp")
 
-file(GLOB_RECURSE TEST_SOURCES "Tests/*.h" "Tests/*.cpp")
+file(GLOB_RECURSE TEST_SOURCES "Tests/SerializationUtilsTest.cpp" "Tests/*.h" "Tests/*.cpp")
 
 include(GoogleTest)
 find_package(GTest REQUIRED)

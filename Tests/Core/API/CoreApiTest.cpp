@@ -1,11 +1,11 @@
 //
 // Created by ilya on 11.10.20.
 //
-
+/*
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <string>
-#include "Client.h"
+#include "API/CoreAPI.h"
 #include "Model/dtoConvertor.h"
 #include "Model/TaskServiceInterface.h"
 using testing::Eq;
@@ -75,41 +75,41 @@ class TaskServiceMock : public TaskServiceInterface {
 
 };
 
-class CoreApiTest : public ::testing::Test {
+class CoreAPITest : public ::testing::Test {
 
 };
 
-TEST_F(CoreApiTest, shouldSave) {
+TEST_F(CoreAPITest, shouldSave) {
   std::unique_ptr<TaskServiceMock> service = std::make_unique<TaskServiceMock>();
   std::string name = "GFD";
   EXPECT_CALL(service.operator*(), save(name)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.save(name), true);
   ASSERT_EQ(api.save(name), false);
 }
 
-TEST_F(CoreApiTest, shouldLoad) {
+TEST_F(CoreAPITest, shouldLoad) {
   std::unique_ptr<TaskServiceMock> service = std::make_unique<TaskServiceMock>();
   std::string name = "GFD";
   EXPECT_CALL(service.operator*(), load(name)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.load(name), true);
   ASSERT_EQ(api.load(name), false);
 }
 
-TEST_F(CoreApiTest, shouldAddTaskInputTask) {
+TEST_F(CoreAPITest, shouldAddTaskInputTask) {
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
                                Task::Priority::FIRST,
                                "labelgfd");
   std::unique_ptr<TaskServiceMock> service = std::make_unique<TaskServiceMock>();
   EXPECT_CALL(service.operator*(), addTask(task)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.addTask(task), true);
   ASSERT_EQ(api.addTask(task), false);
 }
 
-TEST_F(CoreApiTest, shouldAddTaskInputParams) {
+TEST_F(CoreAPITest, shouldAddTaskInputParams) {
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
                                Task::Priority::FIRST,
@@ -119,7 +119,7 @@ TEST_F(CoreApiTest, shouldAddTaskInputParams) {
                                            boost::gregorian::date{2000, 12, 9},
                                            Task::Priority::FIRST,
                                            "labelgfd")).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.addTask("Lol",
                         boost::gregorian::date{2000, 12, 9},
                         Task::Priority::FIRST,
@@ -129,7 +129,7 @@ TEST_F(CoreApiTest, shouldAddTaskInputParams) {
                         Task::Priority::FIRST,
                         "labelgfd"), false);
 }
-TEST_F(CoreApiTest, shouldAddSubTaskInputParams) {
+TEST_F(CoreAPITest, shouldAddSubTaskInputParams) {
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
                                Task::Priority::FIRST,
@@ -142,7 +142,7 @@ TEST_F(CoreApiTest, shouldAddSubTaskInputParams) {
                                                       boost::gregorian::date{2000, 12, 9},
                                                       Task::Priority::FIRST,
                                                       "labelgfd")).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.addSubTaskToParent(id, "Lol",
                                    boost::gregorian::date{2000, 12, 9},
                                    Task::Priority::FIRST,
@@ -153,7 +153,7 @@ TEST_F(CoreApiTest, shouldAddSubTaskInputParams) {
                                    "labelgfd"), false);
 }
 
-TEST_F(CoreApiTest, shouldAddSubTaskInputTask) {
+TEST_F(CoreAPITest, shouldAddSubTaskInputTask) {
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
                                Task::Priority::FIRST,
@@ -164,12 +164,12 @@ TEST_F(CoreApiTest, shouldAddSubTaskInputTask) {
   auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, generator));
   EXPECT_CALL(service.operator*(),
               addSubTaskToParent(id, task)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.addSubTaskToParent(id, task), true);
   ASSERT_EQ(api.addSubTaskToParent(id, task), false);
 }
 
-TEST_F(CoreApiTest, getTask) {
+TEST_F(CoreAPITest, getTask) {
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
                                Task::Priority::FIRST,
@@ -180,11 +180,11 @@ TEST_F(CoreApiTest, getTask) {
   auto entity = std::make_shared<TaskEntity>(TaskEntity::createTaskEntity(task, generator));
   auto dto = dtoConvertor::convert(entity.operator*());
   EXPECT_CALL(service.operator*(), getTask(id)).Times(1).WillOnce(Return(entity.operator*()));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.getTask(id), dto);
 }
 
-TEST_F(CoreApiTest, getTaskReturnNullopt) {
+TEST_F(CoreAPITest, getTaskReturnNullopt) {
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
                                Task::Priority::FIRST,
@@ -193,11 +193,11 @@ TEST_F(CoreApiTest, getTaskReturnNullopt) {
   std::unique_ptr<TaskServiceMock> service = std::make_unique<TaskServiceMock>();
   auto result = std::nullopt;
   EXPECT_CALL(service.operator*(), getTask(id)).Times(1).WillOnce(Return(result));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.getTask(id), result);
 }
 
-TEST_F(CoreApiTest, getSubTasks) {
+TEST_F(CoreAPITest, getSubTasks) {
   std::vector<std::shared_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
@@ -210,10 +210,10 @@ TEST_F(CoreApiTest, getSubTasks) {
   vec.push_back(entity);
   auto dto = dtoConvertor::convert(vec);
   EXPECT_CALL(service.operator*(), getSubTasks(id)).Times(1).WillOnce(Return(vec));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.getSubTasks(id), dto);;
 }
-TEST_F(CoreApiTest, getSubTasksReturnNullopt) {
+TEST_F(CoreAPITest, getSubTasksReturnNullopt) {
   std::vector<std::shared_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
@@ -224,40 +224,40 @@ TEST_F(CoreApiTest, getSubTasksReturnNullopt) {
   std::unique_ptr<TaskServiceMock> service = std::make_unique<TaskServiceMock>();
   auto result = std::nullopt;
   EXPECT_CALL(service.operator*(), getSubTasks(id)).Times(1).WillOnce(Return(result));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.getSubTasks(id), result);;
 }
 
-TEST_F(CoreApiTest, postponeTasks) {
+TEST_F(CoreAPITest, postponeTasks) {
   TaskID id(1);
   auto date = boost::gregorian::date{2000, 8, 3};
   std::unique_ptr<TaskServiceMock> service = std::make_unique<TaskServiceMock>();
   EXPECT_CALL(service.operator*(), postponeTask(id, date)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
 
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.postponeTask(id, date), true);
   ASSERT_EQ(api.postponeTask(id, date), false);
 }
-TEST_F(CoreApiTest, deleteTask) {
+TEST_F(CoreAPITest, deleteTask) {
   TaskID id(1);
   std::unique_ptr<TaskServiceMock> service = std::make_unique<TaskServiceMock>();
   EXPECT_CALL(service.operator*(), deleteTask(id)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.deleteTask(id), true);
   ASSERT_EQ(api.deleteTask(id), false);
 
 }
-TEST_F(CoreApiTest, completeTask) {
+TEST_F(CoreAPITest, completeTask) {
   TaskID id(1);
   std::unique_ptr<TaskServiceMock> service = std::make_unique<TaskServiceMock>();
   EXPECT_CALL(service.operator*(), completeTask(id)).Times(2).WillOnce(Return(true)).WillOnce(Return(false));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.completeTask(id), true);
   ASSERT_EQ(api.completeTask(id), false);
 
 }
 
-TEST_F(CoreApiTest, showAllByDate) {
+TEST_F(CoreAPITest, showAllByDate) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
@@ -270,12 +270,12 @@ TEST_F(CoreApiTest, showAllByDate) {
   vec.push_back(entity);
   auto dtos = dtoConvertor::convert(vec);
   EXPECT_CALL(service.operator*(), showAllByDate()).Times(2).WillRepeatedly(Return(vec));
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.showAllByDate().size(), dtos.size());
   ASSERT_EQ(api.showAllByDate()[0], dtos[0]);
 }
 
-TEST_F(CoreApiTest, showAllByLabel) {
+TEST_F(CoreAPITest, showAllByLabel) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
@@ -291,11 +291,11 @@ TEST_F(CoreApiTest, showAllByLabel) {
 
   EXPECT_CALL(service.operator*(), showAllByLabel()).Times(2).WillRepeatedly(Return(vec));
 
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.showAllByLabel().size(), vec.size());
   ASSERT_EQ(api.showAllByLabel()[0], dtos[0]);
 }
-TEST_F(CoreApiTest, showAllByPriority) {
+TEST_F(CoreAPITest, showAllByPriority) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
@@ -311,11 +311,11 @@ TEST_F(CoreApiTest, showAllByPriority) {
 
   EXPECT_CALL(service.operator*(), showAllByPriority()).Times(2).WillRepeatedly(Return(vec));
 
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.showAllByPriority().size(), vec.size());
   ASSERT_EQ(api.showAllByPriority()[0], dtos[0]);
 }
-TEST_F(CoreApiTest, showTodayByLabel) {
+TEST_F(CoreAPITest, showTodayByLabel) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
@@ -331,11 +331,11 @@ TEST_F(CoreApiTest, showTodayByLabel) {
 
   EXPECT_CALL(service.operator*(), showTodayByLabel()).Times(2).WillRepeatedly(Return(vec));
 
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.showTodayByLabel().size(), vec.size());
   ASSERT_EQ(api.showTodayByLabel()[0], dtos[0]);
 }
-TEST_F(CoreApiTest, showTodayByPriority) {
+TEST_F(CoreAPITest, showTodayByPriority) {
   std::vector<std::weak_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
                                boost::gregorian::date{2000, 12, 9},
@@ -351,11 +351,11 @@ TEST_F(CoreApiTest, showTodayByPriority) {
 
   EXPECT_CALL(service.operator*(), showTodayByPriority()).Times(2).WillRepeatedly(Return(vec));
 
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.showTodayByPriority().size(), vec.size());
   ASSERT_EQ(api.showTodayByPriority()[0], dtos[0]);
 }
-TEST_F(CoreApiTest, showDueDateByPriority) {
+TEST_F(CoreAPITest, showDueDateByPriority) {
   auto date = boost::gregorian::date{2000, 8, 3};
   std::vector<std::weak_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
@@ -372,11 +372,11 @@ TEST_F(CoreApiTest, showDueDateByPriority) {
 
   EXPECT_CALL(service.operator*(), showDueDateByPriority(date)).Times(2).WillRepeatedly(Return(vec));
 
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.showDueDateByPriority(date).size(), vec.size());
   ASSERT_EQ(api.showDueDateByPriority(date)[0], dtos[0]);
 }
-TEST_F(CoreApiTest, showDueDateByLabel) {
+TEST_F(CoreAPITest, showDueDateByLabel) {
   auto date = boost::gregorian::date{2000, 8, 3};
   std::vector<std::weak_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
@@ -393,11 +393,11 @@ TEST_F(CoreApiTest, showDueDateByLabel) {
 
   EXPECT_CALL(service.operator*(), showDueDateByLabel(date)).Times(2).WillRepeatedly(Return(vec));
 
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.showDueDateByLabel(date).size(), vec.size());
   ASSERT_EQ(api.showDueDateByLabel(date)[0], dtos[0]);
 }
-TEST_F(CoreApiTest, showDueDateByDate) {
+TEST_F(CoreAPITest, showDueDateByDate) {
   auto date = boost::gregorian::date{2000, 8, 3};
   std::vector<std::weak_ptr<TaskEntity>> vec;
   Task task = Task::createTask("Lol",
@@ -414,8 +414,8 @@ TEST_F(CoreApiTest, showDueDateByDate) {
 
   EXPECT_CALL(service.operator*(), showDueDateByDate(date)).Times(2).WillRepeatedly(Return(vec));
 
-  Client api(std::move(service));
+  CoreAPI api(std::move(service));
   ASSERT_EQ(api.showDueDateByDate(date).size(), vec.size());
   ASSERT_EQ(api.showDueDateByDate(date)[0], dtos[0]);
 }
-
+*/

@@ -15,7 +15,7 @@
 #include "SerializationUtils.h"
 #include "Model/TaskService.h"
 #include "API/TaskDTO.h"
-#include "Model/dtoConvertor.h"
+#include "dtoConvertor.h"
 #include "API/TaskID.h"
 #include "StorageModel.pb.h"
 

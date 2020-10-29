@@ -7,7 +7,7 @@ void PostponeTaskCommandVisitor::visitPostponeTaskCommand(PostponeTaskCommand &c
   command.execute();
   bool result = command.getPostponeTaskCommandResult();
   if (result) {
-    outputer_->print("Task was completed");
+    outputer_->print("Task was postponed");
   } else {
     outputer_->print("Could not find task");
   }

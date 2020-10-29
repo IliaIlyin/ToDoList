@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "../../../SerializationUtils/SerializationUtils.h"
+#include "SerializationUtils.h"
 #include "Core/Mocks/AllDataStorageMock.h"
 using testing::Eq;
 using testing::Eq;
@@ -12,18 +12,55 @@ using testing::Return;
 using testing::ReturnRef;
 using testing::Mock;
 
-class PersistorUtilsTest : public ::testing::Test {
+class SerializationUtilsTest : public ::testing::Test {
 
 };
 
 bool equal(const protoStorage::Task proto_task, const protoStorage::Task proto_task2) {
   return proto_task.name() == proto_task2.name() &&
-      proto_task.date() == proto_task2.date() &&
+      proto_task.date().date() == proto_task2.date().date() &&
       proto_task.priority() == proto_task2.priority() &&
       proto_task.label() == proto_task2.label();
 }
+TEST_F(SerializationUtilsTest, shouldConvertTaskDate) {
+  boost::gregorian::date date{2000, 11, 11};
+  protoStorage::TaskDate task_date;
+  task_date.set_date(date.day_number());
+  ASSERT_EQ(date, convertDate(task_date));
+  ASSERT_EQ(task_date.date(), convertDate(date).date());
+}
+TEST_F(SerializationUtilsTest, shouldConvertTaskID) {
+  TaskID id(1);
+  coreService::TaskID task_id;
+  task_id.set_id(1);
+  ASSERT_EQ(id, convertTaskID(task_id));
+  ASSERT_EQ(task_id.id(), convertTaskID(id).id());
+}
+TEST_F(SerializationUtilsTest, shouldConvertTaskDTO) {
+  Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
+  TaskDTO dto = TaskDTO(task, TaskID(3), true);
+  coreService::TaskID task_id;
+  task_id.set_id(3);
+  protoStorage::Task proto_task;
+  proto_task.set_name("Lol");
+  protoStorage::TaskDate date1;
+  date1.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  proto_task.set_allocated_date(new protoStorage::TaskDate(date1));
+  proto_task.set_priority(protoStorage::Task_Priority_FIRST);
+  proto_task.set_label("label");
+  coreService::TaskDTO proto_dto;
+  proto_dto.set_allocated_task(new protoStorage::Task(proto_task));
+  proto_dto.set_allocated_id(new coreService::TaskID(task_id));
+  proto_dto.set_complete(true);
+  ASSERT_EQ(dto, convertTaskDTO(proto_dto));
+  ASSERT_TRUE(equal(proto_dto.task(), convertTaskDTO(dto).task()));
+  ASSERT_EQ(proto_dto.id().id(),convertTaskDTO(dto).id().id());
+  ASSERT_EQ(proto_dto.complete(),convertTaskDTO(dto).complete());
+}
 
-TEST_F(PersistorUtilsTest, shouldConvertTaskPriority) {
+
+
+TEST_F(SerializationUtilsTest, shouldConvertTaskPriority) {
   Task::Priority first = Task::Priority::FIRST;
   auto res = protoStorage::Task_Priority_FIRST;
   ASSERT_EQ(res, convertPriority(first));
@@ -38,7 +75,7 @@ TEST_F(PersistorUtilsTest, shouldConvertTaskPriority) {
   ASSERT_EQ(res4, convertPriority(none));
 }
 
-TEST_F(PersistorUtilsTest, shouldConvertProtoPriority) {
+TEST_F(SerializationUtilsTest, shouldConvertProtoPriority) {
   Task::Priority first = Task::Priority::FIRST;
   auto res = protoStorage::Task_Priority_FIRST;
   ASSERT_EQ(first, convertPriority(res));
@@ -53,18 +90,20 @@ TEST_F(PersistorUtilsTest, shouldConvertProtoPriority) {
   ASSERT_EQ(none, convertPriority(res4));
 }
 
-TEST_F(PersistorUtilsTest, shouldSerializeToTask) {
+TEST_F(SerializationUtilsTest, shouldSerializeToTask) {
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   protoStorage::Task proto_task;
   proto_task.set_name("Lol");
-  proto_task.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  protoStorage::TaskDate date1;
+  date1.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  proto_task.set_allocated_date(new protoStorage::TaskDate(date1));
   proto_task.set_priority(protoStorage::Task_Priority_FIRST);
   proto_task.set_label("label");
   auto task2 = convertTask(task);
   ASSERT_TRUE(equal(task2, proto_task));
 }
 
-TEST_F(PersistorUtilsTest, shouldSerializeToTaskEntity) {
+TEST_F(SerializationUtilsTest, shouldSerializeToTaskEntity) {
   //entity creation
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   IdGenerator idGenerator;
@@ -106,14 +145,14 @@ TEST_F(PersistorUtilsTest, shouldSerializeToTaskEntity) {
   ASSERT_EQ(subtasks2.subtasks_size(), 0);
 }
 
-TEST_F(PersistorUtilsTest, shouldSerializeToStorageVectorEmpty) {
+TEST_F(SerializationUtilsTest, shouldSerializeToStorageVectorEmpty) {
   std::vector<std::shared_ptr<TaskEntity>> vec;
   ASSERT_ANY_THROW(serializeToStorage(vec));
 
   // ASSERT_EQ(storage.tasks_size(), 0);
 }
 
-TEST_F(PersistorUtilsTest, shouldSerializeToStorage) {
+TEST_F(SerializationUtilsTest, shouldSerializeToStorage) {
   std::vector<std::shared_ptr<TaskEntity>> vec;
   //entity creation
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
@@ -140,30 +179,38 @@ TEST_F(PersistorUtilsTest, shouldSerializeToStorage) {
   ASSERT_EQ(storage.tasks(1).subtasks_size(), 0);
 }
 
-TEST_F(PersistorUtilsTest, shouldDeserializeFromTask) {
+TEST_F(SerializationUtilsTest, shouldDeserializeFromTask) {
   protoStorage::Task proto_task;
   proto_task.set_name("Lol");
-  proto_task.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  protoStorage::TaskDate date1;
+  date1.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  proto_task.set_allocated_date(new protoStorage::TaskDate(date1));
   proto_task.set_priority(protoStorage::Task_Priority_FIRST);
   proto_task.set_label("label");
   Task task = Task::createTask("Lol", boost::gregorian::date{2000, 12, 9}, Task::Priority::FIRST, "label");
   ASSERT_EQ(convertTask(proto_task), task);
 }
 
-TEST_F(PersistorUtilsTest, shouldSerializeSubTasks) {
+TEST_F(SerializationUtilsTest, shouldSerializeSubTasks) {
   protoStorage::Task task1;
   task1.set_name("Lol");
-  task1.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  protoStorage::TaskDate date1;
+  date1.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  task1.set_allocated_date(new protoStorage::TaskDate(date1));
   task1.set_priority(protoStorage::Task_Priority_FIRST);
   task1.set_label("label");
   protoStorage::Task task2;
   task2.set_name("Lollipop");
-  task2.set_date(boost::gregorian::date{2030, 12, 9}.day_number());
+  protoStorage::TaskDate date2;
+  date2.set_date(boost::gregorian::date{2030, 12, 9}.day_number());
+  task2.set_allocated_date(new protoStorage::TaskDate(date2));
   task2.set_priority(protoStorage::Task_Priority_SECOND);
   task2.set_label("AAAA");
   protoStorage::Task task3;
   task3.set_name("NoName");
-  task3.set_date(boost::gregorian::date{2000, 5, 9}.day_number());
+  protoStorage::TaskDate date3;
+  date3.set_date(boost::gregorian::date{2000, 5, 9}.day_number());
+  task3.set_allocated_date(new protoStorage::TaskDate(date3));
   task3.set_priority(protoStorage::Task_Priority_NONE);
   task3.set_label("fdsfsd");
   protoStorage::TaskEntity entity1;
@@ -183,21 +230,27 @@ TEST_F(PersistorUtilsTest, shouldSerializeSubTasks) {
   EXPECT_CALL(mock.operator*(), addSubTaskToParent(TaskID(1), t3, false)).Times(1).WillOnce(Return(TaskID(2)));
   serializeSubTasks(entity1, TaskID(0), mock);
 }
-TEST_F(PersistorUtilsTest, shouldSerializeTaskEntities) {
+TEST_F(SerializationUtilsTest, shouldSerializeTaskEntities) {
   protoStorage::Storage storage;
   protoStorage::Task task1;
   task1.set_name("Lol");
-  task1.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  protoStorage::TaskDate date1;
+  date1.set_date(boost::gregorian::date{2000, 12, 9}.day_number());
+  task1.set_allocated_date(new protoStorage::TaskDate(date1));
   task1.set_priority(protoStorage::Task_Priority_FIRST);
   task1.set_label("label");
   protoStorage::Task task2;
   task2.set_name("Lollipop");
-  task2.set_date(boost::gregorian::date{2030, 12, 9}.day_number());
+  protoStorage::TaskDate date2;
+  date2.set_date(boost::gregorian::date{2030, 12, 9}.day_number());
+  task2.set_allocated_date(new protoStorage::TaskDate(date2));
   task2.set_priority(protoStorage::Task_Priority_SECOND);
   task2.set_label("AAAA");
   protoStorage::Task task3;
   task3.set_name("NoName");
-  task3.set_date(boost::gregorian::date{2000, 5, 9}.day_number());
+  protoStorage::TaskDate date3;
+  date3.set_date(boost::gregorian::date{2000, 5, 9}.day_number());
+  task3.set_allocated_date(new protoStorage::TaskDate(date3));
   task3.set_priority(protoStorage::Task_Priority_NONE);
   task3.set_label("fdsfsd");
   protoStorage::TaskEntity entity1;

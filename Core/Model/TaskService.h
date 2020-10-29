@@ -8,7 +8,7 @@
 #include "TaskServiceInterface.h"
 #include "Model/TaskEntity.h"
 #include "Model/AllDataStorage.h"
-#include "Model/dtoConvertor.h"
+#include "API/dtoConvertor.h"
 #include "Model/AllDataStorageFactory.h"
 #include "Serialization/Persistor.h"
 

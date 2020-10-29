@@ -2,7 +2,7 @@
 // Created by Ilya on 7/31/2020.
 //
 
-#include "Model/dtoConvertor.h"
+#include "dtoConvertor.h"
 
 TaskDTO dtoConvertor::convert(const TaskEntity &task_entity) {
   return TaskDTO(task_entity.getTask(), task_entity.getTaskId(), task_entity.checkStatus());

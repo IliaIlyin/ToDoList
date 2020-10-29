@@ -7,9 +7,12 @@
 std::shared_ptr<TaskEntity> Storage::addTask(const TaskEntity &task_entity) {
   if (tasks_.count(task_entity.getTaskId()) == 1) {
     auto ptr = tasks_.find(task_entity.getTaskId());
+    *(ptr->second.operator->())=task_entity;
     return ptr->second;
   } else {
-    auto it = tasks_.insert(std::make_pair(task_entity.getTaskId(), std::make_shared<TaskEntity>(task_entity)));
+    auto it = tasks_.insert(std::pair<TaskID,
+                                      std::shared_ptr<TaskEntity>>(task_entity.getTaskId(),
+                                                                   std::make_shared<TaskEntity>(task_entity)));
     return it.first->second;
   }
 }

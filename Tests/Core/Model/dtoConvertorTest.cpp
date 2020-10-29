@@ -5,7 +5,7 @@
 
 #include <gtest/gtest.h>
 
-#include "Model/dtoConvertor.h"
+#include "API/dtoConvertor.h"
 using testing::Eq;
 
 class ConvertorTest : public ::testing::Test {
